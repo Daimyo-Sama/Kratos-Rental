@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-06-04T01:50:43.289Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="G3VRI1BcpqzyyyFnG6OR" version="24.4.13" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-04T03:06:37.296Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="-DP52tPh6i08TahZPfQb" version="24.4.13" type="github">
   <diagram id="Byrdo3OI-UkdsElt1yLv" name="Page-1">
     <mxGraphModel dx="2607" dy="2587" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -924,10 +924,10 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-182" value="&lt;i&gt;Ou devrons integrer stripe&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2013" y="-705" width="171" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-183" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;&lt;a href=&quot;https://docs.google.com/document/d/18QAERjF_WHyNgcebPVhCPG5T8fjqmqrb7OUuw1mv3gs/edit#heading=h.nuuutvbhv3wr&quot;&gt;CAHIER DES CHARGES&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=3;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="dbdwZsKA4burIaIdnD2R-183" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;&lt;a href=&quot;https://docs.google.com/document/d/18QAERjF_WHyNgcebPVhCPG5T8fjqmqrb7OUuw1mv3gs/edit#heading=h.nuuutvbhv3wr&quot;&gt;CAHIER DES CHARGES&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=8;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="1565" y="-416" width="237" height="308" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-184" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;&lt;a href=&quot;https://docs.google.com/document/d/18QAERjF_WHyNgcebPVhCPG5T8fjqmqrb7OUuw1mv3gs/edit#heading=h.nuuutvbhv3wr&quot;&gt;CAHIER DES CHARGES&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=3;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+        <mxCell id="dbdwZsKA4burIaIdnD2R-184" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;&lt;a href=&quot;https://github.com/users/Daimyo-Sama/projects/3/views/1&quot;&gt;BACKLOG&lt;/a&gt;&lt;/b&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=7;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="1831" y="-416" width="237" height="308" as="geometry" />
         </mxCell>
       </root>
