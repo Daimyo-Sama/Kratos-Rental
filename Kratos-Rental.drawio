@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-04T21:01:52.942Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="hTwGutQ9N222JoKn_sdq" version="24.4.13" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-04T21:49:28.035Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="RY12wkrrbnIqh7N3Dy5U" version="24.4.13" type="github">
   <diagram id="Byrdo3OI-UkdsElt1yLv" name="Page-1">
-    <mxGraphModel dx="2081" dy="2283" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="4857" dy="3769" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -791,7 +791,7 @@
           <mxGeometry x="701.75" y="-1099" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-111" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;TACHES A DECOUVRIR&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="1621" y="160" width="147" height="30" as="geometry" />
+          <mxGeometry x="1626" y="416" width="147" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-112" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;MAQUETTE VUES FRONTEND&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1595" y="2616" width="487" height="30" as="geometry" />
@@ -814,7 +814,7 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-120" value="&lt;b&gt;Messagerie&lt;br&gt;(privé)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFEDF9;" vertex="1" parent="1">
           <mxGeometry x="2397.5" y="-746.5" width="120" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-121" value="&lt;b&gt;Dashboard&lt;br&gt;(privé)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFEDF9;" vertex="1" parent="1">
+        <mxCell id="dbdwZsKA4burIaIdnD2R-121" value="&lt;b&gt;Trips&lt;br&gt;(privé)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFEDF9;" vertex="1" parent="1">
           <mxGeometry x="2385" y="-499.25" width="120" height="170" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-122" value="&lt;b&gt;Création de l&#39;offre de service&lt;br&gt;(privé)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFEDF9;" vertex="1" parent="1">
@@ -830,12 +830,12 @@
           <mxGeometry x="2708" y="-628.68" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-128" value="&lt;b&gt;Inscription&lt;/b&gt;&lt;div&gt;&lt;b&gt;Propriétaire&lt;/b&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFEDF9;" vertex="1" parent="1">
-          <mxGeometry x="2922" y="-881" width="120" height="170" as="geometry" />
+          <mxGeometry x="3010" y="-939" width="120" height="170" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-136" value="&lt;b&gt;LISTER TOUS LES PAGES QU&#39;ON A BESOIN ET LEURS ELEMENTS PERTINENTS comme les inputs&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2688.5" y="-184" width="243" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-138" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;taches en cours&amp;nbsp;&lt;br&gt;historiques des interactions&lt;br&gt;historiques des paiments&lt;br&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 8px;&quot;&gt;statut des&amp;nbsp;evenements&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="dbdwZsKA4burIaIdnD2R-138" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;taches en cours&amp;nbsp;&lt;br&gt;historiques des locations&lt;br&gt;historiques des paiements&lt;br&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 8px;&quot;&gt;statut des&amp;nbsp;evenements&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2391.25" y="-322.25" width="107.5" height="91" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-77" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.352;exitY=0.028;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" edge="1" parent="1" source="dbdwZsKA4burIaIdnD2R-78" target="dbdwZsKA4burIaIdnD2R-49">
@@ -860,7 +860,7 @@
           <mxGeometry x="3117.5" y="-809" width="19" height="19" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-159" value="&lt;b&gt;4&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;align=center;fillColor=#9AC7BF;" vertex="1" parent="1">
-          <mxGeometry x="2928" y="-871.5" width="19" height="19" as="geometry" />
+          <mxGeometry x="3013" y="-930" width="19" height="19" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-160" value="&lt;b&gt;2&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;align=center;fillColor=#9AC7BF;" vertex="1" parent="1">
           <mxGeometry x="2931.5" y="-568.5" width="19" height="19" as="geometry" />
@@ -880,8 +880,8 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-166" value="&lt;b&gt;10&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;align=center;fillColor=#9AC7BF;" vertex="1" parent="1">
           <mxGeometry x="2753" y="-520" width="19" height="19" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-167" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Ou trouve t on la page?&amp;nbsp;&lt;br&gt;une vue partielle accessible de tout les pages ou on visite une page specifique pour la messagerie?&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2318" y="-554" width="184" height="30" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-167" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;&lt;b&gt;ON NE PREND PAS CHARGE DE LA MESSAGERIE&lt;br&gt;LES CLIENTS COMMUNIQUE DIRECTEMENT&lt;br&gt;PAR SMS&lt;/b&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2342" y="-564" width="184" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-168" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=90;strokeColor=#9999FF;" vertex="1" parent="1">
           <mxGeometry x="2679.55" y="356.31" width="130.45" height="476.38" as="geometry" />
@@ -1018,7 +1018,7 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-239" value="&lt;b&gt;About us&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFEDF9;" vertex="1" parent="1">
           <mxGeometry x="2167" y="-420" width="120" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-240" value="&lt;i&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Creeons nous notre propre messagerie??&lt;/font&gt;&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="dbdwZsKA4burIaIdnD2R-240" value="&lt;i&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Creeons nous notre propre messagerie??&lt;/font&gt;&lt;/i&gt;&lt;div&gt;&lt;i&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;NON&lt;/font&gt;&lt;/i&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="1887" y="-674" width="191" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-242" value="&lt;span style=&quot;font-size: 30px;&quot;&gt;OU SONT LES INFOS SENSIBLES ICI??&amp;nbsp;&lt;br&gt;LES MARQUER POUR VOIR QUOI CRYPTER&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
@@ -1056,6 +1056,9 @@
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-257" value="&lt;b&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;MENU&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="4328" y="-640" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-259" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.x" vertex="1" parent="1">
+          <mxGeometry x="2407" y="-710" width="100" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
