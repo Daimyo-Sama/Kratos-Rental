@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-04T17:43:31.540Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="NNVjOrQBgqa0ZDSAOvug" version="24.4.13" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-04T18:05:50.150Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="c0T-IrAiM_v7gKNAdiA6" version="24.4.13" type="github">
   <diagram id="Byrdo3OI-UkdsElt1yLv" name="Page-1">
-    <mxGraphModel dx="3643" dy="3119" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1943" dy="2209" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -402,7 +402,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-6" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;LISTES DES FONCTIONNALITÉS&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2632.0000000000005" y="463.62" width="240" height="30" as="geometry" />
+          <mxGeometry x="2621.01" y="436.69" width="262" height="56.62" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-7" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;USER&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="3308" y="-580" width="120" height="60" as="geometry" />
@@ -713,8 +713,8 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-87" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" edge="1" parent="1" source="dbdwZsKA4burIaIdnD2R-88" target="dbdwZsKA4burIaIdnD2R-42">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-88" value="Gestion du profil" style="ellipse;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="1">
-          <mxGeometry x="733" y="-589" width="90" height="60" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-88" value="Gestion du compte" style="ellipse;whiteSpace=wrap;html=1;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="1">
+          <mxGeometry x="733" y="-589" width="89" height="60" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-89" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" edge="1" parent="1" source="dbdwZsKA4burIaIdnD2R-78" target="dbdwZsKA4burIaIdnD2R-57">
           <mxGeometry relative="1" as="geometry" />
@@ -791,7 +791,7 @@
           <mxGeometry x="701.75" y="-1099" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-111" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;TACHES A DECOUVRIR&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="1666" y="244" width="147" height="30" as="geometry" />
+          <mxGeometry x="1621" y="160" width="147" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-112" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;MAQUETTE VUES FRONTEND&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1420" y="2471" width="487" height="30" as="geometry" />
@@ -887,7 +887,7 @@
           <mxGeometry x="2318" y="-554" width="184" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-168" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=90;" vertex="1" parent="1">
-          <mxGeometry x="2688.52" y="363.62" width="130.45" height="476.38" as="geometry" />
+          <mxGeometry x="2679.55" y="356.31" width="130.45" height="476.38" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-169" value="&lt;i&gt;Quelles routes pour satisfaire ces fonctionnalités?&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1827" y="450" width="171" height="30" as="geometry" />
@@ -919,11 +919,11 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-178" value="&lt;span style=&quot;font-size: 7px;&quot;&gt;La page est vide avant la premiere requete et elle affiche les resultats a chaque nouvelle recherche&lt;br&gt;&lt;br&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2708" y="-646.81" width="167" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-181" value="&lt;i&gt;Ou devrons nous integrer google map api&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2013" y="-746.5" width="171" height="30" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-181" value="&lt;i&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Ou devrons nous integrer google map api?&lt;/font&gt;&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2097" y="-682.69" width="171" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-182" value="&lt;i&gt;Ou devrons nous integrer stripe&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2013" y="-705" width="171" height="30" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-182" value="&lt;i&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;Ou devrons nous integrer stripe?&lt;/font&gt;&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2097" y="-613" width="171" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-183" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;&lt;a href=&quot;https://docs.google.com/document/d/18QAERjF_WHyNgcebPVhCPG5T8fjqmqrb7OUuw1mv3gs/edit#heading=h.nuuutvbhv3wr&quot;&gt;CAHIER DES CHARGES&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=8;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="1565" y="-416" width="237" height="308" as="geometry" />
@@ -931,8 +931,8 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-184" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;&lt;a href=&quot;https://github.com/users/Daimyo-Sama/projects/3/views/1&quot;&gt;BACKLOG&lt;/a&gt;&lt;/b&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=7;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="1831" y="-416" width="237" height="308" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-185" value="&lt;div&gt;&lt;b&gt;Page Accueil:&lt;br&gt;&lt;/b&gt;Langue de la page&lt;br&gt;Lien vers la connexion&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;b&gt;Page Création du service:&lt;/b&gt;&lt;br&gt;Images de la voiture&lt;div&gt;&lt;br&gt;&lt;b&gt;Page Login&lt;br&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;br&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;Sécurité:&lt;/b&gt;&lt;div&gt;Gestion de sessions et tokens&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Compatibilité:&lt;/b&gt;&lt;/div&gt;&lt;div&gt;sssss&lt;br&gt;&lt;b&gt;Performance&lt;/b&gt;:&lt;/div&gt;&lt;div&gt;sdsd&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2603.97" y="676" width="286.28" height="419" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-185" value="&lt;div&gt;&lt;b&gt;Page Accueil:&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Interface Visuelle qualité&lt;br&gt;Langue de la page&lt;br&gt;Lien vers les differentes pages&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;b&gt;Page Création du service:&lt;/b&gt;&lt;div&gt;Les donnees que nous manipulerons&lt;br&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Images de la voiture&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Adresse&lt;br&gt;&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Tags&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Description&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;&lt;br&gt;&lt;b&gt;Page Login&lt;/b&gt;&lt;/div&gt;&lt;div&gt;email password&lt;br&gt;+&lt;br&gt;confirmation webhook&lt;/div&gt;&lt;div&gt;2FA?&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page Inscription 1&lt;br&gt;&lt;/b&gt;nom prenom email&amp;nbsp;&lt;br&gt;+&lt;/div&gt;&lt;div&gt;confirmation webhook&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page Inscription 2&lt;/b&gt;&lt;br&gt;nom prenom email&lt;br&gt;+&lt;br&gt;confirmation webhook&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page profil utilisateur&lt;/b&gt;&lt;br&gt;On indique les etapes manquantes avant l&#39;utilisation&lt;br&gt;Oauth verifie les id&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page Profil du service&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Page&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;Sécurité:&lt;/b&gt;&lt;div&gt;Gestion de sessions et tokens&lt;br&gt;&lt;div&gt;securisation des entrees utilisateurs&lt;br&gt;cryptage bd&lt;br&gt;ssl tls&lt;br&gt;https?&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Compatibilité:&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Design adaptif mobile desktop&lt;br&gt;browser principaux&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;b&gt;Performance&lt;/b&gt;:&lt;/div&gt;&lt;div&gt;Jmeter tests&lt;br&gt;optimisation&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2502" y="564" width="484" height="888" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-186" value="Text" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1953.0029411764708" y="729.0035294117649" width="60" height="30" as="geometry" />
@@ -1002,6 +1002,24 @@
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-228" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Inscription Propriétaire&lt;/h1&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="4048" y="1405" width="301" height="106" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-230" value="&lt;b&gt;10&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;align=center;fillColor=#9AC7BF;" vertex="1" parent="1">
+          <mxGeometry x="597" y="-613" width="19" height="19" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-231" value="&lt;b&gt;8&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;align=center;fillColor=#9AC7BF;" vertex="1" parent="1">
+          <mxGeometry x="748.0000000000002" y="-541" width="19" height="19" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-236" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="dbdwZsKA4burIaIdnD2R-187" target="dbdwZsKA4burIaIdnD2R-187">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-237" value="&lt;b&gt;Menu&lt;br&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2537.38" y="-250" width="74" height="91" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-238" value="Liens vers toute les differentes pages&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2498.75" y="-144" width="155" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-239" value="&lt;b&gt;About us&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2167" y="-420" width="120" height="170" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
