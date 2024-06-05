@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-05T17:42:15.427Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="-byJP9b33BCETh-yvsQe" version="24.4.13" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-05T17:46:21.744Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="oC7NBPzEPyYrx9rWt2i1" version="24.4.13" type="github">
   <diagram id="Byrdo3OI-UkdsElt1yLv" name="Page-1">
-    <mxGraphModel dx="1388" dy="1912" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1943" dy="2209" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1087,8 +1087,8 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-275" value="Créer la table Car (service) et sa logique (controller) la remplir de données puis afficher toutes les données sur la page Création du service" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2462.25" y="2029.0000000000002" width="189.75" height="62" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-276" value="Travailler sur la sécurité des accès (il ne faut pas pouvoir esquiver le système de l&#39;application)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2469.48" y="2300" width="188.03" height="53" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-276" value="Integrer Stripe" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2503.96" y="2359.5" width="188.03" height="53" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-277" value="Intégrer la gestion de sessions avec tokens" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2477.0000000000005" y="2124" width="173" height="30" as="geometry" />
@@ -1099,14 +1099,17 @@
         <mxCell id="dbdwZsKA4burIaIdnD2R-284" value="Oui, un token peut être utilisé comme une forme de gestion de session. Les tokens, tels que les JSON Web Tokens (JWT), sont souvent utilisés pour authentifier et maintenir les sessions des utilisateurs. Voici comment cela fonctionne brièvement :&#xa;&#xa;Authentification : L&#39;utilisateur se connecte en fournissant ses informations d&#39;identification (par exemple, nom d&#39;utilisateur et mot de passe).&#xa;Génération du Token : Une fois authentifié, le serveur génère un token (JWT) qui contient des informations encodées sur l&#39;utilisateur.&#xa;Stockage du Token : Le token est envoyé au client (navigateur ou application) et est généralement stocké dans le stockage local ou les cookies.&#xa;Utilisation du Token : Pour chaque demande ultérieure, le client envoie le token au serveur dans les en-têtes d&#39;autorisation.&#xa;Vérification du Token : Le serveur vérifie le token pour s&#39;assurer qu&#39;il est valide et non expiré avant d&#39;autoriser l&#39;accès aux ressources protégées." style="text;whiteSpace=wrap;html=1;labelBackgroundColor=default;labelBorderColor=none;fontSize=8;" vertex="1" parent="1">
           <mxGeometry x="3069" y="1878" width="550" height="91" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-285" value="Designer les maquettes de chaque page" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2820" y="2000.0000000000002" width="188.03" height="53" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-285" value="Designer les maquettes de chaque page en sinspirant du modele" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2828" y="1999.0000000000002" width="188.03" height="53" as="geometry" />
         </mxCell>
-        <mxCell id="dbdwZsKA4burIaIdnD2R-286" value="Travailler sur la sécurité des accès (il ne faut pas pouvoir esquiver le système de l&#39;application)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="2489.4900000000002" y="2383" width="188.03" height="53" as="geometry" />
+        <mxCell id="dbdwZsKA4burIaIdnD2R-286" value="Integrer OAuth au Profil" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2503.9700000000003" y="2405.5" width="188.03" height="53" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-287" value="Appliquer les maquettes au frontend" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="2824.9700000000003" y="2058" width="188.03" height="53" as="geometry" />
+        </mxCell>
+        <mxCell id="dbdwZsKA4burIaIdnD2R-290" value="Appliquer les maquettes au frontend" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2824.9700000000003" y="2124" width="188.03" height="53" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
