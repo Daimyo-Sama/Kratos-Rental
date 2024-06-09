@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-06T21:49:13.607Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="C64jPTEDQft_OOn_JCPS" version="24.4.14" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-09T03:19:29.518Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="fAJkGv24b9ZllnD3l4Yy" version="24.5.2" type="github">
   <diagram id="Byrdo3OI-UkdsElt1yLv" name="Page-1">
-    <mxGraphModel dx="1024" dy="1726" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1674" dy="1999" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -788,7 +788,7 @@
           <mxGeometry x="909.75" y="3311" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-111" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;&lt;b&gt;&lt;i&gt;TACHES A DECOUVRIR&lt;/i&gt;&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="1485" y="-983" width="147" height="30" as="geometry" />
+          <mxGeometry x="1468.5" y="-987" width="147" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dbdwZsKA4burIaIdnD2R-112" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;MAQUETTE VUES FRONTEND&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="4524" y="-1037" width="487" height="100" as="geometry" />
@@ -1135,25 +1135,25 @@
         <mxCell id="6Q_ajLrm_LEtvpWmELrK-13" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="2839" y="346" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="fPo2bMb5yiY2GM-jXTVc-1" value="&lt;b&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;2FA EMAIL?&lt;/font&gt;&lt;/b&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="fPo2bMb5yiY2GM-jXTVc-1" value="&lt;b&gt;&lt;font style=&quot;font-size: 17px;&quot;&gt;2FA EMAIL?&lt;/font&gt;&lt;/b&gt;" style="text;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="663" y="-577" width="56" height="36" as="geometry" />
         </mxCell>
-        <mxCell id="fPo2bMb5yiY2GM-jXTVc-3" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;une review est lié à une instance de trips, a un service et au deux user : une reviewer et un reviewed&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="fPo2bMb5yiY2GM-jXTVc-3" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;une review est lié à une instance de trips, a un service et au deux user : une reviewer et un reviewed&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="3049.5" y="813.5" width="121.5" height="53.5" as="geometry" />
         </mxCell>
-        <mxCell id="fPo2bMb5yiY2GM-jXTVc-6" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;Il y a un seul type de user il stocke seulement plus de donnees lorsqu&#39;il devient vendeur&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="fPo2bMb5yiY2GM-jXTVc-6" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;Il y a un seul type de user il stocke seulement plus de donnees lorsqu&#39;il devient vendeur&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="2172" y="833.3499999999999" width="121" height="53.5" as="geometry" />
         </mxCell>
-        <mxCell id="fPo2bMb5yiY2GM-jXTVc-7" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;Un user est lié a toutes les tables meme si elles sont vides&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="fPo2bMb5yiY2GM-jXTVc-7" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;Un user est lié a toutes les tables meme si elles sont vides&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="2179" y="775.0099999999999" width="121" height="53.5" as="geometry" />
         </mxCell>
-        <mxCell id="fPo2bMb5yiY2GM-jXTVc-8" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;un service est lié aux users qui sont des vendeurs et doit etre accessibles au user qui louent&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="fPo2bMb5yiY2GM-jXTVc-8" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;un service est lié aux users qui sont des vendeurs et doit etre accessibles au user qui louent&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="2465" y="867" width="121" height="53.5" as="geometry" />
         </mxCell>
-        <mxCell id="fPo2bMb5yiY2GM-jXTVc-9" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;un trip sert d&#39;historiques aux 2 users et reprend beaucoup d&#39;infos du service et ajoutent dautre infos comme les montant payés avec stripe&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="fPo2bMb5yiY2GM-jXTVc-9" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;un trip sert d&#39;historiques aux 2 users et reprend beaucoup d&#39;infos du service et ajoutent dautre infos comme les montant payés avec stripe&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="2648" y="915" width="142" height="53.5" as="geometry" />
         </mxCell>
-        <mxCell id="fPo2bMb5yiY2GM-jXTVc-10" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;les deux users doivent avoir l&#39;option de commenter quand le trip est fini&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="fPo2bMb5yiY2GM-jXTVc-10" value="&lt;span style=&quot;font-size: 8px;&quot;&gt;les deux users doivent avoir l&#39;option de commenter quand le trip est fini&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="2984" y="951.9999999999999" width="84" height="53.5" as="geometry" />
         </mxCell>
       </root>
