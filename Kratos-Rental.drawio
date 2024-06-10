@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-09T23:15:02.319Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="jOIShnjAg7xs52MPeUwh" version="24.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-10T14:58:02.564Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="2kS5pgai1XJSgOYGYCO1" version="24.5.2" type="github">
   <diagram id="Byrdo3OI-UkdsElt1yLv" name="Page-1">
-    <mxGraphModel dx="2206" dy="2369" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="9560" dy="6369" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1104,7 +1104,7 @@
         <mxCell id="kbsMDZiAx1miUwS6Q7W9-16" value="&lt;font style=&quot;font-size: 6px;&quot;&gt;taches en cours&amp;nbsp;&lt;br&gt;historiques des locations&lt;br&gt;historiques des paiements&lt;br&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;statut des&amp;nbsp;evenements&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="2977.5" y="-652.06" width="176" height="91" as="geometry" />
         </mxCell>
-        <mxCell id="C1GTLR3ckWLyOPZim_Vq-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kbsMDZiAx1miUwS6Q7W9-17">
+        <mxCell id="C1GTLR3ckWLyOPZim_Vq-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="kbsMDZiAx1miUwS6Q7W9-17" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2714" y="-629" as="targetPoint" />
           </mxGeometry>
