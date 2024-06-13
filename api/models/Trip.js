@@ -8,6 +8,11 @@ const tripSchema = new mongoose.Schema({
     name: {type:String, required:true},
     phone: {type:String, required:true},
     price: Number,
+    status: {
+        type: String,
+        enum: ["upcoming", "completed", "cancelled"],
+        default: "upcoming",
+      }
 });
 
 const TripModel = mongoose.model('Trip', tripSchema);

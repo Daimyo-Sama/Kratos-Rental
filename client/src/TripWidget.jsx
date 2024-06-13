@@ -24,15 +24,39 @@ export default function TripWidget({car}) {
     if(checkIn && checkOut) {
         numberOfNights = differenceInCalendarDays(new Date(checkOut), new Date(checkIn));
     }
+    // if (!checkIn || !checkOut || !numberOfGuests || !name || !phone) {
+    //     alert("All fields are required!");
+    //     return;
+    // }
+
+    //include in try catch block 
+    //console.error('Error creating booking:', error);
+   //alert('Failed to book the place. Please try again.');
 
     async function bookThisCar() {
-        const response = await axios.post('/trips', {
-            checkIn,checkOut,numberOfGuests,name,phone,
-            car:car._id,
-            price:numberOfNights * car.price,
-        });
-        const tripId = response.data._id;
-        setRedirect(`/account/trips/${tripId}`);
+        if (!checkIn || !checkOut || !numberOfGuests || !name || !phone) {
+            alert("All fields are required!");
+            return;
+        }
+    
+        try {
+           
+            const response = await axios.post('/trips', {
+                checkIn,
+                checkOut,
+                numberOfGuests,
+                name,
+                phone,
+                car: car._id,
+                price: numberOfNights * car.price,
+            });
+            // Redirect
+            const tripId = response.data._id;
+            setRedirect(`/account/trips/${tripId}`);
+        } catch (error) {
+            console.error('Error creating booking:', error);
+            alert('Failed to book the car. Please try again.');
+        }
     }
 
     if(redirect) {

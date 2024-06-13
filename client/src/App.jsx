@@ -11,6 +11,7 @@ import CarsFormPage from './pages/CarsFormPage'
 import CarPage from './pages/CarPage'
 import TripsPage from './pages/TripsPage'
 import TripPage from './pages/TripPage'
+import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
 
 axios.defaults.baseURL = 'http://localhost:4000';
 axios.defaults.withCredentials = true;
@@ -31,6 +32,9 @@ function App() {
           <Route path='/account/trips' element={<TripsPage />} />
           <Route path='/account/trips/:id' element={<TripPage />} />
         </Route>
+
+        <Route path='/confirm-email' element={<ConfirmEmailPage />} />
+        
       </Routes>
     </UserContextProvider>
   )
