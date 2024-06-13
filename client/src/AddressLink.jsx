@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default  function AddressLink({children,className=null}) {
     if(!className) {
         className = 'my-3 block';
@@ -15,3 +17,8 @@ export default  function AddressLink({children,className=null}) {
         </a>
     );
 }
+
+AddressLink.propTypes = {
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string,
+};
