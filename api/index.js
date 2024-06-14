@@ -254,7 +254,7 @@ app.get('/trips', async (req,res) =>{
     res.json( await Trip.find({user:userData.id}).populate('car') );
 });
 
-// pour afficher le statut du trip dans my cars
+// pour afficher le statut du trip dans my cars - PAS NECESSAIRES
 app.get('/user-trips', async (req, res) => {
     try {
         const userData = await getUserDataFromReq(req);
@@ -265,6 +265,27 @@ app.get('/user-trips', async (req, res) => {
     }
 });
 
+// pour la page TripDetails
+app.get('/trips/:id', async (req, res) => {
+    try {
+        const trip = await Trip.findById(req.params.id)
+            .populate({
+                path: 'car',
+                populate: {
+                    path: 'owner',
+                    model: 'User'
+                }
+            })
+            .populate('user');
+        
+        if (!trip) {
+            return res.status(404).json({ error: 'Trip not found' });
+        }
+        res.json(trip);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 // Route to accept reservation
 app.put('/trips/:id/accept', async (req, res) => {

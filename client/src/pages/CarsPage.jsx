@@ -6,23 +6,25 @@ import CarImg from "../CarImg";
 
 export default function CarsPage() {
     const [cars, setCars] = useState([]);
-    const [trips, setTrips] = useState([]);
+    const [trips, setTrips] = useState({}); // Store trips by car ID
 
     useEffect(() => {
         // Fetch user cars
         axios.get('/user-cars').then(({ data }) => {
             setCars(data);
-        });
-
-        // Fetch trips
-        axios.get('/user-trips').then(({ data }) => {
-            setTrips(data);
+            // Fetch trip details for each car
+            data.forEach(car => {
+                axios.get(`/trips/${car._id}`).then(tripResponse => {
+                    setTrips(prevTrips => ({
+                        ...prevTrips,
+                        [car._id]: tripResponse.data
+                    }));
+                }).catch(error => {
+                    console.error('Error fetching trip:', error);
+                });
+            });
         });
     }, []);
-    
-    const getTripByCarId = (carId) => {
-        return trips.find(trip => trip.car === carId);
-    };
 
     return (
         <div>
@@ -37,7 +39,7 @@ export default function CarsPage() {
             </div>
             <div className="mt-4">
                 {cars.length > 0 && cars.map(car => {
-                    const trip = getTripByCarId(car._id);
+                    const trip = trips[car._id];
                     return (
                         <div key={car._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl">
                             <Link to={'/account/cars/' + car._id} className="flex w-32 h-32 bg-gray-300 grow shrink-0">
