@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-11T02:25:36.745Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="extQUiE9L-4iUu-6YAw4" version="24.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-14T03:00:54.333Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="V64B4uI6sEjy23BzpfTH" version="24.5.4" type="github">
   <diagram id="Byrdo3OI-UkdsElt1yLv" name="Page-1">
-    <mxGraphModel dx="3585" dy="3119" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3720" dy="2902" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1075,7 +1075,7 @@
           <mxGeometry x="2544.5" y="-553.3299999999999" width="120" height="170" as="geometry" />
         </mxCell>
         <mxCell id="kbsMDZiAx1miUwS6Q7W9-8" value="&lt;b&gt;Trips&lt;br&gt;(privé)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CDA2BE;align=center;" parent="1" vertex="1">
-          <mxGeometry x="3008" y="-714.08" width="115" height="133.75" as="geometry" />
+          <mxGeometry x="3008" y="-661" width="115" height="80.67" as="geometry" />
         </mxCell>
         <mxCell id="kbsMDZiAx1miUwS6Q7W9-9" value="&lt;b&gt;Création de l&#39;offre de service&lt;br&gt;(privé)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFEDF9;" parent="1" vertex="1">
           <mxGeometry x="2639" y="-828" width="120" height="170" as="geometry" />
@@ -1209,7 +1209,7 @@
           <mxGeometry x="2527.25" y="-779.08" width="107.5" height="91" as="geometry" />
         </mxCell>
         <mxCell id="kbsMDZiAx1miUwS6Q7W9-51" value="&lt;b&gt;Reviews&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CDA2BE;align=center;" parent="1" vertex="1">
-          <mxGeometry x="2820" y="-550.75" width="115" height="133.75" as="geometry" />
+          <mxGeometry x="2800" y="-556.87" width="115" height="81.75" as="geometry" />
         </mxCell>
         <mxCell id="kbsMDZiAx1miUwS6Q7W9-52" value="&lt;b&gt;8&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;align=center;fillColor=#9AC7BF;" parent="1" vertex="1">
           <mxGeometry x="2825" y="-543.75" width="19" height="19" as="geometry" />
