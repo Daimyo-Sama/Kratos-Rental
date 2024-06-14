@@ -213,17 +213,18 @@ app.post('/cars', (req,res) => {
     });
 });
 
-app.get('/user-cars', (req,res) => {
-    const {token} = req.cookies;
-    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-        if (err) {
-            console.error('JWT verification error:', err);
-            throw err;
-        }
-        const {id} = userData;
-        res.json( await Car.find({owner:id}) );
-    });
+app.get('/user-cars', async (req, res) => {
+    try {
+        const userData = await getUserDataFromReq(req); // Use the helper function to get user data
+        const { id } = userData;
+        const cars = await Car.find({ owner: id });
+        res.json(cars);
+    } catch (error) {
+        console.error('Error fetching cars:', error);
+        res.status(500).json({ error: 'Failed to fetch cars' });
+    }
 });
+
 
 //
 app.get('/cars/:id', async (req, res) => {
@@ -312,7 +313,7 @@ app.get('/user-trips', async (req, res) => {
     }
 });
 
-// pour la page TripDetails
+// pour la page TripDetails??
 app.get('/trips/:id', async (req, res) => {
     try {
         const trip = await Trip.findById(req.params.id)
@@ -329,6 +330,21 @@ app.get('/trips/:id', async (req, res) => {
             return res.status(404).json({ error: 'Trip not found' });
         }
         res.json(trip);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Route to get trips for a specific car
+app.get('/trips/car/:carId', async (req, res) => {
+    try {
+        const { carId } = req.params;
+        const trips = await Trip.find({ car: carId }).populate('car').populate('user');
+        
+        if (!trips || trips.length === 0) {
+            return res.status(404).json({ error: 'No trips found for this car' });
+        }
+        res.json(trips);
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
     }
@@ -365,18 +381,6 @@ app.put('/trips/:id/accept', async (req, res) => {
     }
 });
 
-//attach the user to req for the server to verify who is reviewerID
-const attachUsertoReq = async (req, res, next) => {
-    try {
-        const userData = await getUserDataFromReq(req);
-        req.user = userData;
-        next();
-    } catch (err) {
-        console.error('Failed to attach user:', err);
-        res.status(401).json({ error: 'Unauthorized' });
-    }
-};
-app.use(attachUsertoReq);
 
 // Route to create a review
 app.post('/reviews', async (req, res) => {

@@ -14,13 +14,13 @@ export default function CarsPage() {
             setCars(data);
             // Fetch trip details for each car
             data.forEach(car => {
-                axios.get(`/trips/${car._id}`).then(tripResponse => {
+                axios.get(`/trips/car/${car._id}`).then(tripResponse => {
                     setTrips(prevTrips => ({
                         ...prevTrips,
                         [car._id]: tripResponse.data
                     }));
                 }).catch(error => {
-                    console.error('Error fetching trip:', error);
+                    console.error('Error fetching trips:', error);
                 });
             });
         });
@@ -39,7 +39,7 @@ export default function CarsPage() {
             </div>
             <div className="mt-4">
                 {cars.length > 0 && cars.map(car => {
-                    const trip = trips[car._id];
+                    const trip = trips[car._id] && trips[car._id][0]; // Assuming only one trip per car
                     return (
                         <div key={car._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl">
                             <Link to={'/account/cars/' + car._id} className="flex w-32 h-32 bg-gray-300 grow shrink-0">
