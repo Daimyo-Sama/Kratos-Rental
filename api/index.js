@@ -222,8 +222,16 @@ app.put('/cars', async (req,res) => {
     });
 });
 
-app.get('/cars', async (req,res) => {
-    res.json( await Car.find() );
+app.get('/cars', async (req, res) => {
+    try {
+        const cars = await Car.find().populate('owner');
+        const carsWithValidOwners = cars.filter(car => car.owner !== null);
+
+        res.json(carsWithValidOwners);// make sure that deleted users cars dont appear
+    } catch (e) {
+        console.error('Error fetching cars:', e);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 app.post('/trips', async (req, res) => {
@@ -245,6 +253,50 @@ app.get('/trips', async (req,res) =>{
     const userData = await getUserDataFromReq(req);
     res.json( await Trip.find({user:userData.id}).populate('car') );
 });
+
+// pour afficher le statut du trip dans my cars
+app.get('/user-trips', async (req, res) => {
+    try {
+        const userData = await getUserDataFromReq(req);
+        const trips = await Trip.find({ user: userData.id }).populate('car');
+        res.json(trips);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch user trips' });
+    }
+});
+
+
+// Route to accept reservation
+app.put('/trips/:id/accept', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const userData = await getUserDataFromReq(req);
+        const userId = userData.id; // Get the authenticated user's ID
+
+        const trip = await Trip.findById(id).populate('car');
+        if (!trip) {
+            return res.status(404).json({ error: 'Trip not found' });
+        }
+
+        const car = await Car.findById(trip.car._id);
+        if (!car) {
+            return res.status(404).json({ error: 'Car not found' });
+        }
+
+        if (car.owner.toString() !== userId.toString()) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+
+        trip.status = 'confirmed';
+        await trip.save();
+
+        res.json(trip);
+    } catch (error) {
+        console.error('Error accepting reservation:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+//
 
 app.listen(4000, () => {
     console.log('Server running on port 4000');

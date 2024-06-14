@@ -5,15 +5,26 @@ import axios from "axios";
 import CarImg from "../CarImg";
 
 export default function CarsPage() {
-    const [cars,setCars] = useState([]);
+    const [cars, setCars] = useState([]);
+    const [trips, setTrips] = useState([]);
 
     useEffect(() => {
-        axios.get('/user-cars').then(({data}) => {
+        // Fetch user cars
+        axios.get('/user-cars').then(({ data }) => {
             setCars(data);
-        })
+        });
+
+        // Fetch trips
+        axios.get('/user-trips').then(({ data }) => {
+            setTrips(data);
+        });
     }, []);
     
-    return ( 
+    const getTripByCarId = (carId) => {
+        return trips.find(trip => trip.car === carId);
+    };
+
+    return (
         <div>
             <AccountNav />
             <div className="text-center">
@@ -25,17 +36,34 @@ export default function CarsPage() {
                 </Link>
             </div>
             <div className="mt-4">
-                {cars.length > 0 && cars.map(car => (
-                    <Link key={car._id} to={'/account/cars/'+car._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl">
-                        <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
-                            <CarImg car={car} />
+                {cars.length > 0 && cars.map(car => {
+                    const trip = getTripByCarId(car._id);
+                    return (
+                        <div key={car._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl">
+                            <Link to={'/account/cars/' + car._id} className="flex w-32 h-32 bg-gray-300 grow shrink-0">
+                                <CarImg car={car} />
+                            </Link>
+                            <div className="grow-0 shrink">
+                                <h2 className="text-xl">{car.title}</h2>
+                                <p className="text-sm mt-2">{car.description}</p>
+                                {trip ? (
+                                    <>
+                                        <p>Status: {trip.status}</p>
+                                        {trip.status === "upcoming" && (
+                                            <div className="text-center mt-4">
+                                                <Link to={`/account/trips/${trip._id}/details`} className="btn-primary">
+                                                    View Trip Details
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <p>Status: No trips</p>
+                                )}
+                            </div>
                         </div>
-                        <div className="grow-0 shrink">
-                            <h2 className="text-xl">{car.title}</h2>
-                            <p className="text-sm mt-2">{car.description}</p>
-                        </div>
-                    </Link>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );
