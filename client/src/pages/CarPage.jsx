@@ -4,21 +4,90 @@ import { useParams } from "react-router-dom";
 import TripWidget from "../TripWidget";
 import CarGallery from "../CarGallery";
 import AddressLink from "../AddressLink";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+
+// Load Stripe
+const stripePromise = loadStripe('pk_test_51PRksoFJmMr6RaVasVRSrxVSTmaISzUT6VI346TB5qFoOQzXqUo8KblyPhrd8vxuwDM3CJrRwvrBis77Lf7qzaed00N0TQRNQw');
+
+function PaymentForm({ clientSecret, onPaymentSuccess }) {
+    const stripe = useStripe();
+    const elements = useElements();
+    const [error, setError] = useState(null);
+    const [processing, setProcessing] = useState(false);
+    const [succeeded, setSucceeded] = useState(false);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setProcessing(true);
+
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement),
+                billing_details: {
+                    name: 'Client Name', // Replace with actual client name
+                },
+            },
+        });
+
+        if (error) {
+            setError(error.message);
+            setProcessing(false);
+        } else {
+            setSucceeded(true);
+            setProcessing(false);
+            alert('Payment succeeded!');
+            onPaymentSuccess();
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <CardElement />
+            <button type="submit" disabled={!stripe || processing || succeeded}>
+                {processing ? "Processing…" : "Pay"}
+            </button>
+            {error && <div>{error}</div>}
+        </form>
+    );
+}
 
 export default function CarPage() {
     const { id } = useParams();
     const [car, setCar] = useState(null);
+    const [clientSecret, setClientSecret] = useState('');
 
     useEffect(() => {
-        if (!id) {
-            return;
-        }
-        axios.get(`/cars/${id}`).then(response => {
-            setCar(response.data);
-        });
+        if (!id) return;
+        axios.get(`/cars/${id}`).then(response => setCar(response.data));
     }, [id]);
 
     if (!car) return '';
+
+    const handleConfirmBooking = async () => {
+        const amount = 1000; // Amount in cents, replace with actual amount
+        const currency = 'cad'; // Define the currency
+        const { data } = await axios.post('/create-payment-intent', { amount, currency });
+        setClientSecret(data.clientSecret);
+    };
+
+    const onPaymentSuccess = async () => {
+        try {
+            const response = await axios.post('/trips', {
+                checkIn: car.checkIn,
+                checkOut: car.checkOut,
+                numberOfGuests: car.maxGuests,
+                name: 'Client Name', // Replace with actual client name
+                phone: 'Client Phone', // Replace with actual client phone
+                car: car._id,
+                price: car.price,
+            });
+            alert('Booking successful!');
+        } catch (error) {
+            console.error('Error creating booking:', error);
+            alert('Failed to book the car. Please try again.');
+        }
+    };
 
     return (
         <div className="mt-4 bg-gray-100 -mx-8 px-8 pt-8">
@@ -42,7 +111,7 @@ export default function CarPage() {
                             <h2 className="font-semibold text-2xl">Host Information</h2>
                             <div className="flex items-center mt-2">
                                 {car.owner.profilePicture && (
-                                    <img src={car.owner.profilePicture} alt="Profile" className="w-16 h-16 rounded-full mr-4" />
+                                    <img src={`/${car.owner.profilePicture}`} alt="Profile" className="w-16 h-16 rounded-full mr-4" />
                                 )}
                                 <div>
                                     <p className="text-lg font-semibold">{car.owner.name}</p>
@@ -62,6 +131,14 @@ export default function CarPage() {
                                 </ul>
                             </div>
                         </div>
+                    )}
+                    <button onClick={handleConfirmBooking} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
+                        Book This Car
+                    </button>
+                    {clientSecret && (
+                        <Elements stripe={stripePromise}>
+                            <PaymentForm clientSecret={clientSecret} onPaymentSuccess={onPaymentSuccess} />
+                        </Elements>
                     )}
                 </div>
             </div>

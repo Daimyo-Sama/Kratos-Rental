@@ -27,9 +27,12 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'));
 
 app.use(cors({
+    origin: 'http://localhost:5173',
     credentials: true,
-    origin: 'http://localhost:5173' //127.0.0.1 ->localhost
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
 }));
+
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -434,6 +437,26 @@ app.get('/users/:userId/reviews', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch reviews' });
     }
 });
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); 
+
+// stripe ROUTES
+app.post('/create-payment-intent', async (req, res) => {
+    const { amount, currency = 'usd' } = req.body; // Amount in cents, default currency to 'usd'
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency,
+            payment_method_types: ['card'],
+        });
+        res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
 
 app.listen(4000, () => {
     console.log('Server running on port 4000');
