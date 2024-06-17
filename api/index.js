@@ -3,17 +3,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');  //{ default: mongoose }
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require('./models/User.js');
+const Car = require('./models/Car.js');
+const Trip = require('./models/Trip.js');
 const cookieParser = require('cookie-parser');
 const imageDownloader = require('image-downloader');
 const multer = require('multer');
 const fs = require('fs');
-
-const User = require('./models/User.js');
-const Car = require('./models/Car.js');
-const Trip = require('./models/Trip.js');
-const Review = require('./models/Review.js');
-
-const { sendConfirmationEmail } = require('./utilities/authEmail.js');
 
 require('dotenv').config();
 const app = express();
@@ -33,13 +29,8 @@ mongoose.connect(process.env.MONGO_URL);
 
 function getUserDataFromReq(req) {
     return new Promise((resolve, reject) => {
-        console.log('Cookies:', req.cookies);
         jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
-            if (err) {
-                console.error('JWT verification error:', err);
-                return reject(err);
-            }
-            console.log('UserData:', userData);
+            if(err) throw err;
             resolve(userData);
         });
     });
@@ -49,94 +40,58 @@ app.get('/test', (req,res) => {
     res.json('test ok');
 });
 
-app.post('/register', async (req, res) => {
-    const { name, email, password } = req.body;
+app.post('/register', async (req,res) => {
+    const {name,email,password} = req.body;
 
-    try {
-        // Create user
+    try{
         const userDoc = await User.create({
             name,
             email,
-            password: bcrypt.hashSync(password, bcryptSalt),
-            confirmed: false // email
+            password:bcrypt.hashSync(password, bcryptSalt),
         });
-
-        // Generate token for email confirmation
-        const token = jwt.sign({ id: userDoc._id, email: userDoc.email }, jwtSecret, { expiresIn: '1d' });
-
-        // Send confirmation email
-        await sendConfirmationEmail(email, token);
-
-        res.json({ message: 'Registration successful! Please check your email to confirm your account.' });
+        res.json(userDoc);
     } catch (e) {
-        console.error('Register error:', e);
         res.status(422).json(e);
     }
 });
 
-// Email confirmation route
-app.get('/auth/confirm-email', async (req, res) => {
-    const { token } = req.query;
-
-    try {
-        const { id } = jwt.verify(token, jwtSecret);
-        await User.findByIdAndUpdate(id, { confirmed: true });
-        res.send('Email confirmed successfully!');
-    } catch (e) {
-        console.error('Email confirmation error:', e);
-        res.status(400).send('Invalid token or token expired');
-    }
-});
-
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    const userDoc = await User.findOne({ email });
+app.post('/login', async (req,res) => {
+    const {email,password} = req.body;
+    const userDoc = await User.findOne({email});
     if (userDoc) {
         const passOk = bcrypt.compareSync(password, userDoc.password);
         if (passOk) {
-            if (!userDoc.confirmed) {
-                return res.status(403).json({ message: 'Please confirm your email to log in.' });
-            }
             jwt.sign({
-                email: userDoc.email,
-                id: userDoc._id
-            }, jwtSecret, {}, (err, token) => {
-                if (err) {
-                    console.error('JWT sign error:', err);
-                    return res.status(500).json({ message: 'Internal server error' });
-                }
-                console.log('Token:', token);
+                email:userDoc.email, 
+                id:userDoc._id}, 
+                jwtSecret, {}, (err,token) => {
+                if(err) throw err;
                 res.cookie('token', token).json(userDoc);
             });
         } else {
-            res.status(422).json({ message: 'Invalid password' });
+            res.status(422).json('pass not ok');
         }
     } else {
-        res.status(404).json({ message: 'User not found' });
+        res.json('not found')
     }
 });
-//delete cookie d<acces
-app.post('/logout', (req,res) => {
-    res.cookie('token', '').json(true);
-});
 
-app.get('/profile', (req, res) => {
-    const { token } = req.cookies;
-    if (token) {
+app.get('/profile', (req,res) => {
+    const {token} = req.cookies;
+    if(token) {
         jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-            if (err) {
-                console.error('JWT verification error:', err);
-                throw err;
-            }
-            const { name, email, _id } = await User.findById(userData.id);
-            res.json({ name, email, _id });
+            if (err) throw err;
+            const {name,email,_id} = await User.findById(userData.id);
+            res.json({name,email,_id});
         });
     } else {
         res.json(null);
     }
+})
+
+app.post('/logout', (req,res) => {
+    res.cookie('token', '').json(true);
 });
-
-
 
 app.post('/upload-by-link', async (req,res) => {
     const {link} = req.body;
@@ -169,10 +124,7 @@ app.post('/cars', (req,res) => {
         perks,extraInfo,checkIn,checkOut,maxGuests,
     } = req.body;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-        if (err) {
-            console.error('JWT verification error:', err);
-            throw err;
-        }
+        if (err) throw err;
         const carDoc = await Car.create({
             owner:userData.id,price,
             title,address,photos:addedPhotos,description,
@@ -185,10 +137,6 @@ app.post('/cars', (req,res) => {
 app.get('/user-cars', (req,res) => {
     const {token} = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-        if (err) {
-            console.error('JWT verification error:', err);
-            throw err;
-        }
         const {id} = userData;
         res.json( await Car.find({owner:id}) );
     });
@@ -206,10 +154,7 @@ app.put('/cars', async (req,res) => {
         perks,extraInfo,checkIn,checkOut,maxGuests,price,
     } = req.body;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-        if (err) {
-            console.error('JWT verification error:', err);
-            throw err;
-        }
+        if(err) throw err;
         const carDoc = await Car.findById(id);
         if(userData.id === carDoc.owner.toString()) {
             carDoc.set({
@@ -246,6 +191,4 @@ app.get('/trips', async (req,res) =>{
     res.json( await Trip.find({user:userData.id}).populate('car') );
 });
 
-app.listen(4000, () => {
-    console.log('Server running on port 4000');
-});
+app.listen(4000);
