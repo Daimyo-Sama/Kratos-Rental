@@ -50,7 +50,7 @@ export default function CarsPage() {
                                 <p className="text-sm mt-2">{car.description}</p>
                                 {trip ? (
                                     <>
-                                        <p>Status: {trip.status}</p>
+                                        <p>Status: {car.status}</p>
                                         {trip.status === "upcoming" && (
                                             <div className="text-center mt-4">
                                                 <Link to={`/account/trips/${trip._id}/details`} className="btn-primary">

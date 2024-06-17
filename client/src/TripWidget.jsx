@@ -33,32 +33,34 @@ export default function TripWidget({car}) {
     //console.error('Error creating booking:', error);
    //alert('Failed to book the place. Please try again.');
 
-    async function bookThisCar() {
-        if (!checkIn || !checkOut || !numberOfGuests || !name || !phone) {
-            alert("All fields are required!");
-            return;
-        }
-    
-        try {
-           
-            const response = await axios.post('/trips', {
-                checkIn,
-                checkOut,
-                numberOfGuests,
-                name,
-                phone,
-                car: car._id,
-                price: numberOfNights * car.price,
-            });
-            // Redirect
-            const tripId = response.data._id;
-            setRedirect(`/account/trips/${tripId}`);
-        } catch (error) {
+   async function bookThisCar() {
+    if (!checkIn || !checkOut || !numberOfGuests || !name || !phone) {
+        alert("All fields are required!");
+        return;
+    }
+
+    try {
+        const response = await axios.post('/trips', {
+            checkIn,
+            checkOut,
+            numberOfGuests,
+            name,
+            phone,
+            car: car._id,
+            price: numberOfNights * car.price,
+        });
+        // Redirect
+        const tripId = response.data._id;
+        setRedirect(`/account/trips/${tripId}`);
+    } catch (error) {
+        if (error.response && error.response.status === 400) {
+            alert('This car is already booked for the selected dates.');
+        } else {
             console.error('Error creating booking:', error);
             alert('Failed to book the car. Please try again.');
         }
     }
-
+}
     if(redirect) {
         return <Navigate to={redirect} />
     }
