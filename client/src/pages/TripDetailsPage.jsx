@@ -5,6 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 // Load Stripe
+// mon public stripe key?
 const stripePromise = loadStripe('pk_test_51PRksoFJmMr6RaVasVRSrxVSTmaISzUT6VI346TB5qFoOQzXqUo8KblyPhrd8vxuwDM3CJrRwvrBis77Lf7qzaed00N0TQRNQw');
 
 function PaymentForm({ clientSecret, onPaymentSuccess }) {
@@ -110,6 +111,7 @@ export default function TripDetailsPage() {
                 <div className="w-full md:w-1/3 p-2">
                     <div className="bg-white p-4 rounded shadow-md">
                         <h2 className="text-2xl mb-2">Owner Information</h2>
+                        <p><strong>Profile Picture:</strong> {trip.car.owner.profilePicture}</p>
                         <p><strong>Name:</strong> {trip.car.owner.name}</p>
                         <p><strong>Email:</strong> {trip.car.owner.email}</p>
                     </div>
@@ -151,8 +153,10 @@ export default function TripDetailsPage() {
                 <div className="w-full md:w-1/3 p-2">
                     <div className="bg-white p-4 rounded shadow-md">
                         <h2 className="text-2xl mb-2">Client Information</h2>
-                        <p><strong>Name:</strong> {trip.user.name}</p>
+                        <p><strong>Profile Picture:</strong> {trip.user.profilePicture}</p>
+                        <p><strong>Name:</strong> {trip.name}</p>
                         <p><strong>Email:</strong> {trip.user.email}</p>
+                        <p><strong>Phone:</strong> {trip.phone}</p>
                     </div>
                 </div>
             </div>

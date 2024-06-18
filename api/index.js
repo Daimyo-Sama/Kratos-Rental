@@ -433,11 +433,15 @@ app.get('/trips/:id', async (req, res) => {
         if (!trip) {
             return res.status(404).json({ error: 'Trip not found' });
         }
+        
+        console.log('Trip Data:', trip); 
         res.json(trip);
     } catch (error) {
+        console.error('Error fetching trip:', error); 
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 // Route to get trips for a specific car
 app.get('/trips/car/:carId', async (req, res) => {
@@ -508,10 +512,10 @@ app.put('/trips/:id/cancel', async (req, res) => {
             return res.status(403).json({ error: 'Unauthorized' });
         }
 
-        trip.status = 'canceled';
+        trip.status = 'cancelled';
         await trip.save();
 
-        await CarModel.findByIdAndUpdate(car._id, { status: 'available' }); // Update car status to 'available'
+        await Car.findByIdAndUpdate(car._id, { status: 'available' }); // Update car status to 'available'
 
         res.json(trip);
     } catch (error) {
