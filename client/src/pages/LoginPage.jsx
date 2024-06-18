@@ -21,7 +21,7 @@ export default function LoginPage() {
       if (error.response && error.response.status === 403) {
         setMessage("Please confirm your email to log in.");
       } else if (error.response && error.response.status === 422) {
-        setMessage("Invalid password");
+        setMessage("Invalid password. Please reload and try again.");
       } else if (error.response && error.response.status === 404) {
         setMessage("User not found, please register.");
       } else {

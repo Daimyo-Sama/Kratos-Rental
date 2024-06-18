@@ -10,7 +10,7 @@ const tripSchema = new mongoose.Schema({
     price: Number,
     status: {
         type: String,
-        enum: ["upcoming", "completed", "cancelled"],
+        enum: ["upcoming", "unpaid", "confirmed", "completed", "cancelled"],
         default: "upcoming",
       }
 });

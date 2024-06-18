@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const carSchema = new mongoose.Schema({
-    owner: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     title: String,
     address: String,
     photos: [String],
@@ -12,6 +12,7 @@ const carSchema = new mongoose.Schema({
     checkOut: Number,
     maxGuests: Number,
     price: Number,
+    status: { type: String, enum: ['available', 'booked'], default: 'available' } //
 });
 
 const CarModel = mongoose.model('Car', carSchema);

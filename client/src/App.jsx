@@ -12,6 +12,8 @@ import CarPage from './pages/CarPage'
 import TripsPage from './pages/TripsPage'
 import TripPage from './pages/TripPage'
 import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
+import TripDetailsPage from './pages/TripDetailsPage'; // Import the new page
+import StripeConnectPage from "./pages/StripeConnectPage";
 
 axios.defaults.baseURL = 'http://localhost:4000';
 axios.defaults.withCredentials = true;
@@ -31,6 +33,8 @@ function App() {
           <Route path='/car/:id' element={<CarPage />} />
           <Route path='/account/trips' element={<TripsPage />} />
           <Route path='/account/trips/:id' element={<TripPage />} />
+          <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
+          <Route path="/stripe-connect" element={<StripeConnectPage />} />
         </Route>
 
         <Route path='/confirm-email' element={<ConfirmEmailPage />} />
