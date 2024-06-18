@@ -51,7 +51,7 @@ export default function CarsPage() {
                                 {trip ? (
                                     <>
                                         <p>Status: {car.status}</p>
-                                        {trip.status === "upcoming" && (
+                                        {car.status === "booked" && (
                                             <div className="text-center mt-4">
                                                 <Link to={`/account/trips/${trip._id}/details`} className="btn-primary">
                                                     View Trip Details
