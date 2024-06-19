@@ -1,20 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import TripWidget from "../TripWidget";
 import CarGallery from "../CarGallery";
 import AddressLink from "../AddressLink";
 
 export default function CarPage() {
-    const { id } = useParams();
-    const [car, setCar] = useState(null);
-
+    const {id} = useParams();
+    const [car,setCars] = useState(null);
     useEffect(() => {
-        if (!id) return;
-        axios.get(`/cars/${id}`).then(response => setCar(response.data));
+        if(!id) {
+            return;
+        }
+        axios.get(`/cars/${id}`).then(response => {
+            setCars(response.data);
+        })
     }, [id]);
 
-    if (!car) return '';
+    if(!car) return '';
 
     return (
         <div className="mt-4 bg-gray-100 -mx-8 px-8 pt-8">
@@ -59,7 +62,6 @@ export default function CarPage() {
                             </div>
                         </div>
                     )}
-                   
                 </div>
             </div>
             <div className="bg-white -mx-8 px-8 py-8 border-t">
