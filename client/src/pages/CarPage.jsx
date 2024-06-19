@@ -1,23 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, } from "react-router-dom";
 import TripWidget from "../TripWidget";
 import CarGallery from "../CarGallery";
 import AddressLink from "../AddressLink";
 
 export default function CarPage() {
-    const {id} = useParams();
-    const [car,setCars] = useState(null);
+    const { id } = useParams();
+    const [car, setCar] = useState(null);
+
     useEffect(() => {
-        if(!id) {
-            return;
-        }
-        axios.get(`/cars/${id}`).then(response => {
-            setCars(response.data);
-        })
+        if (!id) return;
+        axios.get(`/cars/${id}`).then(response => setCar(response.data));
     }, [id]);
 
-    if(!car) return '';
+    if (!car) return '';
 
     return (
         <div className="mt-4 bg-gray-100 -mx-8 px-8 pt-8">
@@ -33,6 +30,12 @@ export default function CarPage() {
                     Check-in: {car.checkIn}<br />
                     Check-out: {car.checkOut}<br />
                     Max number of guests: {car.maxGuests}
+                     <div className="bg-grey -mx-2 px-2 py-8 border-t">
+                <div>
+                    <h2 className="font-semibold text-2xl">Extra info</h2>
+                </div>
+                <div className="mb-4 mt-2 text-sm text-gray-700 leading-5">{car.extraInfo}</div>
+            </div>
                 </div>
                 <div>
                     <TripWidget car={car} />
@@ -62,14 +65,10 @@ export default function CarPage() {
                             </div>
                         </div>
                     )}
+                   
                 </div>
             </div>
-            <div className="bg-white -mx-8 px-8 py-8 border-t">
-                <div>
-                    <h2 className="font-semibold text-2xl">Extra info</h2>
-                </div>
-                <div className="mb-4 mt-2 text-sm text-gray-700 leading-5">{car.extraInfo}</div>
-            </div>
+           
         </div>
     );
 }
