@@ -6,18 +6,19 @@ import CarGallery from "../CarGallery";
 import AddressLink from "../AddressLink";
 
 export default function CarPage() {
-    const {id} = useParams();
-    const [car,setCars] = useState(null);
+    const { id } = useParams();
+    const [car, setCar] = useState(null);
+
     useEffect(() => {
-        if(!id) {
+        if (!id) {
             return;
         }
         axios.get(`/cars/${id}`).then(response => {
-            setCars(response.data);
-        })
+            setCar(response.data);
+        });
     }, [id]);
 
-    if(!car) return '';
+    if (!car) return 'Loading...';
 
     return (
         <div className="mt-4 bg-gray-100 -mx-8 px-8 pt-8">
@@ -41,7 +42,11 @@ export default function CarPage() {
                             <h2 className="font-semibold text-2xl">Host Information</h2>
                             <div className="flex items-center mt-2">
                                 {car.owner.profilePicture && (
-                                    <img src={`/${car.owner.profilePicture}`} alt="Profile" className="w-16 h-16 rounded-full mr-4" />
+                                    <img 
+                                        src={`http://localhost:4000${car.owner.profilePicture}`} 
+                                        alt="Profile" 
+                                        className="w-16 h-16 rounded-full mr-4" 
+                                    />
                                 )}
                                 <div>
                                     <p className="text-lg font-semibold">{car.owner.name}</p>
@@ -53,7 +58,10 @@ export default function CarPage() {
                                 <ul className="list-disc list-inside">
                                     {car.owner.reviews.length > 0 ? (
                                         car.owner.reviews.map((review, index) => (
-                                            <li key={index} className="text-sm text-gray-700 mt-1">{review.comment}</li>
+                                            <li key={index} className="text-sm text-gray-700 mt-1">
+                                                <p><strong>{review.reviewer.name}:</strong> {review.comment}</p>
+                                                <p className="text-xs text-gray-500">Rating: {review.rating}</p>
+                                            </li>
                                         ))
                                     ) : (
                                         <p className="text-sm text-gray-600">No reviews yet.</p>

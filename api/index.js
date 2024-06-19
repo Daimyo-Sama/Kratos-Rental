@@ -468,7 +468,15 @@ app.get("/cars/:id", async (req, res) => {
   try {
     const car = await Car.findById(req.params.id).populate({
       path: "owner",
-      select: "profilePicture bio reviews", // Fetch only necessary fields
+      select: "profilePicture bio reviews",
+      populate: {
+        path: "reviews",
+        model: "Review",
+        populate: {
+          path: "reviewer",
+          select: "name profilePicture"
+        }
+      }
     });
 
     if (!car) {
@@ -477,9 +485,13 @@ app.get("/cars/:id", async (req, res) => {
 
     res.json(car);
   } catch (error) {
+    console.error("Error fetching car:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+
 
 //pour modifier les annonces de voitures
 app.put("/cars", async (req, res) => {
@@ -743,7 +755,8 @@ app.put("/trips/:id/cancel", async (req, res) => {
 app.post("/reviews", async (req, res) => {
   try {
     const { reviewedUserId, tripId, carId, rating, comment } = req.body;
-    const reviewerId = req.user.id; //Securely get the reviewer ID from the session
+    const userData = await getUserDataFromReq(req);
+    const reviewerId = userData.id; // Securely get the reviewer ID from the session
 
     console.log("Creating review:", {
       reviewedUserId,
@@ -791,6 +804,7 @@ app.post("/reviews", async (req, res) => {
   }
 });
 
+
 // Route to get reviews for a specific user
 app.get("/users/:userId/reviews", async (req, res) => {
   try {
@@ -817,7 +831,6 @@ app.get('/deals', async (req,res) =>{
   res.json(allDeals);
 });
 
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.listen(4000, () => {
   console.log("Server running on port 4000");
