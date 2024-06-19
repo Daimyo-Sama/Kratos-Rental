@@ -21,7 +21,7 @@ export default function IndexPage() {
                     <h2 className="font-bold">{car.address}</h2>
                     <h3 className="text-sm text-gray-500">{car.title}</h3>
                     <div className="mt-1">
-                        <span className="font-bold">${car.price}</span> per night
+                        <span className="font-bold">${car.price}</span> per day
                     </div>
                 </Link>
             ))}

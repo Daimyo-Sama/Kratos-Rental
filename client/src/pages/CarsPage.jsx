@@ -6,24 +6,30 @@ import CarImg from "../CarImg";
 
 export default function CarsPage() {
     const [cars, setCars] = useState([]);
-    const [trips, setTrips] = useState({}); // Store trips by car ID
+    // const [trips, setTrips] = useState({}); // Store trips by car ID
+
+    // useEffect(() => {
+    //     // Fetch user cars
+    //     axios.get('/user-cars').then(({ data }) => {
+    //         setCars(data);
+    //         // Fetch trip details for each car
+    //         data.forEach(car => {
+    //             axios.get(`/trips/car/${car._id}`).then(tripResponse => {
+    //                 setTrips(prevTrips => ({
+    //                     ...prevTrips,
+    //                     [car._id]: tripResponse.data
+    //                 }));
+    //             }).catch(error => {
+    //                 console.error('Error fetching trips:', error);
+    //             });
+    //         });
+    //     });
+    // }, []);
 
     useEffect(() => {
-        // Fetch user cars
-        axios.get('/user-cars').then(({ data }) => {
+        axios.get('/user-cars').then(({data}) => {
             setCars(data);
-            // Fetch trip details for each car
-            data.forEach(car => {
-                axios.get(`/trips/car/${car._id}`).then(tripResponse => {
-                    setTrips(prevTrips => ({
-                        ...prevTrips,
-                        [car._id]: tripResponse.data
-                    }));
-                }).catch(error => {
-                    console.error('Error fetching trips:', error);
-                });
-            });
-        });
+        })
     }, []);
 
     return (
@@ -37,7 +43,7 @@ export default function CarsPage() {
                     Add new car
                 </Link>
             </div>
-            <div className="mt-4">
+            {/* <div className="mt-4">
                 {cars.length > 0 && cars.map(car => {
                     const trip = trips[car._id] && trips[car._id][0]; // Assuming only one trip per car
                     return (
@@ -66,6 +72,19 @@ export default function CarsPage() {
                         </div>
                     );
                 })}
+            </div> */}
+            <div className="mt-4">
+                {cars.length > 0 && cars.map(car => (
+                    <Link key={car._id} to={'/account/cars/'+car._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl">
+                        <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
+                            <CarImg car={car} />
+                        </div>
+                        <div className="grow-0 shrink">
+                            <h2 className="text-xl">{car.title}</h2>
+                            <p className="text-sm mt-2">{car.description}</p>
+                        </div>
+                    </Link>
+                ))}
             </div>
         </div>
     );

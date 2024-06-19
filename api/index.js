@@ -805,7 +805,19 @@ app.get("/users/:userId/reviews", async (req, res) => {
   }
 });
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+app.get('/deals', async (req,res) =>{
+  const userData = await getUserDataFromReq(req);
+  const userCars = await Car.find({owner:userData.id}); 
+  const userCarsId = userCars.map(car => car._id.toString());
+  const allDeals = [];
+  for (let i = 0; i < userCarsId.length; i++) {
+      const deals = await Trip.find({ car: userCarsId[i] }).populate('car');
+      allDeals.push(...deals);
+  }
+  res.json(allDeals);
+});
+
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.listen(4000, () => {
   console.log("Server running on port 4000");

@@ -11,6 +11,8 @@ import CarsFormPage from './pages/CarsFormPage'
 import CarPage from './pages/CarPage'
 import TripsPage from './pages/TripsPage'
 import TripPage from './pages/TripPage'
+import DealsPage from './pages/DealsPage'
+import DealPage from './pages/DealPage'
 import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
 import TripDetailsPage from './pages/TripDetailsPage'; // Import the new page
 
@@ -34,10 +36,11 @@ function App() {
           <Route path='/account/trips' element={<TripsPage />} />
           <Route path='/account/trips/:id' element={<TripPage />} />
           <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
+          <Route path='/account/deals' element={<DealsPage />} />
+          <Route path='/account/deals/:id' element={<DealPage />} />
+          <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
         </Route>
-
-        <Route path='/confirm-email' element={<ConfirmEmailPage />} />
-        
+        <Route path='/confirm-email' element={<ConfirmEmailPage />} />        
       </Routes>
     </UserContextProvider>
   )
