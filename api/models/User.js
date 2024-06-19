@@ -10,7 +10,8 @@ const UserSchema = new Schema({
   confirmed: { type: Boolean, default: false }, // email confirmation
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }], // reference to reviews
   account_level: { type: String, enum: ['client', 'owner'], default: 'client' }, // account level field
-  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
+  paypalEmail: { type: String }
 });
 
 const UserModel = mongoose.model("User", UserSchema);
