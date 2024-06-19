@@ -14,6 +14,8 @@ import TripPage from './pages/TripPage'
 import DealsPage from './pages/DealsPage'
 import DealPage from './pages/DealPage'
 import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 // import TripDetailsPage from './pages/TripDetailsPage'; // Import the new page
 // import StripeConnectPage from "./pages/StripeConnectPage";
 
@@ -37,6 +39,8 @@ function App() {
           <Route path='/account/trips/:id' element={<TripPage />} />
           <Route path='/account/deals' element={<DealsPage />} />
           <Route path='/account/deals/:id' element={<DealPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           {/* <Route path='/account/trips/:id/details' element={<TripDetailsPage />} /> */}
           {/* <Route path="/stripe-connect" element={<StripeConnectPage />} /> */}
         </Route>

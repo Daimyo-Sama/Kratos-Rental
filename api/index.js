@@ -13,6 +13,7 @@ const Car = require("./models/Car.js");
 const Trip = require("./models/Trip.js");
 const Review = require("./models/Review.js");
 const Task = require("./models/Task.js");
+const { sendResetPasswordEmail } = require("./utilities/authEmail.js");
 
 const { paypalClient, transferPaymentToOwner } = require('./utilities/paypal.js');
 const paypal = require('@paypal/checkout-server-sdk');
@@ -757,6 +758,42 @@ app.get('/deals', async (req,res) =>{
       allDeals.push(...deals);
   }
   res.json(allDeals);
+});
+
+// Route to handle password reset request
+app.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const token = jwt.sign({ id: user._id, email: user.email }, jwtSecret, { expiresIn: '1h' });
+    await sendResetPasswordEmail(email, token);
+
+    res.json({ message: "Password reset link sent to your email address." });
+  } catch (error) {
+    console.error("Error in forgot-password:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/reset-password", async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    const hashedPassword = bcrypt.hashSync(newPassword, bcryptSalt);
+
+    await User.findByIdAndUpdate(decoded.id, { password: hashedPassword });
+
+    res.json({ message: "Password has been reset successfully." });
+  } catch (error) {
+    console.error("Error in reset-password:", error);
+    res.status(400).json({ message: "Invalid or expired token." });
+  }
 });
 
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
