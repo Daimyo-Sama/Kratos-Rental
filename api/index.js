@@ -14,8 +14,11 @@ const Trip = require("./models/Trip.js");
 const Review = require("./models/Review.js");
 const Task = require("./models/Task.js");
 
-const { paypalClient, transferPaymentToOwner } = require('./utilities/paypal.js');
-const paypal = require('@paypal/checkout-server-sdk');
+const {
+  paypalClient,
+  transferPaymentToOwner,
+} = require("./utilities/paypal.js");
+const paypal = require("@paypal/checkout-server-sdk");
 
 const { sendConfirmationEmail } = require("./utilities/authEmail.js");
 const { generateUserTasks } = require("./utilities/TasksGenerate.js");
@@ -61,69 +64,112 @@ app.get("/test", (req, res) => {
   res.json("test ok");
 });
 
+//////////////////////
 // Create a PayPal order
 app.post("/create-paypal-order", async (req, res) => {
-    const { amount } = req.body;
-    const request = new paypal.orders.OrdersCreateRequest();
-    request.requestBody({
-      intent: "CAPTURE",
-      purchase_units: [
-        {
-          amount: {
-            currency_code: "CAD",
-            value: amount.toString(), // Ensure amount is a string
-          },
+  const { amount } = req.body;
+  const request = new paypal.orders.OrdersCreateRequest();
+  request.requestBody({
+    intent: "CAPTURE",
+    purchase_units: [
+      {
+        amount: {
+          currency_code: "CAD",
+          value: amount.toString(), // Ensure amount is a string
         },
-      ],
-    });
-  
-    try {
-      const order = await paypalClient.execute(request);
-      res.json({ id: order.result.id });
-    } catch (error) {
-      console.error('Error creating PayPal order:', error);
-      res.status(500).json({ error: error.message });
-    }
+      },
+    ],
   });
+
+  try {
+    const order = await paypalClient.execute(request);
+    res.json({ id: order.result.id });
+  } catch (error) {
+    console.error("Error creating PayPal order:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Capture a PayPal order
 app.post("/capture-paypal-order", async (req, res) => {
-    const { orderID, tripID } = req.body;
-    const request = new paypal.orders.OrdersCaptureRequest(orderID);
-    request.requestBody({});
+  const { orderID, tripID } = req.body;
+  const request = new paypal.orders.OrdersCaptureRequest(orderID);
+  request.requestBody({});
 
-    try {
-        console.log('Executing PayPal capture request...');
-        const capture = await paypalClient.execute(request);
-        console.log('PayPal capture response:', capture);
+  try {
+    console.log("Executing PayPal capture request...");
+    const capture = await paypalClient.execute(request);
+    console.log("PayPal capture response:", capture);
 
-        // Check if the payment was successful
-        if (capture.result.status === 'COMPLETED') {
-            console.log('Payment completed, updating trip status...');
-            const trip = await Trip.findById(tripID);
-            if (!trip) {
-                console.log('Trip not found:', tripID);
-                return res.status(404).json({ error: 'Trip not found' });
-            }
+    // Check if the payment was successful
+    if (capture.result.status === "COMPLETED") {
+      console.log("Payment completed, updating trip status...");
+      const trip = await Trip.findById(tripID);
+      if (!trip) {
+        console.log("Trip not found:", tripID);
+        return res.status(404).json({ error: "Trip not found" });
+      }
 
-            trip.status = 'confirmed';
-            await trip.save();
+      trip.status = "confirmed";
+      await trip.save();
 
-            // Transfer payment to the owner
-            const ownerPayment = await transferPaymentToOwner(trip);
+      // Transfer payment to the owner
+      const ownerPayment = await transferPaymentToOwner(trip);
 
-            console.log('Trip status updated to confirmed:', trip);
-            res.json({ message: 'Payment successful and trip confirmed!', capture: capture.result });
-        } else {
-            console.log('Payment not completed:', capture.result.status);
-            res.status(400).json({ error: 'Payment not completed' });
-        }
-    } catch (error) {
-        console.error('Error capturing PayPal order:', error);
-        res.status(500).json({ error: error.message });
+      console.log("Trip status updated to confirmed:", trip);
+      res.json({
+        message: "Payment successful and trip confirmed!",
+        capture: capture.result,
+      });
+    } else {
+      console.log("Payment not completed:", capture.result.status);
+      res.status(400).json({ error: "Payment not completed" });
     }
+  } catch (error) {
+    console.error("Error capturing PayPal order:", error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
+// Recuperer le PayPal email du client
+app.post("/update-paypal-email", async (req, res) => {
+  const { userId, paypalEmail } = req.body;
+
+  try {
+    // Update the user's PayPal email
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { paypalEmail },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the task status to completed
+    const tasks = await Task.updateMany(
+      { user: userId, description: "Provide your Paypal email to receive payments" },
+      { $set: { status: "completed" } }
+    );
+
+    // Fetch updated tasks
+    const updatedTasks = await Task.find({ user: userId });
+
+    res.json({
+      message: "PayPal email updated successfully",
+      user,
+      tasks: updatedTasks,
+    });
+  } catch (error) {
+    console.error("Error updating PayPal email:", error);
+    res.status(500).json({ error: "Failed to update PayPal email" });
+  }
+});
+
+//////////////////////
+
+/////////////////////
 
 app.post("/register", async (req, res) => {
   const { name, email, password, account_level } = req.body; // Include account_level in the request body
@@ -224,7 +270,8 @@ app.post("/login", async (req, res) => {
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
-////////
+////////////
+
 //stocke les photos localement
 const photosMiddleware = multer({ dest: "uploads/" });
 app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
@@ -250,7 +297,11 @@ app.post("/upload-by-link", async (req, res) => {
   });
   res.json(newName);
 });
-//////
+
+////////////////
+
+///////////////
+
 //obtenir les infos pour userContext et le profil
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
@@ -286,9 +337,8 @@ app.post("/become-owner", async (req, res) => {
       { account_level: "owner" },
       { new: true }
     );
-
-    // Generate owner-specific tasks for the user
-    await generateUserTasks(userId, "owner");
+    // Generate tasks
+    await generateUserTasks(userId, user.account_level);
 
     res.json({
       message: "User is now an owner and tasks have been generated.",
@@ -361,7 +411,10 @@ app.put("/tasks/:id", async (req, res) => {
   }
 });
 
-//////
+///////////////
+
+//////////////
+
 app.get("/user-cars", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
@@ -374,7 +427,7 @@ app.get("/user-cars", async (req, res) => {
   }
 });
 
-////// creer une voiture
+// creer une voiture
 app.post("/cars", (req, res) => {
   const { token } = req.cookies;
   const {
@@ -469,6 +522,11 @@ app.put("/cars", async (req, res) => {
   });
 });
 
+///////
+
+///////
+
+// Page Accueil
 app.get("/cars", async (req, res) => {
   try {
     const cars = await Car.find().populate("owner");

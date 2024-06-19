@@ -5,27 +5,25 @@ import axios from "axios";
 import CarsPage from "./CarsPage";
 import AccountNav from "../AccountNav";
 
-// Load PayPal script
-const loadPayPalScript = (clientId) => {
-    return new Promise((resolve) => {
-        const script = document.createElement("script");
-        script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=CAD`;
-        script.onload = resolve;
-        document.body.appendChild(script);
-    });
-};
+const PayPalInstructions = () => (
+    <div className="text-left">
+        <h3 className="text-lg font-semibold mb-2">Create a PayPal Account</h3>
+        <p>If you do not have a PayPal account, please <a href="https://www.paypal.com/signup" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">sign up here</a>.</p>
+        <p>Once you have a PayPal account, please enter your PayPal email address below to link it to your profile and receive payments.</p>
+    </div>
+);
 
 export default function ProfilePage() {
     const [redirect, setRedirect] = useState(null);
     const { ready, user, setUser } = useContext(UserContext);
     const [tasks, setTasks] = useState([]);
-    let { subpage } = useParams();
     const [bio, setBio] = useState(user?.bio || '');
     const [profilePicture, setProfilePicture] = useState(null);
-    const [isPayPalScriptLoaded, setIsPayPalScriptLoaded] = useState(false);
+    const [paypalEmail, setPaypalEmail] = useState(user?.paypalEmail || '');
+    const [showPayPalInstructions, setShowPayPalInstructions] = useState(false);
+    const [thankYouMessage, setThankYouMessage] = useState(false);
 
-    const PAYPAL_CLIENT_ID = 'AU3CK9Rvo6bUagdNuHdR0b2SBGT-wVKSB-Qf7vNggiFRPWdURKCkSB3Kds9PeNNyQXqDLB5myEbU_jbn';
-
+    let { subpage } = useParams();
     if (subpage === undefined) {
         subpage = 'profile';
     }
@@ -87,11 +85,6 @@ export default function ProfilePage() {
             axios.get('/tasks').then(({ data }) => {
                 setTasks(data);
             });
-
-            // Load PayPal script
-            loadPayPalScript(PAYPAL_CLIENT_ID).then(() => {
-                setIsPayPalScriptLoaded(true);
-            });
         }
     }, [ready, user]);
 
@@ -109,19 +102,33 @@ export default function ProfilePage() {
 
     const handleBecomeOwner = async () => {
         try {
-            await axios.post('/become-owner');
-            // Fetch updated tasks
-            const { data } = await axios.get('/tasks');
-            console.log('Updated tasks:', data); // Debug logging
-            setTasks(data);
-            alert('You are now an owner. Tasks updated.');
-            // Optionally redirect after updating tasks
-            // setRedirect('/account');
+            await axios.post('/become-owner', { userId: user._id });
+            setShowPayPalInstructions(true);
         } catch (error) {
-            console.error('Error generating tasks:', error);
-            alert('Failed to generate tasks. Please try again.');
+            console.error('Error becoming owner:', error);
+            alert('Failed to become an owner. Please try again.');
         }
     };
+
+    const handleUpdatePayPalEmail = async (ev) => {
+        ev.preventDefault();
+        try {
+            const { data } = await axios.post('/update-paypal-email', {
+                userId: user._id,
+                paypalEmail: paypalEmail
+            });
+
+            setUser(data.user);
+            setTasks(data.tasks);
+            setThankYouMessage(true);
+        } catch (error) {
+            console.error('Error updating PayPal email:', error);
+            alert('Failed to update PayPal email. Please try again.');
+        }
+    };
+
+    // Check if all tasks are completed
+    const allTasksCompleted = tasks.every(task => task.status === 'completed');
 
     return (
         <div>
@@ -165,7 +172,7 @@ export default function ProfilePage() {
                                 className="w-full p-2 border rounded"
                                 onChange={(ev) => setProfilePicture(ev.target.files[0])}
                             />
-                        </div>
+                        </div>  
                         <button type="submit" className="primary">Update Profile Picture</button>
                     </form>
                     <button onClick={logout} className="primary max-w-sm mt-4">Logout</button>
@@ -186,8 +193,38 @@ export default function ProfilePage() {
                         </div>
                     )}
                     {user && user.role !== 'owner' && (
-                        <div className="mt-4">
-                            <button onClick={handleBecomeOwner} className="primary">Become an Owner</button>
+                        <div className="mt-4 flex flex-col items-center">
+                            {allTasksCompleted ? (
+                                <div className="text-center">
+                                    <h3 className="text-lg font-semibold mb-2">All tasks are completed!</h3>
+                                    <p>You can now access the host functionalities above.</p>
+                                </div>
+                            ) : showPayPalInstructions ? (
+                                thankYouMessage ? (
+                                    <div className="text-center">
+                                        <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
+                                        <p>Your PayPal email has been updated successfully. You can now receive payments.</p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <PayPalInstructions />
+                                        <form onSubmit={handleUpdatePayPalEmail} className="mt-4">
+                                            <label className="block text-left font-medium">PayPal Email</label>
+                                            <input
+                                                type="email"
+                                                className="w-full p-2 border rounded"
+                                                placeholder="Enter your PayPal email"
+                                                value={paypalEmail}
+                                                onChange={(ev) => setPaypalEmail(ev.target.value)}
+                                                required
+                                            />
+                                            <button type="submit" className="primary mt-2">Submit</button>
+                                        </form>
+                                    </>
+                                )
+                            ) : (
+                                <button onClick={handleBecomeOwner} className="primary mt-4">Become an Owner</button>
+                            )}
                         </div>
                     )}
                 </div>
