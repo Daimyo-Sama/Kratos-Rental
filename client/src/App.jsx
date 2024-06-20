@@ -17,6 +17,7 @@ import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEma
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import TripDetailsPage from './pages/TripDetailsPage'; // Import the new page
+import AboutUs from './pages/AboutUsPage';
 
 
 axios.defaults.baseURL = 'http://localhost:4000';
@@ -43,6 +44,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
            <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
+           <Route path='/about-us' element={<AboutUs />} />
             
         </Route>
         <Route path='/confirm-email' element={<ConfirmEmailPage />} />        

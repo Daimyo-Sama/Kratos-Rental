@@ -1,21 +1,21 @@
+// IndexPage.js
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Banner from "../HomeBanner"; // Import the Banner component
 
 export default function IndexPage() {
     const [cars, setCars] = useState([]);
-    
+
     useEffect(() => {
         axios.get('/cars').then(response => {
             setCars(response.data);
         });
     }, []);
-    
+
     return (
         <div>
-            <div className="bg-gray-500 text-white text-center py-16 mb-4 mt-16">
-                <h2 className="text-2xl">Zone 1</h2>
-            </div>
+            <Banner /> {/* Add the Banner component here */}
             <div className="bg-gray-600 text-white text-center py-16 mb-8">
                 <h2 className="text-2xl">Filters??</h2>
             </div>

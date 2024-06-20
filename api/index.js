@@ -876,7 +876,6 @@ app.post("/reset-password", async (req, res) => {
   }
 });
 
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.listen(4000, () => {
   console.log("Server running on port 4000");
