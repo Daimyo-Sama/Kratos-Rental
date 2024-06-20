@@ -104,7 +104,14 @@ app.post("/capture-paypal-order", async (req, res) => {
     // Check if the payment was successful
     if (capture.result.status === "COMPLETED") {
       console.log("Payment completed, updating trip status...");
-      const trip = await Trip.findById(tripID);
+      const trip = await Trip.findById(tripID).populate({
+        path: 'car',
+        populate: {
+          path: 'owner',
+          model: 'User',
+        }
+      });
+
       if (!trip) {
         console.log("Trip not found:", tripID);
         return res.status(404).json({ error: "Trip not found" });
@@ -120,6 +127,7 @@ app.post("/capture-paypal-order", async (req, res) => {
       res.json({
         message: "Payment successful and trip confirmed!",
         capture: capture.result,
+        ownerPayment
       });
     } else {
       console.log("Payment not completed:", capture.result.status);

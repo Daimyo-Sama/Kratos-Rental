@@ -22,6 +22,7 @@ export default function ProfilePage() {
     const [paypalEmail, setPaypalEmail] = useState(user?.paypalEmail || '');
     const [showPayPalInstructions, setShowPayPalInstructions] = useState(false);
     const [thankYouMessage, setThankYouMessage] = useState(false);
+    const [becomeOwnerClicked, setBecomeOwnerClicked] = useState(false);
 
     let { subpage } = useParams();
     if (subpage === undefined) {
@@ -84,6 +85,9 @@ export default function ProfilePage() {
         if (ready && user) {
             axios.get('/tasks').then(({ data }) => {
                 setTasks(data);
+                if (data.some(task => task.description === 'Update PayPal Email' && task.status === 'completed')) {
+                    setThankYouMessage(true);
+                }
             });
         }
     }, [ready, user]);
@@ -104,6 +108,7 @@ export default function ProfilePage() {
         try {
             await axios.post('/become-owner', { userId: user._id });
             setShowPayPalInstructions(true);
+            setBecomeOwnerClicked(true); // Hide the button after it is clicked
         } catch (error) {
             console.error('Error becoming owner:', error);
             alert('Failed to become an owner. Please try again.');
@@ -126,6 +131,9 @@ export default function ProfilePage() {
             alert('Failed to update PayPal email. Please try again.');
         }
     };
+
+    // Check if the PayPal task is completed
+    const isPayPalTaskCompleted = tasks.some(task => task.description === 'Update PayPal Email' && task.status === 'completed');
 
     // Check if all tasks are completed
     const allTasksCompleted = tasks.every(task => task.status === 'completed');
@@ -192,39 +200,40 @@ export default function ProfilePage() {
                             <CarsPage />
                         </div>
                     )}
-                    {user && user.role !== 'owner' && (
+                    {user && user.role !== 'owner' && !allTasksCompleted && (
                         <div className="mt-4 flex flex-col items-center">
-                            {allTasksCompleted ? (
-                                <div className="text-center">
-                                    <h3 className="text-lg font-semibold mb-2">All tasks are completed!</h3>
-                                    <p>You can now access the host functionalities above.</p>
-                                </div>
-                            ) : showPayPalInstructions ? (
-                                thankYouMessage ? (
-                                    <div className="text-center">
-                                        <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
-                                        <p>Your PayPal email has been updated successfully. You can now receive payments.</p>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <PayPalInstructions />
-                                        <form onSubmit={handleUpdatePayPalEmail} className="mt-4">
-                                            <label className="block text-left font-medium">PayPal Email</label>
-                                            <input
-                                                type="email"
-                                                className="w-full p-2 border rounded"
-                                                placeholder="Enter your PayPal email"
-                                                value={paypalEmail}
-                                                onChange={(ev) => setPaypalEmail(ev.target.value)}
-                                                required
-                                            />
-                                            <button type="submit" className="primary mt-2">Submit</button>
-                                        </form>
-                                    </>
-                                )
-                            ) : (
+                            {!isPayPalTaskCompleted && !becomeOwnerClicked && (
                                 <button onClick={handleBecomeOwner} className="primary mt-4">Become an Owner</button>
                             )}
+                            {showPayPalInstructions && !thankYouMessage && (
+                                <>
+                                    <PayPalInstructions />
+                                    <form onSubmit={handleUpdatePayPalEmail} className="mt-4">
+                                        <label className="block text-left font-medium">PayPal Email</label>
+                                        <input
+                                            type="email"
+                                            className="w-full p-2 border rounded"
+                                            placeholder="Enter your PayPal email"
+                                            value={paypalEmail}
+                                            onChange={(ev) => setPaypalEmail(ev.target.value)}
+                                            required
+                                        />
+                                        <button type="submit" className="primary mt-2">Submit</button>
+                                    </form>
+                                </>
+                            )}
+                            {thankYouMessage && (
+                                <div className="text-center">
+                                    <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
+                                    <p>Your PayPal email has been updated successfully. You can now receive payments.</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    {allTasksCompleted && (
+                        <div className="text-center mt-4">
+                            <h3 className="text-lg font-semibold mb-2">All tasks are complete!</h3>
+                            <p>You now have access to the host functionalities.</p>
                         </div>
                     )}
                 </div>
