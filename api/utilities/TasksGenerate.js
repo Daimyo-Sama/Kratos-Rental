@@ -18,8 +18,8 @@ async function generateUserTasks(userId, accountLevel) {
     }
 
     if (accountLevel === 'owner') {
-        if (!taskDescriptions.includes('Sign up to Stripe for payment processing')) {
-            tasksToAdd.push({ description: 'Sign up to Stripe for payment processing', user: userId });
+        if (!taskDescriptions.includes('Provide your Paypal email to receive payments')) {
+            tasksToAdd.push({ description: 'Provide your Paypal email to receive payments', user: userId });
         }
     }
 

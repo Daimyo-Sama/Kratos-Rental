@@ -6,20 +6,45 @@ import CarImg from "../CarImg";
 import TripDates from "../TripDates";
 
 export default function DealsPage() {
-    const [deals,setDeals] = useState([]);
+    const [deals, setDeals] = useState([]);
+
     useEffect(() => {
         axios.get('/deals').then(response => {
             setDeals(response.data);
         });
     }, []);
+
+    const handleCancelDeal = async (deal) => {
+        try {
+            const response = await axios.put(`/deals/${deal._id}/cancel`);
+            alert('Deal canceled successfully!');
+            window.location.reload(); // Reload the page on successful cancellation
+        } catch (error) {
+            console.error('Error canceling deal:', error);
+            if (error.response && error.response.status === 400) {
+                alert('Deal dates overlap with another deal. Please choose different dates.');
+            } else {
+                alert('Failed to cancel the deal. Please try again.');
+            }
+        }
+    };
+
     return (
         <div>
             <AccountNav />
-            <div>
+            
+               {/* <br></br>
+               <br></br>
+               <h1>on donne des instructions ici</h1>
+            <h1>this your deals with your quick acces panel on the right, you can click on the image for more details</h1>         
+            <br></br>
+            <br></br> */}
+
+            <div className="flex flex-col max-w-6xl mx-auto">
                 {deals?.length > 0 && deals.map(deal => (
-                    <Link key={deal._id} to={`/account/deals/${deal._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden">
+                    <Link key={deal._id} to={`/account/deals/${deal._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mt-4">
                         <div className="w-48">
-                            <CarImg car={deal.car} />
+                            <CarImg car={deal.car} className={"object-cover h-full"} />
                         </div>
                         <div className="py-3 pr-3 grow">
                             <h2 className="text-xl">{deal.car.title}</h2>
@@ -42,6 +67,16 @@ export default function DealsPage() {
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                        <div className="p-4 border-black border-2 flex-shrink-0">
+                            <h3 className="text-lg font-semibold mb-2">Quick Access Panel</h3>
+                            {/* Add your quick access panel content here */}
+                            <p>Some quick access content.</p>
+                            {deal.status !== "cancelled" && deal.status !== "completed" && (
+                                <button onClick={() => handleCancelDeal(deal)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
+                                    Cancel Deal
+                                </button>
+                            )}
                         </div>
                     </Link>
                 ))}

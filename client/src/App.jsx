@@ -16,8 +16,8 @@ import DealPage from './pages/DealPage'
 import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-// import TripDetailsPage from './pages/TripDetailsPage'; // Import the new page
-// import StripeConnectPage from "./pages/StripeConnectPage";
+import TripDetailsPage from './pages/TripDetailsPage'; // Import the new page
+
 
 axios.defaults.baseURL = 'http://localhost:4000';
 axios.defaults.withCredentials = true;
@@ -37,17 +37,18 @@ function App() {
           <Route path='/car/:id' element={<CarPage />} />
           <Route path='/account/trips' element={<TripsPage />} />
           <Route path='/account/trips/:id' element={<TripPage />} />
+          <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
           <Route path='/account/deals' element={<DealsPage />} />
           <Route path='/account/deals/:id' element={<DealPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-          {/* <Route path='/account/trips/:id/details' element={<TripDetailsPage />} /> */}
-          {/* <Route path="/stripe-connect" element={<StripeConnectPage />} /> */}
+           <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
+            
         </Route>
         <Route path='/confirm-email' element={<ConfirmEmailPage />} />        
       </Routes>
     </UserContextProvider>
-  )
+  );
 }
 
-export default App
+export default App;
