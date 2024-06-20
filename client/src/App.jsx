@@ -14,9 +14,7 @@ import TripPage from './pages/TripPage';
 import DealsPage from './pages/DealsPage';
 import DealPage from './pages/DealPage';
 import ConfirmEmailPage from './pages/ConfirmEmailPage';
-// import TripDetailsPage from './pages/TripDetailsPage';
 import TripsArchivedPage from './pages/TripsArchivedPage';
-// import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
@@ -39,7 +37,6 @@ function App() {
           <Route path='/account/trips' element={<TripsPage />} />
           <Route path='/account/trips/:id' element={<TripPage />} />
           <Route path='/account/trips/archived' element={<TripsArchivedPage />} />
-          {/* <Route path='/account/trips/:id/details' element={<TripDetailsPage />} /> */}
           <Route path='/account/deals' element={<DealsPage />} />
           <Route path='/account/deals/:id' element={<DealPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
