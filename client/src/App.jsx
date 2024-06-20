@@ -16,7 +16,7 @@ import DealPage from './pages/DealPage';
 import ConfirmEmailPage from './pages/ConfirmEmailPage';
 // import TripDetailsPage from './pages/TripDetailsPage';
 import TripsArchivedPage from './pages/TripsArchivedPage';
-import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
+// import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
