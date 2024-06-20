@@ -40,6 +40,7 @@ export default function DealPage() {
     const handleCancelTrip = async () => {
         try {
             const response = await axios.put(`/trips/${deal._id}/cancel`);
+            setDeal(response.data);
             alert('Trip canceled successfully!');
             navigate('/account/'); // Redirect to profile page after cancellation
         } catch (error) {
