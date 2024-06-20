@@ -16,6 +16,9 @@ import DealPage from './pages/DealPage';
 import ConfirmEmailPage from './pages/ConfirmEmailPage';
 // import TripDetailsPage from './pages/TripDetailsPage';
 import TripsArchivedPage from './pages/TripsArchivedPage';
+import ConfirmEmailPage from './pages/ConfirmEmailPage' // Import the ConfirmEmailPage component
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 axios.defaults.baseURL = 'http://localhost:4000';
 axios.defaults.withCredentials = true;
@@ -39,7 +42,8 @@ function App() {
           {/* <Route path='/account/trips/:id/details' element={<TripDetailsPage />} /> */}
           <Route path='/account/deals' element={<DealsPage />} />
           <Route path='/account/deals/:id' element={<DealPage />} />
-          {/* <Route path='/account/trips/:id/details' element={<TripDetailsPage />} /> */}
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
         </Route>
         <Route path='/confirm-email' element={<ConfirmEmailPage />} />        
       </Routes>

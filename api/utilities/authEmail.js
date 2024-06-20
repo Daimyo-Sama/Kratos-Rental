@@ -22,4 +22,20 @@ const sendConfirmationEmail = async (email, token) => {
   await transporter.sendMail(mailOptions);
 };
 
-module.exports = { sendConfirmationEmail };
+// Function to send the reset password email
+const sendResetPasswordEmail = async (email, token) => {
+  const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: 'Password Reset',
+    html: `<p>You requested a password reset. Click the following link to reset your password:</p>
+           <a href="${resetUrl}">${resetUrl}</a>
+           <p>This link will expire in 1 hour.</p>`,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+module.exports = { sendConfirmationEmail, sendResetPasswordEmail };

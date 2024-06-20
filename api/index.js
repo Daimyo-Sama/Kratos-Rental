@@ -13,6 +13,7 @@ const Car = require("./models/Car.js");
 const Trip = require("./models/Trip.js");
 const Review = require("./models/Review.js");
 const Task = require("./models/Task.js");
+const { sendResetPasswordEmail } = require("./utilities/authEmail.js");
 
 const {
   paypalClient,
@@ -104,7 +105,14 @@ app.post("/capture-paypal-order", async (req, res) => {
     // Check if the payment was successful
     if (capture.result.status === "COMPLETED") {
       console.log("Payment completed, updating trip status...");
-      const trip = await Trip.findById(tripID);
+      const trip = await Trip.findById(tripID).populate({
+        path: 'car',
+        populate: {
+          path: 'owner',
+          model: 'User',
+        }
+      });
+
       if (!trip) {
         console.log("Trip not found:", tripID);
         return res.status(404).json({ error: "Trip not found" });
@@ -120,6 +128,7 @@ app.post("/capture-paypal-order", async (req, res) => {
       res.json({
         message: "Payment successful and trip confirmed!",
         capture: capture.result,
+        ownerPayment
       });
     } else {
       console.log("Payment not completed:", capture.result.status);
@@ -866,6 +875,43 @@ app.get('/deals', async (req,res) =>{
   res.json(allDeals);
 });
 
+// Route to handle password reset request
+app.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const token = jwt.sign({ id: user._id, email: user.email }, jwtSecret, { expiresIn: '1h' });
+    await sendResetPasswordEmail(email, token);
+
+    res.json({ message: "Password reset link sent to your email address." });
+  } catch (error) {
+    console.error("Error in forgot-password:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/reset-password", async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    const hashedPassword = bcrypt.hashSync(newPassword, bcryptSalt);
+
+    await User.findByIdAndUpdate(decoded.id, { password: hashedPassword });
+
+    res.json({ message: "Password has been reset successfully." });
+  } catch (error) {
+    console.error("Error in reset-password:", error);
+    res.status(400).json({ message: "Invalid or expired token." });
+  }
+});
+
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.listen(4000, () => {
   console.log("Server running on port 4000");

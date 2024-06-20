@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, } from "react-router-dom";
 import TripWidget from "../TripWidget";
 import CarGallery from "../CarGallery";
 import AddressLink from "../AddressLink";
@@ -34,6 +34,12 @@ export default function CarPage() {
                     Check-in: {car.checkIn}<br />
                     Check-out: {car.checkOut}<br />
                     Max number of guests: {car.maxGuests}
+                     <div className="bg-grey -mx-2 px-2 py-8 border-t">
+                <div>
+                    <h2 className="font-semibold text-2xl">Extra info</h2>
+                </div>
+                <div className="mb-4 mt-2 text-sm text-gray-700 leading-5">{car.extraInfo}</div>
+            </div>
                 </div>
                 <div>
                     <TripWidget car={car} />
@@ -70,14 +76,10 @@ export default function CarPage() {
                             </div>
                         </div>
                     )}
+                   
                 </div>
             </div>
-            <div className="bg-white -mx-8 px-8 py-8 border-t">
-                <div>
-                    <h2 className="font-semibold text-2xl">Extra info</h2>
-                </div>
-                <div className="mb-4 mt-2 text-sm text-gray-700 leading-5">{car.extraInfo}</div>
-            </div>
+           
         </div>
     );
 }
