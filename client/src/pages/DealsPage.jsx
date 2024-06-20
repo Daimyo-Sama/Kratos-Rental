@@ -30,25 +30,22 @@ export default function DealsPage() {
     };
 
     return (
-        <div><AccountNav />
-               <br></br>
+        <div>
+            <AccountNav />
+            
+               {/* <br></br>
                <br></br>
                <h1>on donne des instructions ici</h1>
-            <h1>this your deals with your quick acces panel on the right, you can click on the image for more details</h1>
-         
+            <h1>this your deals with your quick acces panel on the right, you can click on the image for more details</h1>         
             <br></br>
-            <br></br>
+            <br></br> */}
 
-            
-            <div>
+            <div className="flex flex-col max-w-6xl mx-auto">
                 {deals?.length > 0 && deals.map(deal => (
-                    <div key={deal._id} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mb-4">
-                        <Link to={`/account/deals/${deal._id}`} className="block w-full h-48 relative group">
-                            <CarImg car={deal.car} className="w-full h-full object-cover cursor-pointer" />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                                Click for more details
-                            </div>
-                        </Link>
+                    <Link key={deal._id} to={`/account/deals/${deal._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mt-4">
+                        <div className="w-48">
+                            <CarImg car={deal.car} className={"object-cover h-full"} />
+                        </div>
                         <div className="py-3 pr-3 grow">
                             <h2 className="text-xl">{deal.car.title}</h2>
                             <div className="text-xl">
@@ -81,7 +78,7 @@ export default function DealsPage() {
                                 </button>
                             )}
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
