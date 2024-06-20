@@ -14,7 +14,8 @@ import TripPage from './pages/TripPage';
 import DealsPage from './pages/DealsPage';
 import DealPage from './pages/DealPage';
 import ConfirmEmailPage from './pages/ConfirmEmailPage';
-import TripDetailsPage from './pages/TripDetailsPage';
+// import TripDetailsPage from './pages/TripDetailsPage';
+import TripsArchivedPage from './pages/TripsArchivedPage';
 
 axios.defaults.baseURL = 'http://localhost:4000';
 axios.defaults.withCredentials = true;
@@ -34,10 +35,11 @@ function App() {
           <Route path='/car/:id' element={<CarPage />} />
           <Route path='/account/trips' element={<TripsPage />} />
           <Route path='/account/trips/:id' element={<TripPage />} />
-          <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
+          <Route path='/account/trips/archived' element={<TripsArchivedPage />} />
+          {/* <Route path='/account/trips/:id/details' element={<TripDetailsPage />} /> */}
           <Route path='/account/deals' element={<DealsPage />} />
           <Route path='/account/deals/:id' element={<DealPage />} />
-          <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
+          {/* <Route path='/account/trips/:id/details' element={<TripDetailsPage />} /> */}
         </Route>
         <Route path='/confirm-email' element={<ConfirmEmailPage />} />        
       </Routes>
