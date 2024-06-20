@@ -75,7 +75,7 @@ export default function TripsPage() {
     };
 
     return (
-        <div>
+        <div><AccountNav />
                <br></br>
                <br></br>
                <h1>on donne des instructions ici</h1>
@@ -84,7 +84,7 @@ export default function TripsPage() {
             <br></br>
             <br></br>
 
-            <AccountNav />
+            
             <div>
                 {trips?.length > 0 && trips.map(trip => (
                     <div key={trip._id} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mb-4">

@@ -13,7 +13,7 @@ export default function AccountNav() {
         if(type === subpage) {
             classes += ' bg-primary text-white';
         } else {
-            classes += ' bg-gray-200';
+            classes += ' bg-gray-200 hover:bg-blue-700';
         }
         return classes;
     }
