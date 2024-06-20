@@ -30,7 +30,7 @@ export default function DealsPage() {
     };
 
     return (
-        <div>
+        <div><AccountNav />
                <br></br>
                <br></br>
                <h1>on donne des instructions ici</h1>
@@ -39,7 +39,7 @@ export default function DealsPage() {
             <br></br>
             <br></br>
 
-            <AccountNav />
+            
             <div>
                 {deals?.length > 0 && deals.map(deal => (
                     <div key={deal._id} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mb-4">
