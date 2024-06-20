@@ -25,7 +25,6 @@ export default function TripsPage() {
         axios.get('/trips').then(response => {
             setTrips(response.data); // Fetch trips data and set it in state
         });
-
         // Load PayPal script
         loadPayPalScript('AU3CK9Rvo6bUagdNuHdR0b2SBGT-wVKSB-Qf7vNggiFRPWdURKCkSB3Kds9PeNNyQXqDLB5myEbU_jbn').then(() => {
             setIsPayPalScriptLoaded(true);
@@ -74,6 +73,42 @@ export default function TripsPage() {
         }
     };
 
+    function userAccessPanelMessage1(tripStatus) {
+        if(tripStatus === "upcoming"){
+            return "Booking Request Completed!";
+        } if(tripStatus === "unpaid"){
+            return "Your Request Approved!";
+        } if(tripStatus === "confirmed"){
+            return "Booking Completed!";
+        } if(tripStatus === "ongoing"){
+            return "Trip in Progress!";
+        } if(tripStatus === "completed"){
+            return "Trip Completed!"
+        } if(tripStatus === "canceled"){
+            return "Trip Canceled"
+        } else {
+            return "";
+        }
+    }
+
+    function userAccessPanelMessage2(tripStatus) {
+        if(tripStatus === "upcoming"){
+            return "Awaiting Approval";
+        } if(tripStatus === "unpaid"){
+            return "Payment Required";
+        } if(tripStatus === "confirmed"){
+            return "Awaiting Your Reservation!";
+        } if(tripStatus === "ongoing"){
+            return "Enjoy Your Trip!";
+        } if(tripStatus === "completed"){
+            return "Thanks for Choosing Kratos!"
+        } if(tripStatus === "canceled"){
+            return "See you soon!"
+        } else {
+            return "";
+        }
+    }
+
     return (
         <div>
             <AccountNav />
@@ -100,7 +135,7 @@ export default function TripsPage() {
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
                                     </svg>
                                     <span className="text-2xl">
-                                        Total price: ${trip.price}
+                                        Total price: {trip.price}$
                                     </span>
                                 </div>
                                 <div className="flex gap-1">
@@ -113,14 +148,14 @@ export default function TripsPage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="p-4 border-black border-2 flex-shrink-0">
-                            <h3 className="text-lg font-semibold mb-2">Quick Access Panel</h3>
-                            {/* Add your quick access panel content here */}
-                            <p>Some quick access content.</p>
+                        <div className="px-2 bg-gray-100">
+                            <h3 className="text-lg font-semibold">Quick Access Panel</h3>
+                            <p>{userAccessPanelMessage1(trip.status)}</p>
+                            <p>{userAccessPanelMessage2(trip.status)}</p>
                             <div id={`paypal-button-container-${trip._id}`}></div>
                             <button
                                 onClick={() => handlePayment(trip)}
-                                className={`btn-primary ${trip.status !== "unpaid" ? "bg-gray-400 cursor-not-allowed" : ""}`}
+                                className={`${trip.status !== "unpaid" ? "bg-gray-400 cursor-not-allowed" : ""}`}
                                 disabled={trip.status !== "unpaid"}
                             >
                                 Pay with PayPal

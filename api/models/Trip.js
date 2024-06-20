@@ -10,9 +10,19 @@ const tripSchema = new mongoose.Schema({
     price: Number,
     status: {
         type: String,
-        enum: ["upcoming", "unpaid", "confirmed", "completed", "cancelled"],
+        enum: ["upcoming", "unpaid", "confirmed", "ongoing", "completed", "cancelled"],
         default: "upcoming",
-      }
+      },
+    userStatus: {
+      type: String,
+      enum: ["inprogress", "archived", "deleted"],
+      default: "inprogress",
+    },
+    ownerStatus: {
+      type: String,
+      enum: ["inprogress", "archived", "deleted"],
+      default: "inprogress",
+    }
 });
 
 const TripModel = mongoose.model('Trip', tripSchema);
