@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const tripSchema = new mongoose.Schema({
     car: {type:mongoose.Schema.Types.ObjectId, required:true, ref:'Car'},
-    user: {type:mongoose.Schema.Types.ObjectId, required:true},
+    user: {type:mongoose.Schema.Types.ObjectId, required:true, ref:'User'},
     checkIn: {type:Date, required:true},
     checkOut: {type:Date, required:true},
     name: {type:String, required:true},
