@@ -725,6 +725,41 @@ app.put("/trips/:id/accept", async (req, res) => {
   }
 });
 
+app.put("/trips/:id/archive", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userData = await getUserDataFromReq(req);
+    const userId = userData.id; // Get the authenticated user's ID
+
+    const trip = await Trip.findById(id);  //.populate("car")
+    if (!trip) {
+      return res.status(404).json({ error: "Trip not found" });
+    }
+
+    // const car = await Car.findById(trip.car._id);
+    // if (!car) {
+    //   return res.status(404).json({ error: "Car not found" });
+    // }
+
+    if (
+      trip.user.toString() !== userId.toString() // &&
+      // car.owner.toString() !== userId.toString()
+    ) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    trip.userStatus = "archived";
+    await trip.save();
+
+    // await Car.findByIdAndUpdate(car._id, { status: "available" }); // Update car status to 'available'
+
+    res.json(trip);
+  } catch (error) {
+    console.error("Error archiving trip:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.put("/trips/:id/cancel", async (req, res) => {
   const { id } = req.params;
   try {

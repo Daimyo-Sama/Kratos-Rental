@@ -97,13 +97,16 @@ export default function ProfilePage() {
     }
   }
 
-  useEffect(() => {
-    if (ready && user) {
-      axios.get("/tasks").then(({ data }) => {
-        setTasks(data);
-      });
-    }
-  }, [ready, user]);
+    useEffect(() => {
+        if (ready && user) {
+            axios.get('/tasks').then(({ data }) => {
+                setTasks(data);
+                if (data.some(task => task.description === 'Update PayPal Email' && task.status === 'completed')) {
+                    setThankYouMessage(true);
+                }
+            });
+        }
+    }, [ready, user]);
 
   if (!ready) {
     return "Loading...";
@@ -117,15 +120,16 @@ export default function ProfilePage() {
     return <Navigate to={redirect} />;
   }
 
-  const handleBecomeOwner = async () => {
-    try {
-      await axios.post("/become-owner", { userId: user._id });
-      setShowPayPalInstructions(true);
-    } catch (error) {
-      console.error("Error becoming owner:", error);
-      alert("Failed to become an owner. Please try again.");
-    }
-  };
+    const handleBecomeOwner = async () => {
+        try {
+            await axios.post('/become-owner', { userId: user._id });
+            setShowPayPalInstructions(true);
+            setBecomeOwnerClicked(true); // Hide the button after it is clicked
+        } catch (error) {
+            console.error('Error becoming owner:', error);
+            alert('Failed to become an owner. Please try again.');
+        }
+    };
 
   const handleUpdatePayPalEmail = async (ev) => {
     ev.preventDefault();
@@ -135,14 +139,17 @@ export default function ProfilePage() {
         paypalEmail: paypalEmail,
       });
 
-      setUser(data.user);
-      setTasks(data.tasks);
-      setThankYouMessage(true);
-    } catch (error) {
-      console.error("Error updating PayPal email:", error);
-      alert("Failed to update PayPal email. Please try again.");
-    }
-  };
+            setUser(data.user);
+            setTasks(data.tasks);
+            setThankYouMessage(true);
+        } catch (error) {
+            console.error('Error updating PayPal email:', error);
+            alert('Failed to update PayPal email. Please try again.');
+        }
+    };
+
+    // Check if the PayPal task is completed
+    const isPayPalTaskCompleted = tasks.some(task => task.description === 'Update PayPal Email' && task.status === 'completed');
 
   // Check if all tasks are completed
   const allTasksCompleted = tasks.every((task) => task.status === "completed");
@@ -242,7 +249,7 @@ export default function ProfilePage() {
               </button>
             </form>
           )}
-          <div>
+                    <div>
             <form onSubmit={updateProfilePicture} className="space-y-4 mt-4">
               <div className="p-4 border rounded shadow-lg bg-gray-50">
                 <label className="block text-center font-medium mb-2 text- font-bold">
@@ -262,11 +269,11 @@ export default function ProfilePage() {
               </div>
             </form>
           </div>
-
+                    
           <div className="bg-blue-200 p-4 rounded mt-3">
             <h3 className="font-semibold text-xl">Tasks to Complete</h3>
             <ul className="list-disc list-inside text-left">
-              {tasks.map((task, index) => (
+            {tasks.map((task, index) => (
                 <li key={index} className="flex items-center">
                   {renderTaskIcon(task.status)}
                   {task.description} - {task.status}
