@@ -6,13 +6,13 @@ import CarImg from "../CarImg";
 import TripDates from "../TripDates";
 
 export default function DealsPage() {
-    const [deals, setDeals] = useState([]);
+  const [deals, setDeals] = useState([]);
 
-    useEffect(() => {
-        axios.get('/deals').then(response => {
-            setDeals(response.data);
-        });
-    }, []);
+  useEffect(() => {
+    axios.get("/deals").then((response) => {
+      setDeals(response.data);
+    });
+  }, []);
 
     const handleCancelDeal = async (dealId) => {
         try {
@@ -209,19 +209,17 @@ export default function DealsPage() {
     return (
         <div>
             <AccountNav />
-            <div className="text-center ">
-                <Link className="inline-flex hover:bg-blue-700 gap-1 bg-primary text-white py-2 px-6 rounded-full" to={'/account/deals/archived'}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
-                    </svg>
-                    Archived Deals
-                </Link>
-            </div>
+            
+               {/* <br></br>
+               <br></br>
+               <h1>on donne des instructions ici</h1>
+            <h1>this your deals with your quick acces panel on the right, you can click on the image for more details</h1>         
+            <br></br>
+            <br></br> */}
+
             <div className="flex flex-col max-w-6xl mx-auto">
-                {deals?.length > 0 && deals
-                .filter(deal => deal.ownerStatus !== 'archived' && deal.ownerStatus !== 'deleted')
-                .map(deal => (
-                    <Link key={deal._id} to={`/account/deals/${deal._id}`} className="flex gap-4 bg-gray-300 rounded-2xl overflow-hidden mt-4">
+                {deals?.length > 0 && deals.map(deal => (
+                    <Link key={deal._id} to={`/account/deals/${deal._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mt-4">
                         <div className="w-48">
                             <CarImg car={deal.car} className={"object-cover h-full"} />
                         </div>
@@ -247,16 +245,15 @@ export default function DealsPage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
-                            <h3 className="text-lg font-semibold">Quick Access Panel</h3>
-                            <div className="flex flex-col items-center space-y-2 pt-2">
-                                <p>{ownerAccessPanelMessage1(deal.status)}</p>
-                                <p>{ownerAccessPanelMessage2(deal.status)}</p>
-                            </div>
-                            <div className="flex w-full p-2 space-x-2 mt-auto">
-                                {ownerActionButton1(deal)}
-                                {ownerActionButton2(deal)}
-                            </div>
+                        <div className="p-4 border-black border-2 flex-shrink-0">
+                            <h3 className="text-lg font-semibold mb-2">Quick Access Panel</h3>
+                            {/* Add your quick access panel content here */}
+                            <p>Some quick access content.</p>
+                            {deal.status !== "cancelled" && deal.status !== "completed" && (
+                                <button onClick={() => handleCancelDeal(deal)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">
+                                    Cancel Deal
+                                </button>
+                            )}
                         </div>
                     </Link>
                 ))}

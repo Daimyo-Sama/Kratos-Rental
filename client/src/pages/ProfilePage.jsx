@@ -37,6 +37,7 @@ export default function ProfilePage() {
   const [showPayPalInstructions, setShowPayPalInstructions] = useState(false);
   const [thankYouMessage, setThankYouMessage] = useState(false);
   const [editBio, setEditBio] = useState(false);
+  const [becomeOwnerClicked, setBecomeOwnerClicked] = useState(false);
 
   let { subpage } = useParams();
   if (subpage === undefined) {
@@ -97,16 +98,22 @@ export default function ProfilePage() {
     }
   }
 
-    useEffect(() => {
-        if (ready && user) {
-            axios.get('/tasks').then(({ data }) => {
-                setTasks(data);
-                if (data.some(task => task.description === 'Update PayPal Email' && task.status === 'completed')) {
-                    setThankYouMessage(true);
-                }
-            });
+  useEffect(() => {
+    if (ready && user) {
+      axios.get("/tasks").then(({ data }) => {
+        setTasks(data);
+        if (
+          data.some(
+            (task) =>
+              task.description === "Update PayPal Email" &&
+              task.status === "completed"
+          )
+        ) {
+          setThankYouMessage(true);
         }
-    }, [ready, user]);
+      });
+    }
+  }, [ready, user]);
 
   if (!ready) {
     return "Loading...";
@@ -120,16 +127,16 @@ export default function ProfilePage() {
     return <Navigate to={redirect} />;
   }
 
-    const handleBecomeOwner = async () => {
-        try {
-            await axios.post('/become-owner', { userId: user._id });
-            setShowPayPalInstructions(true);
-            setBecomeOwnerClicked(true); // Hide the button after it is clicked
-        } catch (error) {
-            console.error('Error becoming owner:', error);
-            alert('Failed to become an owner. Please try again.');
-        }
-    };
+  const handleBecomeOwner = async () => {
+    try {
+      await axios.post("/become-owner", { userId: user._id });
+      setShowPayPalInstructions(true);
+      setBecomeOwnerClicked(true); // Hide the button after it is clicked
+    } catch (error) {
+      console.error("Error becoming owner:", error);
+      alert("Failed to become an owner. Please try again.");
+    }
+  };
 
   const handleUpdatePayPalEmail = async (ev) => {
     ev.preventDefault();
@@ -139,17 +146,20 @@ export default function ProfilePage() {
         paypalEmail: paypalEmail,
       });
 
-            setUser(data.user);
-            setTasks(data.tasks);
-            setThankYouMessage(true);
-        } catch (error) {
-            console.error('Error updating PayPal email:', error);
-            alert('Failed to update PayPal email. Please try again.');
-        }
-    };
+      setUser(data.user);
+      setTasks(data.tasks);
+      setThankYouMessage(true);
+    } catch (error) {
+      console.error("Error updating PayPal email:", error);
+      alert("Failed to update PayPal email. Please try again.");
+    }
+  };
 
-    // Check if the PayPal task is completed
-    const isPayPalTaskCompleted = tasks.some(task => task.description === 'Update PayPal Email' && task.status === 'completed');
+  // Check if the PayPal task is completed
+  const isPayPalTaskCompleted = tasks.some(
+    (task) =>
+      task.description === "Update PayPal Email" && task.status === "completed"
+  );
 
   // Check if all tasks are completed
   const allTasksCompleted = tasks.every((task) => task.status === "completed");
@@ -249,7 +259,7 @@ export default function ProfilePage() {
               </button>
             </form>
           )}
-                    <div>
+          <div>
             <form onSubmit={updateProfilePicture} className="space-y-4 mt-4">
               <div className="p-4 border rounded shadow-lg bg-gray-50">
                 <label className="block text-center font-medium mb-2 text- font-bold">
@@ -269,11 +279,11 @@ export default function ProfilePage() {
               </div>
             </form>
           </div>
-                    
+
           <div className="bg-blue-200 p-4 rounded mt-3">
             <h3 className="font-semibold text-xl">Tasks to Complete</h3>
             <ul className="list-disc list-inside text-left">
-            {tasks.map((task, index) => (
+              {tasks.map((task, index) => (
                 <li key={index} className="flex items-center">
                   {renderTaskIcon(task.status)}
                   {task.description} - {task.status}
@@ -287,53 +297,51 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-          {user && user.role !== "owner" && (
+          {user && user.role !== "owner" && !allTasksCompleted && (
             <div className="mt-4 flex flex-col items-center">
-              {allTasksCompleted ? (
-                <div className="bg-green-400 p-4 rounded mt-3">
-                  <h3 className="text-lg font-semibold mb-2">
-                    All tasks are completed!
-                  </h3>
-                  <p>You can now access the host functionalities above.</p>
-                </div>
-              ) : showPayPalInstructions ? (
-                thankYouMessage ? (
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
-                    <p>
-                      Your PayPal email has been updated successfully. You can
-                      now receive payments.
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    <PayPalInstructions />
-                    <form onSubmit={handleUpdatePayPalEmail} className="mt-4">
-                      <label className="block text-left font-medium">
-                        PayPal Email
-                      </label>
-                      <input
-                        type="email"
-                        className="w-full p-2 border rounded"
-                        placeholder="Enter your PayPal email"
-                        value={paypalEmail}
-                        onChange={(ev) => setPaypalEmail(ev.target.value)}
-                        required
-                      />
-                      <button type="submit" className="primary mt-2">
-                        Submit
-                      </button>
-                    </form>
-                  </>
-                )
-              ) : (
-                <button
-                  onClick={handleBecomeOwner}
-                  className="primary mt-4 hover:bg-blue-700 "
-                >
+              {!isPayPalTaskCompleted && !becomeOwnerClicked && (
+                <button onClick={handleBecomeOwner} className="primary mt-4">
                   Become an Owner
                 </button>
               )}
+              {showPayPalInstructions && !thankYouMessage && (
+                <>
+                  <PayPalInstructions />
+                  <form onSubmit={handleUpdatePayPalEmail} className="mt-4">
+                    <label className="block text-left font-medium">
+                      PayPal Email
+                    </label>
+                    <input
+                      type="email"
+                      className="w-full p-2 border rounded"
+                      placeholder="Enter your PayPal email"
+                      value={paypalEmail}
+                      onChange={(ev) => setPaypalEmail(ev.target.value)}
+                      required
+                    />
+                    <button type="submit" className="primary mt-2">
+                      Submit
+                    </button>
+                  </form>
+                </>
+              )}
+              {thankYouMessage && (
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
+                  <p>
+                    Your PayPal email has been updated successfully. You can now
+                    receive payments.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+          {allTasksCompleted && (
+            <div className="bg-green-400 p-4 rounded mt-3">
+              <h3 className="text-lg font-semibold mb-2">
+                All tasks are complete!
+              </h3>
+              <p>You now have access to the host functionalities.</p>
             </div>
           )}
         </div>
