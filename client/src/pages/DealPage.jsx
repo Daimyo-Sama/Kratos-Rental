@@ -6,8 +6,8 @@ import TripDates from "../TripDates";
 import CarImg from "../CarImg";
 
 export default function DealPage() {
-    const { id } = useParams();
-    const [deal, setDeal] = useState(null);
+  const { id } = useParams();
+  const [deal, setDeal] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -20,17 +20,18 @@ export default function DealPage() {
     }
   }, [id]);
 
-    
+  if (!deal) {
+    return "Loading...";
+  }
 
-    return (
-        <div className="my-8">
-            <div className="flex-row">
-                <h1 className="text-3xl">{deal.car.title}</h1>
-                <div className="w-96">
-                    <CarImg car={deal.car} />
-                </div>
-            </div>
-
+  return (
+    <div className="my-8">
+      <div className="flex-row">
+        <h1 className="text-3xl">{deal.car.title}</h1>
+        <div className="w-96">
+          <CarImg car={deal.car} />
+        </div>
+      </div>
       <AddressLink className="my-2 block">{deal.car.address}</AddressLink>
       <div className="bg-gray-200 rounded-2xl">
         <div className="p-6 my-6 flex items-center justify-between">
@@ -43,7 +44,6 @@ export default function DealPage() {
             <div className="text-3xl">${deal.price}</div>
           </div>
         </div>
-        <div></div>
       </div>
       <div className="my-8">
         <div className="flex flex-wrap">
@@ -65,7 +65,6 @@ export default function DealPage() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
