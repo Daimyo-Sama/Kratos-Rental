@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import axios from "axios";
 
 export default function Header() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const [location, setLocation] = useState("");
+  const location = useLocation();
+  const [searchLocation, setSearchLocation] = useState("");
 
   async function handleLogout() {
     try {
@@ -17,6 +18,24 @@ export default function Header() {
       console.error("Failed to logout:", error);
     }
   }
+
+  function handleSearch() {
+    if (searchLocation.trim() !== "") {
+      const normalizedLocation = searchLocation
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      navigate(`/search?location=${encodeURIComponent(normalizedLocation)}`);
+    }
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  }
+
+  const showSearchBar =
+    location.pathname === "/" || location.pathname.startsWith("/search");
 
   return (
     <header className="flex justify-between items-center">
@@ -37,35 +56,43 @@ export default function Header() {
         </svg>
         <span className="font-bold text-xl">Kratos</span>
       </Link>
-      <div className="flex gap-2 border border-gray-300 rounded-full p-2 px-4 shadow-md shadow-gray-300">
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="Enter city, zip code or address"
-          className="flex-grow outline-none"
-        />
-        <div className="border-l border-gray-300"></div>
-        <div>Any week</div>
-        <div className="border-l border-gray-300"></div>
-        <div>Add guests</div>
-        <button className="bg-primary text-white p-1 rounded-full">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-4"
+
+      {showSearchBar && (
+        <div
+          className="flex gap-2 border border-gray-300 rounded-full p-2 px-4 shadow-md shadow-gray-300"
+          style={{ width: "40%" }}
+        >
+          <input
+            type="text"
+            value={searchLocation}
+            onChange={(e) => setSearchLocation(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Enter city or zip code"
+            className="flex-grow outline-none"
+          />
+
+          <button
+            onClick={handleSearch}
+            className="bg-primary text-white p-1 rounded-full"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
-        </button>
-      </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
+
       <div className="relative group">
         <Link
           to={user ? "/account" : "/login"}
