@@ -116,13 +116,38 @@ export default function TripPage() {
 
   return (
     <div className="my-8">
-      <h1 className="text-3xl">{trip.car.title}</h1>
-      <AddressLink className="my-2 block">{trip.car.address}</AddressLink>
+      <button
+        onClick={() => navigate("/account/trips")}
+        className="inline-flex items-center text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-4 shadow-md hover:shadow-lg transform transition-transform hover:scale-105"
+      >
+        <svg
+          className="w-5 h-5 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          ></path>
+        </svg>
+        Go Back
+      </button>
+    
       <div className="bg-gray-200 p-6 my-6 rounded-2xl flex items-center justify-between">
         <div>
-          <h2 className="text-2xl mb-4">Your trip information</h2>
+        <h2 className="text-2xl mb-4">Your trip information</h2>
+        <h1 className="text-3xl">{trip.car.title}</h1>
+        <AddressLink className="my-2 block">{trip.car.address}</AddressLink>
+      
+          
           <TripDates trip={trip} />
+          
         </div>
+
         <div className="bg-gray-300 p-4 rounded shadow-md">
           <h2 className="text-2xl mb-2">Owner</h2>
           <div className="flex items-center">
