@@ -819,16 +819,44 @@ app.get("/users/:userId/reviews", async (req, res) => {
   }
 });
 
-app.get('/deals', async (req,res) =>{
-  const userData = await getUserDataFromReq(req);
-  const userCars = await Car.find({owner:userData.id}); 
-  const userCarsId = userCars.map(car => car._id.toString());
-  const allDeals = [];
-  for (let i = 0; i < userCarsId.length; i++) {
-      const deals = await Trip.find({ car: userCarsId[i] }).populate('car');
+app.get('/deals', async (req, res) => {
+  try {
+    const userData = await getUserDataFromReq(req);
+    const userCars = await Car.find({ owner: userData.id });
+    const userCarsId = userCars.map(car => car._id.toString());
+    const allDeals = [];
+
+    for (let i = 0; i < userCarsId.length; i++) {
+      const deals = await Trip.find({ car: userCarsId[i] })
+        .populate({
+          path: 'car',
+          populate: {
+            path: 'owner',
+            model: 'User',
+          }
+        })
+        .populate({
+          path: 'user',
+          model: 'User',
+          select: 'name email profilePicture reviews',
+          populate: {
+            path: 'reviews',
+            populate: {
+              path: 'reviewer',
+              model: 'User',
+              select: 'name'
+            }
+          }
+        });
+
       allDeals.push(...deals);
+    }
+
+    res.json(allDeals);
+  } catch (error) {
+    console.error('Error fetching deals:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  res.json(allDeals);
 });
 
 // Route to accept reservation

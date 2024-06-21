@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AddressLink from "../AddressLink";
 import CarGallery from "../CarGallery";
 import TripDates from "../TripDates";
@@ -86,7 +86,7 @@ export default function TripPage() {
     if (!isPayPalScriptLoaded || paypalButtonsRendered) return;
 
     const createOrder = async () => {
-      const amount = trip.price; // Use the actual trip price
+      const amount = trip.price;
       const response = await axios.post("/create-paypal-order", { amount });
       return response.data.id;
     };
@@ -98,7 +98,7 @@ export default function TripPage() {
       });
       if (response.data.message === "Payment successful and trip confirmed!") {
         alert("Payment successful and trip confirmed!");
-        window.location.reload(); // Reload the page on successful payment
+        window.location.reload();
       } else {
         alert("Payment not completed");
       }
@@ -121,31 +121,50 @@ export default function TripPage() {
       <div className="bg-gray-200 p-6 my-6 rounded-2xl flex items-center justify-between">
         <div>
           <h2 className="text-2xl mb-4">Your trip information</h2>
-          <div className="bg-white p-4 rounded shadow-md">
-            <h2 className="text-2xl mb-2">Owner Information</h2>
-            {/* flexer dans un div qui fait du sens */}
-            <p>
-              <strong>Profile Picture:</strong> {trip.car.owner.profilePicture}
-            </p>
-            <p>
-              <strong>Name:</strong> {trip.car.owner.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {trip.car.owner.email}
-            </p>
-          </div>
           <TripDates trip={trip} />
+        </div>
+        <div className="bg-gray-300 p-4 rounded shadow-md">
+          <h2 className="text-2xl mb-2">Owner</h2>
+          <div className="flex items-center">
+            {trip.car.owner.profilePicture && (
+              <img
+                src={`http://localhost:4000${trip.car.owner.profilePicture}`}
+                alt="Profile"
+                className="w-16 h-16 rounded-full mr-4"
+              />
+            )}
+            <div>
+              <p>
+                <strong>Name:</strong> {trip.car.owner.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {trip.car.owner.email}
+              </p>
+            </div>
+          </div>
         </div>
         <div className="mt-4 flex items-center">
           <span className="font-semibold">Status:</span> {trip.status}
-          {trip.status === "confirmed" && (
-            <Link
-              to={`/account/trips/${trip._id}/details`}
-              className="btn-primary ml-4"
-            >
-              Go to New Page
-            </Link>
-          )}
+        </div>
+        <div className="text-center mt-4">
+          <div id={`paypal-button-container`}></div>
+          <button
+            onClick={handlePayment}
+            className={`btn-primary   ${
+              trip.status !== "unpaid" ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={trip.status !== "unpaid"}
+          >
+            Pay with PayPal
+          </button>
+        </div>
+        <div className="flex gap-4 mt-4">
+          <button
+            onClick={handleCancelTrip}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Cancel Trip
+          </button>
         </div>
         <div className="bg-primary p-6 text-white rounded-2xl">
           <div>Total price</div>
@@ -153,6 +172,7 @@ export default function TripPage() {
         </div>
       </div>
       <CarGallery car={trip.car} />
+
       {(trip.status === "confirmed" || trip.status === "completed") && (
         <div className="mt-4 p-4 bg-white rounded shadow">
           <h2 className="font-semibold text-2xl">Submit a Review</h2>
@@ -211,23 +231,6 @@ export default function TripPage() {
           )}
         </div>
       )}
-      <div className="flex gap-4 mt-4">
-        <button
-          onClick={handleCancelTrip}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Cancel Trip
-        </button>
-        {trip.status === "unpaid" && (
-          <div className="text-center mt-4">
-            <div id={`paypal-button-container`}></div>
-            <button onClick={handlePayment} className="btn-primary">
-              Pay with PayPal
-            </button>
-          </div>
-        )}
-      </div>
-      <div className="my-8"></div>
     </div>
   );
 }
