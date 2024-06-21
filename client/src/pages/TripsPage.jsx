@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AccountNav from "../AccountNav";
 import axios from "axios";
 import CarImg from "../CarImg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import TripDates from "../TripDates";
 
 // Load PayPal script
@@ -19,7 +19,7 @@ export default function TripsPage() {
     const [trips, setTrips] = useState([]); // State to store the list of trips
     const [isPayPalScriptLoaded, setIsPayPalScriptLoaded] = useState(false);
     const [paypalButtonsRendered, setPaypalButtonsRendered] = useState({}); // Track which PayPal buttons are rendered
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('/trips').then(response => {
@@ -62,7 +62,7 @@ export default function TripsPage() {
         try {
             await axios.put(`/trips/${tripId}/cancel`);
             alert('Trip canceled successfully!');
-            navigate('/account/'); // Redirect to profile page after cancellation
+            // navigate('/account/'); // Redirect to profile page after cancellation
         } catch (error) {
             console.error('Error canceling trip:', error);
             if (error.response && error.response.status === 400) {
@@ -195,7 +195,7 @@ export default function TripsPage() {
                 {trips?.length > 0 && trips
                 .filter(trip => trip.userStatus !== 'archived' && trip.userStatus !== 'deleted')
                 .map(trip => (
-                    <Link key={trip._id} to={`/account/trips/${trip._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mt-4">
+                    <Link key={trip._id} to={`/account/trips/${trip._id}`} className="flex gap-4 bg-gray-300 rounded-2xl overflow-hidden mt-4">
                         <div className="w-48">
                             <CarImg car={trip.car} className={"object-cover h-full"}/>
                         </div>
@@ -221,7 +221,7 @@ export default function TripsPage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col px-2 bg-gray-100 w-64 items-center py-2 justify-between ">
+                        <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
                             <h3 className="text-lg font-semibold">Quick Access Panel</h3>
                             <div className="flex flex-col items-center space-y-2 pt-2">
                                 <p>{userAccessPanelMessage1(trip.status)}</p>

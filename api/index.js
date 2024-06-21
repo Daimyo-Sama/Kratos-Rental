@@ -692,68 +692,24 @@ app.get("/trips/car/:carId", async (req, res) => {
   }
 });
 
-// Route to accept reservation
-app.put("/trips/:id/accept", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const userData = await getUserDataFromReq(req);
-    const userId = userData.id; // Get the authenticated user's ID
-
-    const trip = await Trip.findById(id).populate("car");
-    if (!trip) {
-      return res.status(404).json({ error: "Trip not found" });
-    }
-
-    const car = await Car.findById(trip.car._id);
-    if (!car) {
-      return res.status(404).json({ error: "Car not found" });
-    }
-
-    if (car.owner.toString() !== userId.toString()) {
-      return res.status(403).json({ error: "Unauthorized" });
-    }
-
-    trip.status = "unpaid";
-    await trip.save();
-
-    // await Car.findByIdAndUpdate(car._id, { status: 'booked' }); // Update car status to 'booked'
-
-    res.json(trip);
-  } catch (error) {
-    console.error("Error accepting reservation:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
 app.put("/trips/:id/archive", async (req, res) => {
   const { id } = req.params;
   try {
     const userData = await getUserDataFromReq(req);
-    const userId = userData.id; // Get the authenticated user's ID
-
-    const trip = await Trip.findById(id);  //.populate("car")
+    const userId = userData.id;
+    const trip = await Trip.findById(id);
     if (!trip) {
       return res.status(404).json({ error: "Trip not found" });
-    }
-
-    // const car = await Car.findById(trip.car._id);
-    // if (!car) {
-    //   return res.status(404).json({ error: "Car not found" });
-    // }
-
+    } 
     if (
-      trip.user.toString() !== userId.toString() // &&
-      // car.owner.toString() !== userId.toString()
+      trip.user.toString() !== userId.toString() 
     ) {
       return res.status(403).json({ error: "Unauthorized" });
     }
-
     trip.userStatus = "archived";
     await trip.save();
-
-    // await Car.findByIdAndUpdate(car._id, { status: "available" }); // Update car status to 'available'
-
     res.json(trip);
+
   } catch (error) {
     console.error("Error archiving trip:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -873,6 +829,146 @@ app.get('/deals', async (req,res) =>{
       allDeals.push(...deals);
   }
   res.json(allDeals);
+});
+
+// Route to accept reservation
+app.put("/deals/:id/accept", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userData = await getUserDataFromReq(req);
+    const userId = userData.id; // Get the authenticated user's ID
+
+    const deal = await Trip.findById(id).populate("car");
+    if (!deal) {
+      return res.status(404).json({ error: "Deal not found" });
+    }
+
+    const car = await Car.findById(deal.car._id);
+    if (!car) {
+      return res.status(404).json({ error: "Deal not found" });
+    }
+
+    if (car.owner.toString() !== userId.toString()) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    deal.status = "unpaid";
+    await deal.save();
+
+    // await Car.findByIdAndUpdate(car._id, { status: 'booked' }); // Update car status to 'booked'
+
+    res.json(deal);
+  } catch (error) {
+    console.error("Error accepting reservation:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.put("/deals/:id/checkin", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userData = await getUserDataFromReq(req);
+    const userId = userData.id;
+    const deal = await Trip.findById(id);
+    if (!deal) {
+      return res.status(404).json({ error: "Deal not found" });
+    } 
+    if (
+      deal.user.toString() !== userId.toString() 
+    ) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+    deal.status = "ongoing";
+    await deal.save();
+    res.json(deal);
+
+  } catch (error) {
+    console.error("Error archiving deal:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.put("/deals/:id/checkout", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userData = await getUserDataFromReq(req);
+    const userId = userData.id;
+    const deal = await Trip.findById(id);
+    if (!deal) {
+      return res.status(404).json({ error: "Deal not found" });
+    } 
+    if (
+      deal.user.toString() !== userId.toString() 
+    ) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+    deal.status = "completed";
+    await deal.save();
+    res.json(deal);
+
+  } catch (error) {
+    console.error("Error archiving deal:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.put("/deals/:id/cancel", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userData = await getUserDataFromReq(req);
+    const userId = userData.id; // Get the authenticated user's ID
+
+    const deal = await Trip.findById(id).populate("car");
+    if (!deal) {
+      return res.status(404).json({ error: "Deal not found" });
+    }
+
+    const car = await Car.findById(deal.car._id);
+    if (!car) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+
+    if (
+      deal.user.toString() !== userId.toString() &&
+      car.owner.toString() !== userId.toString()
+    ) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    deal.status = "cancelled";
+    await deal.save();
+
+    await Car.findByIdAndUpdate(car._id, { status: "available" }); // Update car status to 'available'
+
+    res.json(deal);
+  } catch (error) {
+    console.error("Error canceling deal:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.put("/deals/:id/archive", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userData = await getUserDataFromReq(req);
+    const userId = userData.id;
+    const deal = await Trip.findById(id);
+    if (!deal) {
+      return res.status(404).json({ error: "Deal not found" });
+    } 
+    if (
+      deal.user.toString() !== userId.toString() 
+    ) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+    deal.ownerStatus = "archived";
+    await deal.save();
+    res.json(deal);
+
+  } catch (error) {
+    console.error("Error archiving deal:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 // Route to handle password reset request
