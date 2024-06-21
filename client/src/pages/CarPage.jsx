@@ -65,7 +65,7 @@ export default function CarPage() {
                                     {car.owner.reviews.length > 0 ? (
                                         car.owner.reviews.map((review, index) => (
                                             <li key={index} className="text-sm text-gray-700 mt-1">
-                                                <p><strong>{review.reviewer.name}:</strong> {review.comment}</p>
+                                                <p><strong>{review.reviewedUser.name}:</strong> {review.comment}</p>
                                                 <p className="text-xs text-gray-500">Rating: {review.rating}</p>
                                             </li>
                                         ))

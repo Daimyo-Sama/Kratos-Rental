@@ -17,7 +17,6 @@ import ConfirmEmailPage from './pages/ConfirmEmailPage';
 import TripsArchivedPage from './pages/TripsArchivedPage';
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-import TripDetailsPage from './pages/TripDetailsPage'; // Import the new page
 import AboutUs from './pages/AboutUsPage';
 
 
@@ -44,7 +43,6 @@ function App() {
           <Route path='/account/deals/:id' element={<DealPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-           <Route path='/account/trips/:id/details' element={<TripDetailsPage />} />
            <Route path='/about-us' element={<AboutUs />} />
             
         </Route>
