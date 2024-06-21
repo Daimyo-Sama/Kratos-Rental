@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AddressLink from "../AddressLink";
 import TripDates from "../TripDates";
 import CarImg from "../CarImg";
-import StatusNav from "../StatusNav";
 
 export default function DealPage() {
     const { id } = useParams();
@@ -14,16 +13,16 @@ export default function DealPage() {
     const [reviewSubmitted, setReviewSubmitted] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (id) {
-            axios.get('/deals').then(response => {
-                const foundDeal = response.data.find(({ _id }) => _id === id);
-                if (foundDeal) {
-                    setDeal(foundDeal);
-                }
-            });
+  useEffect(() => {
+    if (id) {
+      axios.get("/deals").then((response) => {
+        const foundDeal = response.data.find(({ _id }) => _id === id);
+        if (foundDeal) {
+          setDeal(foundDeal);
         }
-    }, [id]);
+      });
+    }
+  }, [id]);
 
     if (!deal) {
         return 'Loading...';

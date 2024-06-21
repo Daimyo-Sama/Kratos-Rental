@@ -26,7 +26,7 @@ export default function CarsPage() {
             </div>
             <div className="flex flex-col max-w-6xl mx-auto">
                 {cars.length > 0 && cars.map(car => (
-                    <Link key={car._id} to={'/account/cars/'+car._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl mt-4">
+                    <Link key={car._id} to={'/account/cars/'+car._id} className="flex cursor-pointer gap-4 bg-gray-200 p-4 rounded-2xl mt-4">
                         <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
                             <CarImg car={car} />
                         </div>
