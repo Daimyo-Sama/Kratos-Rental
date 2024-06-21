@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AddressLink from "../AddressLink";
 import TripDates from "../TripDates";
 import CarImg from "../CarImg";
@@ -97,7 +97,6 @@ export default function DealPage() {
                     </div>
                 </div>
                 <div>
-                    <StatusNav trip={deal.status} />
                 </div>
             </div>
             <div className="my-8">
