@@ -44,7 +44,33 @@ app.use(
   })
 );
 
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Helper function to normalize strings
+function normalizeString(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+app.get("/api/cars/search", async (req, res) => {
+  const searchAddress = req.query.address;
+  if (!searchAddress) {
+    return res.status(400).json({ error: "Address query parameter is required" });
+  }
+
+  try {
+    const normalizedSearchAddress = normalizeString(searchAddress);
+    const cars = await Car.find();
+    const filteredCars = cars.filter(car =>
+      normalizeString(car.address).includes(normalizedSearchAddress)
+    );
+    res.json(filteredCars);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch cars" });
+  }
+});
 
 //helper function to check json token
 function getUserDataFromReq(req) {
@@ -573,6 +599,18 @@ app.get("/cars", async (req, res) => {
   } catch (e) {
     console.error("Error fetching cars:", e);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Search cars by address
+app.get('/api/cars/search', async (req, res) => {
+  try {
+    const { address } = req.query;
+    const cars = await Car.find({ address: new RegExp(address, 'i') }); // Using regex for case-insensitive search
+    res.json(cars);
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    res.status(500).json({ error: 'Failed to fetch cars' });
   }
 });
 
