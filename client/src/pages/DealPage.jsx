@@ -57,7 +57,6 @@ export default function DealPage() {
     }
   };
 
-
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     try {
@@ -138,7 +137,7 @@ export default function DealPage() {
           <div className="bg-gray-200 p-4 rounded shadow-md">
             <div>
               <h2 className="text-2xl mb-2">Client Information</h2>
-              {deal.user.profilePicture && (
+              {deal.user?.profilePicture && (
                 <img
                   src={`http://localhost:4000${deal.user.profilePicture}`}
                   alt="Profile"
@@ -146,10 +145,10 @@ export default function DealPage() {
                 />
               )}
               <p>
-                <strong>Name:</strong> {deal.user.name}
+                <strong>Name:</strong> {deal.user?.name}
               </p>
               <p>
-                <strong>Email:</strong> {deal.user.email}
+                <strong>Email:</strong> {deal.user?.email}
               </p>
               <p>
                 <strong>Phone:</strong> {deal.phone}
@@ -159,7 +158,7 @@ export default function DealPage() {
             <div className="mt-4">
               <h3 className="font-semibold text-xl">Reviews</h3>
               <ul className="list-disc list-inside">
-                {deal.user.reviews.length > 0 ? (
+                {deal.user?.reviews?.length > 0 ? (
                   deal.user.reviews.map((review, index) => (
                     <li key={index} className="text-sm text-gray-700 mt-1">
                       <p>

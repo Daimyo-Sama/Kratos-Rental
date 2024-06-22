@@ -205,7 +205,7 @@ export default function ProfilePage() {
   return (
     <div>
       <AccountNav />
-      <div className="bg-white p-6 rounded shadow-md text-center mb-4">
+      <div className="bg-white px-12 py-6 max-w-2xl rounded shadow-md text-center mb-4 mx-auto">
         {user.profilePicture ? (
           <img
             src={`http://localhost:4000${user.profilePicture}`} // Check for correct URL
