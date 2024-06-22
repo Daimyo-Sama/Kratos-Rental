@@ -15,7 +15,7 @@ export default function IndexPage() {
 
     return (
         <div>
-            <Banner /> {/* Add the Banner component here */}
+            <Banner /> 
             <div className="bg-gray-600 text-white text-center py-16 mb-8">
                 <h2 className="text-2xl">Filters??</h2>
             </div>

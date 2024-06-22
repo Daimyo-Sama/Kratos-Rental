@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import AccountNav from "../AccountNav";
 import axios from "axios";
-import CarImg from "../CarImg";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AddressLink from "../AddressLink";
 import TripDates from "../TripDates";
+import CarImg from "../CarImg";
+import AccountNav from "../AccountNav";
 
 // Load PayPal script
 const loadPayPalScript = (clientId) => {
@@ -19,7 +20,6 @@ export default function TripsPage() {
     const [trips, setTrips] = useState([]); // State to store the list of trips
     const [isPayPalScriptLoaded, setIsPayPalScriptLoaded] = useState(false);
     const [paypalButtonsRendered, setPaypalButtonsRendered] = useState({}); // Track which PayPal buttons are rendered
-    // const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('/trips').then(response => {
@@ -62,14 +62,9 @@ export default function TripsPage() {
         try {
             await axios.put(`/trips/${tripId}/cancel`);
             alert('Trip canceled successfully!');
-            // navigate('/account/'); // Redirect to profile page after cancellation
         } catch (error) {
             console.error('Error canceling trip:', error);
-            if (error.response && error.response.status === 400) {
-                // alert('Trip dates overlap with another trip. Please choose different dates.');
-            } else {
-                alert('Failed to cancel the trip. Please try again.');
-            }
+            alert('Failed to cancel the trip. Please try again.');
         }
     };
 
@@ -82,11 +77,7 @@ export default function TripsPage() {
             ));
         } catch (error) {
             console.error('Error archiving trip:', error);
-            if (error.response && error.response.status === 400) {
-                // alert('Trip dates overlap with another trip. Please choose different dates.');
-            } else {
-                alert('Failed to archive the trip. Please try again.');
-            }
+            alert('Failed to archive the trip. Please try again.');
         }
     };
 
@@ -142,7 +133,6 @@ export default function TripsPage() {
             const buttonText = "Review"
             return (
                 <button
-                    // onClick={() => handleCancelTrip(trip._id)}
                     className={classNameButton}
                 >
                     {buttonText}
@@ -183,7 +173,7 @@ export default function TripsPage() {
     return (
         <div>
             <AccountNav />
-            <div className="text-center ">
+            <div className="text-center">
                 <Link className="inline-flex hover:bg-blue-700 gap-1 bg-primary text-white py-2 px-6 rounded-full" to={'/account/trips/archived'}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
@@ -195,6 +185,7 @@ export default function TripsPage() {
                 {trips?.length > 0 && trips
                 .filter(trip => trip.userStatus !== 'archived' && trip.userStatus !== 'deleted')
                 .map(trip => (
+                    trip.car ? (
                     <Link key={trip._id} to={`/account/trips/${trip._id}`} className="flex gap-4 bg-gray-300 rounded-2xl overflow-hidden mt-4">
                         <div className="w-48">
                             <CarImg car={trip.car} className={"object-cover h-full"}/>
@@ -227,13 +218,13 @@ export default function TripsPage() {
                                 <p>{userAccessPanelMessage1(trip.status)}</p>
                                 <p>{userAccessPanelMessage2(trip.status)}</p>
                             </div>
-                            {/* <div id={`paypal-button-container-${trip._id}`}></div> */}
                             <div className="flex w-full p-2 space-x-2 mt-auto">
                                 {userActionButton1(trip)}
                                 {userActionButton2(trip)}
                             </div>
                         </div>
                     </Link>
+                    ) : null
                 ))}
             </div>
         </div>
