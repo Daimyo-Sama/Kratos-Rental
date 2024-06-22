@@ -1,7 +1,7 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import Perks from "../Perks.jsx";
 import PhotosUploader from "../PhotosUploader.jsx";
-import axios from "axios";
 import AccountNav from "../AccountNav.jsx";
 import { Navigate, useParams } from "react-router-dom";
 
@@ -79,6 +79,16 @@ export default function CarsFormPage() {
         }
     }
 
+    async function deleteCar() {
+        try {
+            await axios.delete(`/cars/${id}`);
+            setRedirect(true); // Redirect to the car listing page after deletion
+        } catch (error) {
+            console.error('Error deleting car:', error);
+            alert('Failed to delete the car. Please try again.');
+        }
+    }
+
     if (redirect) {
         return <Navigate to={'/account/cars'} />
     }
@@ -86,57 +96,94 @@ export default function CarsFormPage() {
     return (
         <div>
             <AccountNav />
-            <form onSubmit={saveCar}>
+            <form onSubmit={saveCar} className="max-w-6xl mx-auto p-6 bg-gray-300 border-8 border-gray-400 rounded-xl">
                 {preInput('Title', 'Title for your car, should be short and catchy as in advertisement')}
-                <input type="text"
+                <input 
+                    type="text"
                     value={title}
                     onChange={ev => setTitle(ev.target.value)}
-                    placeholder="title, for example: My lovely car" />
+                    placeholder="title, for example: My lovely car"
+                    className="w-full p-2 border rounded-lg mb-4"
+                />
                 {preInput('Address', 'Address to this car')}
-                <input type="text"
+                <input 
+                    type="text"
                     value={address}
                     onChange={ev => setAddress(ev.target.value)}
-                    placeholder="address" />
+                    placeholder="address"
+                    className="w-full p-2 border rounded-lg mb-4"
+                />
                 {preInput('Photos', 'More = better')}
                 <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
                 {preInput('Description', 'Description of the car')}
-                <textarea value={description} onChange={ev => setDescription(ev.target.value)} />
+                <textarea 
+                    value={description} 
+                    onChange={ev => setDescription(ev.target.value)}
+                    className="w-full p-2 border rounded-lg mb-4"
+                />
                 {preInput('Perks', 'Select all the perks of your car')}
-                <div className="grid mt-2 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+                <div className="grid mt-2 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mb-4">
                     <Perks selected={perks} onChange={setPerks} />
                 </div>
                 {preInput('Extra info', 'Additional information, etc')}
-                <textarea value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
+                <textarea 
+                    value={extraInfo} 
+                    onChange={ev => setExtraInfo(ev.target.value)}
+                    className="w-full p-2 border rounded-lg mb-4"
+                />
                 {preInput('Check in & out times', 'Add check in and out times, remember to have some window for cleaning the car between guests')}
                 <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
                     <div>
                         <h3 className="mt-2 -mb-1">Check in time</h3>
-                        <input type="text"
+                        <input 
+                            type="text"
                             value={checkIn}
                             onChange={ev => setCheckIn(ev.target.value)}
-                            placeholder="14" />
+                            placeholder="14"
+                            className="w-full p-2 border rounded-lg"
+                        />
                     </div>
                     <div>
                         <h3 className="mt-2 -mb-1">Check out time</h3>
-                        <input type="text"
+                        <input 
+                            type="text"
                             value={checkOut}
                             onChange={ev => setCheckOut(ev.target.value)}
-                            placeholder="11" />
+                            placeholder="11"
+                            className="w-full p-2 border rounded-lg"
+                        />
                     </div>
                     <div>
                         <h3 className="mt-2 -mb-1">Max number of guests</h3>
-                        <input type="number"
+                        <input 
+                            type="number"
                             value={maxGuests}
-                            onChange={ev => setMaxGuests(ev.target.value)} />
+                            onChange={ev => setMaxGuests(ev.target.value)}
+                            className="w-full p-2 border rounded-lg"
+                        />
                     </div>
                     <div>
                         <h3 className="mt-2 -mb-1">Price per night</h3>
-                        <input type="number"
+                        <input 
+                            type="number"
                             value={price}
-                            onChange={ev => setPrice(ev.target.value)} />
+                            onChange={ev => setPrice(ev.target.value)}
+                            className="w-full p-2 border rounded-lg"
+                        />
                     </div>
                 </div>
-                <button className="primary my-4">Save</button>
+                <div className="flex justify-end space-x-4 mt-4">
+                    <button className="w-full md:w-auto primary my-4 px-4 py-2  text-white rounded-2xl hover:bg-gray-600">Save</button>
+                    
+                    
+                        <button 
+                            type="button" 
+                            onClick={deleteCar} 
+                            className="w-full md:w-auto my-4 px-4 py-2 bg-red-500 text-white rounded-2xl hover:bg-red-600"
+                        >
+                            Delete Car
+                        </button>
+                </div>
             </form>
         </div>
     );

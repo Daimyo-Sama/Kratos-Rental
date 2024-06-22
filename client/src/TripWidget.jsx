@@ -24,14 +24,6 @@ export default function TripWidget({car}) {
     if(checkIn && checkOut) {
         numberOfNights = differenceInCalendarDays(new Date(checkOut), new Date(checkIn));
     }
-    // if (!checkIn || !checkOut || !numberOfGuests || !name || !phone) {
-    //     alert("All fields are required!");
-    //     return;
-    // }
-
-    //include in try catch block 
-    //console.error('Error creating booking:', error);
-   //alert('Failed to book the place. Please try again.');
 
    async function bookThisCar() {
     if (!checkIn || !checkOut || !numberOfGuests || !name || !phone) {
@@ -55,6 +47,9 @@ export default function TripWidget({car}) {
     } catch (error) {
         if (error.response && error.response.status === 400) {
             alert('This car is already booked for the selected dates.');
+        } else if (error.response && error.response.status === 401) {
+            alert('Please log in before booking.');
+            setRedirect('/login');
         } else {
             console.error('Error creating booking:', error);
             alert('Failed to book the car. Please try again.');

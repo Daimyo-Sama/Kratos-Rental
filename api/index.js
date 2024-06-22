@@ -569,9 +569,25 @@ app.put("/cars", async (req, res) => {
   });
 });
 
-///////
+app.delete("/cars/:id", async (req, res) => {
+  try {
+    const userData = await getUserDataFromReq(req);
+    const { id } = req.params;
 
-///////
+
+    const carDoc = await Car.findById(id);
+    if (!carDoc) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+
+    await Car.deleteOne({ _id: id });
+    res.json({ message: "Car deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting car:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 // Page Accueil
 app.get("/cars", async (req, res) => {
@@ -601,11 +617,18 @@ app.get('/api/cars/search', async (req, res) => {
 // pour booker des voitures
 app.post("/trips", async (req, res) => {
   try {
-    const userData = await getUserDataFromReq(req);
+    const userData = await getUserDataFromReq(req).catch(err => {
+      console.error("JWT verification error:", err);
+      return res.status(401).json({ error: "Unauthorized. Please log in." });
+    });
+
+    if (!userData) {
+      return;
+    }
+
     const { car, checkIn, checkOut, numberOfGuests, name, phone, price } =
       req.body;
 
-    // Convert checkIn and checkOut to Date objects
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
 
@@ -619,7 +642,6 @@ app.post("/trips", async (req, res) => {
       price,
     });
 
-    // Check for overlapping trips
     const overlappingTrips = await Trip.find({
       car,
       $or: [
@@ -636,7 +658,6 @@ app.post("/trips", async (req, res) => {
         .json({ error: "This car is already booked for the selected dates." });
     }
 
-    // Create the trip
     const trip = await Trip.create({
       car,
       checkIn,
@@ -649,9 +670,6 @@ app.post("/trips", async (req, res) => {
       status: "upcoming", // statut du trip
     });
 
-    console.log("Trip created:", trip);
-
-    // Update car status to 'booked'
     const updatedCar = await Car.findByIdAndUpdate(
       car,
       { status: "booked" },
@@ -662,8 +680,6 @@ app.post("/trips", async (req, res) => {
       console.error("Failed to update car status");
       return res.status(500).json({ error: "Failed to update car status" });
     }
-
-    console.log("Car status updated to booked:", updatedCar);
 
     res.json(trip);
   } catch (err) {
