@@ -131,7 +131,7 @@ export default function CarsFormPage() {
                     onChange={ev => setExtraInfo(ev.target.value)}
                     className="w-full p-2 border rounded-lg mb-4"
                 />
-                {preInput('Check in & out times', 'Add check in and out times, remember to have some window for cleaning the car between guests')}
+                {preInput('Price', 'Add the income you want to receive per day. Remember that it will be more expensive for the user due to the Kratos fees')}
                 <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
                     {/* <div>
                         <h3 className="mt-2 -mb-1">Check in time</h3>
