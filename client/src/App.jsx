@@ -39,16 +39,10 @@ function App() {
           <Route path="/car/:id" element={<CarPage />} />
           <Route path="/account/trips" element={<TripsPage />} />
           <Route path="/account/trips/:id" element={<TripPage />} />
-          <Route
-            path="/account/trips/archived"
-            element={<TripsArchivedPage />}
-          />
+          <Route path="/account/trips/archived" element={<TripsArchivedPage />} />
           <Route path="/account/deals" element={<DealsPage />} />
           <Route path="/account/deals/:id" element={<DealPage />} />
-          <Route
-            path="/account/deals/archived"
-            element={<DealsArchivedPage />}
-          />
+          <Route path="/account/deals/archived" element={<DealsArchivedPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/about-us" element={<AboutUs />} />

@@ -15,7 +15,7 @@ export default function DealsArchivedPage() {
   }, []);
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <AccountNav />
       <div className="text-center">
         <Link
@@ -39,7 +39,7 @@ export default function DealsArchivedPage() {
           Go Back
         </Link>
       </div>
-      <div className="flex flex-col max-w-6xl mx-auto">
+      <div className="flex flex-col">
         {deals?.length > 0 &&
           deals
             .filter((deal) => deal.ownerStatus === "archived")

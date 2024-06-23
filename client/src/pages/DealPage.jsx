@@ -75,7 +75,7 @@ export default function DealPage() {
   };
 
   return (
-    <div className="my-8">
+    <div className="max-w-6xl mx-auto">
       <button
         onClick={() => navigate("/account/deals")}
         className="inline-flex items-center text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-4 shadow-md hover:shadow-lg transform transition-transform hover:scale-105"

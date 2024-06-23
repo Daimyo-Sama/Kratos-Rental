@@ -207,7 +207,7 @@ export default function DealsPage() {
     }
 
     return (
-        <div>
+        <div className="max-w-6xl mx-auto">
             <AccountNav />
             <div className="text-center ">
                 <Link className="inline-flex hover:bg-blue-700 gap-1 bg-primary text-white py-2 px-6 rounded-full" to={'/account/deals/archived'}>
@@ -217,7 +217,7 @@ export default function DealsPage() {
                     Archived Deals
                 </Link>
             </div>
-            <div className="flex flex-col max-w-6xl mx-auto">
+            <div className="flex flex-col">
                 {deals?.length > 0 && deals
                 .filter(deal => deal.ownerStatus !== 'archived' && deal.ownerStatus !== 'deleted')
                 .map(deal => (
