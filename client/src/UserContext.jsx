@@ -4,26 +4,29 @@ import PropTypes from "prop-types";
 
 export const UserContext = createContext({});
 
-export function UserContextProvider({children}) {
-    const [user,setUser] = useState(null);
-    const [ready,setReady] = useState(false);
+export function UserContextProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [ready, setReady] = useState(false);
 
-    useEffect(() => {
-        if (!user) {
-            axios.get('/profile').then(({data}) => {
-                setUser(data);
-                setReady(true);
-            });
-        }
-    });
+  useEffect(() => {
+    axios.get('/profile')
+      .then(({ data }) => {
+        setUser(data);
+        setReady(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+        setReady(true);
+      });
+  }, []); // Run only once
 
-    return (
-        <UserContext.Provider value={{user,setUser,ready}}>
-            {children}
-        </UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider value={{ user, setUser, ready }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 UserContextProvider.propTypes = {
-    children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };

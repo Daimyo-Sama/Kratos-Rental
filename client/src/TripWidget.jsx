@@ -47,7 +47,7 @@ export default function TripWidget({car}) {
     } catch (error) {
         if (error.response && error.response.status === 400) {
             alert('This car is already booked for the selected dates.');
-        } else if (error.response && error.response.status === 401) {
+        } else if (error.response && error.response.status === 500) {
             alert('Please log in before booking.');
             setRedirect('/login');
         } else {

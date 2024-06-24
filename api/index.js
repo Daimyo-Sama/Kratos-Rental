@@ -200,6 +200,27 @@ app.post("/update-paypal-email", async (req, res) => {
   }
 });
 
+// Route to check if PayPal email is filled
+app.get("/check-paypal-email/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const isPayPalEmailFilled = Boolean(user.paypalEmail);
+
+    res.json({ isPayPalEmailFilled });
+  } catch (error) {
+    console.error("Error checking PayPal email:", error);
+    res.status(500).json({ error: "Failed to check PayPal email" });
+  }
+});
+
+
 //////////////////////
 
 /////////////////////
@@ -612,20 +633,17 @@ app.get('/api/cars/search', async (req, res) => {
   }
 });
 
+
 // pour booker des voitures
 app.post("/trips", async (req, res) => {
   try {
-    const userData = await getUserDataFromReq(req).catch(err => {
-      console.error("JWT verification error:", err);
-      return res.status(401).json({ error: "Unauthorized. Please log in." });
-    });
+    const userData = await getUserDataFromReq(req);
 
     if (!userData) {
-      return;
+      return res.status(401).json({ error: "Unauthorized. Please log in." });
     }
 
-    const { car, checkIn, checkOut, numberOfGuests, name, phone, price } =
-      req.body;
+    const { car, checkIn, checkOut, numberOfGuests, name, phone, price } = req.body;
 
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
@@ -651,9 +669,7 @@ app.post("/trips", async (req, res) => {
 
     if (overlappingTrips.length > 0) {
       console.log("Overlapping trips:", overlappingTrips);
-      return res
-        .status(400)
-        .json({ error: "This car is already booked for the selected dates." });
+      return res.status(400).json({ error: "This car is already booked for the selected dates." });
     }
 
     const trip = await Trip.create({
@@ -685,6 +701,36 @@ app.post("/trips", async (req, res) => {
     res.status(500).json({ error: "Failed to create trip." });
   }
 });
+
+async function getUserDataFromReq(req) {
+  return new Promise((resolve, reject) => {
+    console.log("Cookies:", req.cookies);
+    jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
+      if (err) {
+        console.error("JWT verification error:", err);
+        return reject(new Error("Unauthorized. Please log in."));
+      }
+      console.log("UserData:", userData);
+      resolve(userData);
+    });
+  });
+}
+
+
+async function getUserDataFromReq(req) {
+  return new Promise((resolve, reject) => {
+    console.log("Cookies:", req.cookies);
+    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
+      if (err) {
+        console.error("JWT verification error:", err);
+        return reject(new Error("Unauthorized. Please log in."));
+      }
+      console.log("UserData:", userData);
+      resolve(userData);
+    });
+  });
+}
+
 
 app.get("/trips", async (req, res) => {
   const userData = await getUserDataFromReq(req);
