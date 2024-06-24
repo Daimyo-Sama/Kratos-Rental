@@ -94,9 +94,9 @@ export default function CarsFormPage() {
     }
 
     return (
-        <div>
+        <div className="max-w-6xl mx-auto">
             <AccountNav />
-            <form onSubmit={saveCar} className="max-w-6xl mx-auto p-6 bg-gray-300 border-8 border-gray-400 rounded-xl">
+            <form onSubmit={saveCar} className="p-6 bg-gray-300 border-8 border-gray-400 rounded-xl">
                 {preInput('Title', 'Title for your car, should be short and catchy as in advertisement')}
                 <input 
                     type="text"
@@ -131,9 +131,9 @@ export default function CarsFormPage() {
                     onChange={ev => setExtraInfo(ev.target.value)}
                     className="w-full p-2 border rounded-lg mb-4"
                 />
-                {preInput('Check in & out times', 'Add check in and out times, remember to have some window for cleaning the car between guests')}
+                {preInput('Price', 'Add the income you want to receive per day. Remember that it will be more expensive for the user due to the Kratos fees')}
                 <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
-                    <div>
+                    {/* <div>
                         <h3 className="mt-2 -mb-1">Check in time</h3>
                         <input 
                             type="text"
@@ -161,9 +161,9 @@ export default function CarsFormPage() {
                             onChange={ev => setMaxGuests(ev.target.value)}
                             className="w-full p-2 border rounded-lg"
                         />
-                    </div>
+                    </div> */}
                     <div>
-                        <h3 className="mt-2 -mb-1">Price per night</h3>
+                        <h3 className="mt-2 -mb-1">Price per day</h3>
                         <input 
                             type="number"
                             value={price}
@@ -174,15 +174,13 @@ export default function CarsFormPage() {
                 </div>
                 <div className="flex justify-end space-x-4 mt-4">
                     <button className="w-full md:w-auto primary my-4 px-4 py-2  text-white rounded-2xl hover:bg-gray-600">Save</button>
-                    
-                    
-                        <button 
-                            type="button" 
-                            onClick={deleteCar} 
-                            className="w-full md:w-auto my-4 px-4 py-2 bg-red-500 text-white rounded-2xl hover:bg-red-600"
-                        >
-                            Delete Car
-                        </button>
+                    <button
+                        type="button" 
+                        onClick={deleteCar} 
+                        className="w-full md:w-auto my-4 px-4 py-2 bg-red-500 text-white rounded-2xl hover:bg-red-600"
+                    >
+                        Delete Car
+                    </button>
                 </div>
             </form>
         </div>

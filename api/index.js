@@ -44,10 +44,8 @@ app.use(
   })
 );
 
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URL)
+
 
 // Helper function to normalize strings
 function normalizeString(str) {

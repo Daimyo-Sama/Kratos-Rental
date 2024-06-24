@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import TripWidget from "../TripWidget";
 import CarGallery from "../CarGallery";
 import AddressLink from "../AddressLink";
@@ -13,15 +13,15 @@ export default function CarPage() {
         if (!id) {
             return;
         }
-        axios.get(`/cars/${id}`).then(response => {
+        axios.get(`/cars/${id}`).then((response) => {
             setCar(response.data);
         });
     }, [id]);
 
-    if (!car) return 'Loading...';
+    if (!car) return "Loading...";
 
     return (
-        <div className="mt-4 bg-gray-100 -mx-8 px-8 pt-8">
+        <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl">{car.title}</h1>
             <AddressLink>{car.address}</AddressLink>
             <CarGallery car={car} />
@@ -31,15 +31,19 @@ export default function CarPage() {
                         <h2 className="font-semibold text-2xl">Description</h2>
                         {car.description}
                     </div>
-                    Check-in: {car.checkIn}<br />
-                    Check-out: {car.checkOut}<br />
+                    Check-in: {car.checkIn}
+                    <br />
+                    Check-out: {car.checkOut}
+                    <br />
                     Max number of guests: {car.maxGuests}
-                     <div className="bg-grey -mx-2 px-2 py-8 border-t">
-                <div>
-                    <h2 className="font-semibold text-2xl">Extra info</h2>
-                </div>
-                <div className="mb-4 mt-2 text-sm text-gray-700 leading-5">{car.extraInfo}</div>
-            </div>
+                    <div className="bg-grey -mx-2 px-2 py-8 border-t">
+                        <div>
+                            <h2 className="font-semibold text-2xl">Extra info</h2>
+                        </div>
+                        <div className="mb-4 mt-2 text-sm text-gray-700 leading-5">
+                            {car.extraInfo}
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <TripWidget car={car} />
@@ -48,10 +52,10 @@ export default function CarPage() {
                             <h2 className="font-semibold text-2xl">Host Information</h2>
                             <div className="flex items-center mt-2">
                                 {car.owner.profilePicture && (
-                                    <img 
-                                        src={`http://localhost:4000${car.owner.profilePicture}`} 
-                                        alt="Profile" 
-                                        className="w-16 h-16 rounded-full mr-4" 
+                                    <img
+                                        src={`http://localhost:4000${car.owner.profilePicture}`}
+                                        alt="Profile"
+                                        className="w-16 h-16 rounded-full mr-4"
                                     />
                                 )}
                                 <div>
@@ -65,8 +69,13 @@ export default function CarPage() {
                                     {car.owner.reviews.length > 0 ? (
                                         car.owner.reviews.map((review, index) => (
                                             <li key={index} className="text-sm text-gray-700 mt-1">
-                                                <p><strong>{review.reviewedUser.name}:</strong> {review.comment}</p>
-                                                <p className="text-xs text-gray-500">Rating: {review.rating}</p>
+                                                <p>
+                                                    <strong>{review.reviewedUser.name}:</strong>{" "}
+                                                    {review.comment}
+                                                </p>
+                                                <p className="text-xs text-gray-500">
+                                                    Rating: {review.rating}
+                                                </p>
                                             </li>
                                         ))
                                     ) : (
@@ -76,10 +85,8 @@ export default function CarPage() {
                             </div>
                         </div>
                     )}
-                   
                 </div>
             </div>
-           
         </div>
     );
 }
