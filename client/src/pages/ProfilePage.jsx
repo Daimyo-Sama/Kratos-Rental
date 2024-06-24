@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserContext";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import CarsPage from "./CarsPage";
 import AccountNav from "../AccountNav";
 
+// Component for displaying PayPal instructions
 const PayPalInstructions = () => (
   <div className="text-left">
     <h3 className="text-lg font-semibold mb-2">Create a PayPal Account</h3>
@@ -39,11 +40,32 @@ export default function ProfilePage() {
   const [editBio, setEditBio] = useState(false);
   const [becomeOwnerClicked, setBecomeOwnerClicked] = useState(false);
 
+  // Get the subpage from the URL
   let { subpage } = useParams();
   if (subpage === undefined) {
     subpage = "profile";
   }
 
+  // Effect to fetch tasks when the component is ready and user is loaded
+  useEffect(() => {
+    if (ready && user) {
+      // Fetch user tasks
+      axios.get("/tasks").then(({ data }) => {
+        setTasks(data);
+        if (
+          data.some(
+            (task) =>
+              task.description === "Update PayPal Email" &&
+              task.status === "completed"
+          )
+        ) {
+          setThankYouMessage(true);
+        }
+      });
+    }
+  }, [ready, user]); // Dependencies to control re-running the effect
+
+  // Function to update the user's bio
   async function updateBio(ev) {
     ev.preventDefault();
     try {
@@ -58,6 +80,7 @@ export default function ProfilePage() {
     }
   }
 
+  // Function to update the user's profile picture
   async function updateProfilePicture(ev) {
     ev.preventDefault();
     const formData = new FormData();
@@ -79,6 +102,7 @@ export default function ProfilePage() {
     }
   }
 
+  // Function to update the status of a task
   async function updateTaskStatus(description) {
     const task = tasks.find((t) => t.description === description);
     if (task) {
@@ -86,7 +110,7 @@ export default function ProfilePage() {
         const { data } = await axios.put(`/tasks/${task._id}`, {
           status: "completed",
         });
-        console.log("Task updated:", data); // Debug logging
+        console.log("Task updated:", data);
         setTasks((prevTasks) =>
           prevTasks.map((t) =>
             t._id === task._id ? { ...t, status: "completed" } : t
@@ -98,46 +122,19 @@ export default function ProfilePage() {
     }
   }
 
-  useEffect(() => {
-    if (ready && user) {
-      axios.get("/tasks").then(({ data }) => {
-        setTasks(data);
-        if (
-          data.some(
-            (task) =>
-              task.description === "Update PayPal Email" &&
-              task.status === "completed"
-          )
-        ) {
-          setThankYouMessage(true);
-        }
-      });
-    }
-  }, [ready, user]);
-
-  if (!ready) {
-    return "Loading...";
-  }
-
-  if (ready && !user && !redirect) {
-    return <Navigate to={"/login"} />;
-  }
-
-  if (redirect) {
-    return <Navigate to={redirect} />;
-  }
-
+  // Function to handle the user becoming an owner
   const handleBecomeOwner = async () => {
     try {
       await axios.post("/become-owner", { userId: user._id });
       setShowPayPalInstructions(true);
-      setBecomeOwnerClicked(true); // Hide the button after it is clicked
+      setBecomeOwnerClicked(true);
     } catch (error) {
       console.error("Error becoming owner:", error);
       alert("Failed to become an owner. Please try again.");
     }
   };
 
+  // Function to update the user's PayPal email
   const handleUpdatePayPalEmail = async (ev) => {
     ev.preventDefault();
     try {
@@ -164,6 +161,7 @@ export default function ProfilePage() {
   // Check if all tasks are completed
   const allTasksCompleted = tasks.every((task) => task.status === "completed");
 
+  // Function to render task status icons
   const renderTaskIcon = (status) => {
     if (status === "completed") {
       return (
@@ -202,9 +200,22 @@ export default function ProfilePage() {
     }
   };
 
+  // Handle loading and redirects
+  if (!ready) {
+    return "Loading...";
+  }
+
+  if (ready && !user && !redirect) {
+    return <Navigate to={"/login"} />;
+  }
+
+  if (redirect) {
+    return <Navigate to={redirect} />;
+  }
+
   return (
     <div>
-      <AccountNav />
+      <AccountNav paypalEmail={paypalEmail} />
       <div className="bg-white p-6 rounded shadow-md text-center mb-4">
         {user.profilePicture ? (
           <img
@@ -228,7 +239,7 @@ export default function ProfilePage() {
           ) : (
             <span className="text-red-500">Bio not available</span>
           )}
-          <br></br>
+          <br />
           <button
             onClick={() => setEditBio(true)}
             className="primary hover:bg-blue-700"
@@ -297,9 +308,9 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-          {user && user.role !== "owner" && !allTasksCompleted && (
+          {user && user.role !== "owner" && !isPayPalTaskCompleted && (
             <div className="mt-4 flex flex-col items-center">
-              {!isPayPalTaskCompleted && !becomeOwnerClicked && (
+              {!becomeOwnerClicked && (
                 <button onClick={handleBecomeOwner} className="primary mt-4">
                   Become an Owner
                 </button>
@@ -329,8 +340,13 @@ export default function ProfilePage() {
                 <div className="text-center">
                   <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
                   <p>
-                    Your PayPal email has been updated successfully. You can now
-                    receive payments.
+                    Your PayPal email has been updated successfully.
+                    You are now set up to
+                    receive payments and have gained access to the host functionalities!
+                    <br></br>
+                    <br></br>
+                     You should now see My Cars and My Deals tabs at the top of the page.
+                     Refer to about us page for more details.
                   </p>
                 </div>
               )}
@@ -341,7 +357,10 @@ export default function ProfilePage() {
               <h3 className="text-lg font-semibold mb-2">
                 All tasks are complete!
               </h3>
-              <p>You now have access to the host functionalities.</p>
+              <h3 className="text-lg font-semibold mb-2">
+                If you are not sure how to use it. Refer to our instructions in about us page.
+              </h3>
+
             </div>
           )}
         </div>
