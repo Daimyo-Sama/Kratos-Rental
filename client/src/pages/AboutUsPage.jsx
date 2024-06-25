@@ -27,8 +27,9 @@ export default function AboutUs() {
                                 <li>You can now find your trip in <span className="font-semibold text-indigo-500">My Trips</span>.</li>
                                 <li>Now lets just wait for the owner to confirm! You will see the status update accordingly.</li>
                                 <li>If you click on your trip, you can get the full details on your booking.</li>
-                                <li>When the trip is accepted by the owner, you will see this payemnt button appear.</li>
+                                <li>When the trip is accepted by the owner, you will see this payment button appear.</li>
                                 <li>Once the payment goes through, your trip status will be updated to confirmed, and the deal is done!</li>
+                                <li>You can now leave a comment about your experience to help other user make a choice! </li>
                                 <li>Please note that you are free to cancel at any point before the trip.</li>
                                 <li>When you cancel a trip, you can archive it so your dashboard stays clean!</li>
                             </ol>

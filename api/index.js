@@ -44,24 +44,45 @@ app.use(
   })
 );
 
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_URL);
 
+
+//helper function to check json token
+async function getUserDataFromReq(req) {
+  return new Promise((resolve, reject) => {
+    console.log("Cookies:", req.cookies);
+    jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
+      if (err) {
+        console.error("JWT verification error:", err);
+        return reject(new Error("Unauthorized. Please log in."));
+      }
+      console.log("UserData:", userData);
+      resolve(userData);
+    });
+  });
+}
 
 // Helper function to normalize strings
 function normalizeString(str) {
-  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
 }
+
 
 app.get("/api/cars/search", async (req, res) => {
   const searchAddress = req.query.address;
   if (!searchAddress) {
-    return res.status(400).json({ error: "Address query parameter is required" });
+    return res
+      .status(400)
+      .json({ error: "Address query parameter is required" });
   }
 
   try {
     const normalizedSearchAddress = normalizeString(searchAddress);
     const cars = await Car.find();
-    const filteredCars = cars.filter(car =>
+    const filteredCars = cars.filter((car) =>
       normalizeString(car.address).includes(normalizedSearchAddress)
     );
     res.json(filteredCars);
@@ -70,26 +91,6 @@ app.get("/api/cars/search", async (req, res) => {
   }
 });
 
-//helper function to check json token
-function getUserDataFromReq(req) {
-  return new Promise((resolve, reject) => {
-    console.log("Cookies:", req.cookies);
-    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
-      if (err) {
-        console.error("JWT verification error:", err);
-        return reject(err);
-      }
-      console.log("UserData:", userData);
-      resolve(userData);
-    });
-  });
-}
-
-app.get("/test", (req, res) => {
-  res.json("test ok");
-});
-
-//////////////////////
 // Create a PayPal order
 app.post("/create-paypal-order", async (req, res) => {
   const { amount } = req.body;
@@ -100,7 +101,7 @@ app.post("/create-paypal-order", async (req, res) => {
       {
         amount: {
           currency_code: "CAD",
-          value: amount.toString(), // Ensure amount is a string
+          value: amount.toString(), 
         },
       },
     ],
@@ -115,7 +116,7 @@ app.post("/create-paypal-order", async (req, res) => {
   }
 });
 
-// Capture a PayPal order
+
 app.post("/capture-paypal-order", async (req, res) => {
   const { orderID, tripID } = req.body;
   const request = new paypal.orders.OrdersCaptureRequest(orderID);
@@ -130,11 +131,11 @@ app.post("/capture-paypal-order", async (req, res) => {
     if (capture.result.status === "COMPLETED") {
       console.log("Payment completed, updating trip status...");
       const trip = await Trip.findById(tripID).populate({
-        path: 'car',
+        path: "car",
         populate: {
-          path: 'owner',
-          model: 'User',
-        }
+          path: "owner",
+          model: "User",
+        },
       });
 
       if (!trip) {
@@ -152,7 +153,7 @@ app.post("/capture-paypal-order", async (req, res) => {
       res.json({
         message: "Payment successful and trip confirmed!",
         capture: capture.result,
-        ownerPayment
+        ownerPayment,
       });
     } else {
       console.log("Payment not completed:", capture.result.status);
@@ -164,7 +165,7 @@ app.post("/capture-paypal-order", async (req, res) => {
   }
 });
 
-// Recuperer le PayPal email du client
+
 app.post("/update-paypal-email", async (req, res) => {
   const { userId, paypalEmail } = req.body;
 
@@ -180,13 +181,14 @@ app.post("/update-paypal-email", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Update the task status to completed
     const tasks = await Task.updateMany(
-      { user: userId, description: "Provide your Paypal email to receive payments" },
+      {
+        user: userId,
+        description: "Provide your Paypal email to receive payments",
+      },
       { $set: { status: "completed" } }
     );
 
-    // Fetch updated tasks
     const updatedTasks = await Task.find({ user: userId });
 
     res.json({
@@ -221,15 +223,11 @@ app.get("/check-paypal-email/:userId", async (req, res) => {
 });
 
 
-//////////////////////
-
-/////////////////////
-
 app.post("/register", async (req, res) => {
-  const { name, email, password, account_level } = req.body; // Include account_level in the request body
+  const { name, email, password, account_level } = req.body;
 
   try {
-    // Create user
+    
     const userDoc = await User.create({
       name,
       email,
@@ -238,14 +236,14 @@ app.post("/register", async (req, res) => {
       account_level,
     });
 
-    // Generate token for email confirmation
+    // Generate token
     const token = jwt.sign(
       { id: userDoc._id, email: userDoc.email },
       jwtSecret,
       { expiresIn: "1d" }
     );
 
-    // Send confirmation email
+    
     await sendConfirmationEmail(email, token);
 
     res.json({
@@ -258,7 +256,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Email confirmation route
+
 app.get("/auth/confirm-email", async (req, res) => {
   const { token } = req.query;
 
@@ -285,10 +283,9 @@ app.post("/login", async (req, res) => {
             .json({ message: "Please confirm your email to log in." });
         }
 
-        // Check and generate tasks if not already present
         const userTasks = await Task.find({ user: userDoc._id });
         if (userTasks.length === 0) {
-          // on genere les task si cest vide
+          
           await generateUserTasks(userDoc._id, userDoc.account_level);
         }
 
@@ -320,14 +317,14 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//delete cookie d<acces
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
-////////////
 
-//stocke les photos localement
+
+//middleware
 const photosMiddleware = multer({ dest: "uploads/" });
+
 app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
   const uploadedFiles = [];
   for (let i = 0; i < req.files.length; i++) {
@@ -341,7 +338,7 @@ app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
   res.json(uploadedFiles);
 });
 
-// pour pouvoir upload les photos
+
 app.post("/upload-by-link", async (req, res) => {
   const { link } = req.body;
   const newName = "photo" + Date.now() + ".jpg";
@@ -352,11 +349,7 @@ app.post("/upload-by-link", async (req, res) => {
   res.json(newName);
 });
 
-////////////////
 
-///////////////
-
-//obtenir les infos pour userContext et le profil
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
   if (token) {
@@ -385,13 +378,12 @@ app.post("/become-owner", async (req, res) => {
     const userData = await getUserDataFromReq(req);
     const userId = userData.id;
 
-    // Update user's account level to owner
     const user = await User.findByIdAndUpdate(
       userId,
       { account_level: "owner" },
       { new: true }
     );
-    // Generate tasks
+
     await generateUserTasks(userId, user.account_level);
 
     res.json({
@@ -465,10 +457,6 @@ app.put("/tasks/:id", async (req, res) => {
   }
 });
 
-///////////////
-
-//////////////
-
 app.get("/user-cars", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
@@ -481,7 +469,6 @@ app.get("/user-cars", async (req, res) => {
   }
 });
 
-// creer une voiture
 app.post("/cars", (req, res) => {
   const { token } = req.cookies;
   const {
@@ -528,9 +515,9 @@ app.get("/cars/:id", async (req, res) => {
         model: "Review",
         populate: {
           path: "reviewer",
-          select: "name profilePicture"
-        }
-      }
+          select: "name profilePicture",
+        },
+      },
     });
 
     if (!car) {
@@ -544,10 +531,6 @@ app.get("/cars/:id", async (req, res) => {
   }
 });
 
-
-
-
-//pour modifier les annonces de voitures
 app.put("/cars", async (req, res) => {
   const { token } = req.cookies;
   const {
@@ -593,7 +576,6 @@ app.delete("/cars/:id", async (req, res) => {
     const userData = await getUserDataFromReq(req);
     const { id } = req.params;
 
-
     const carDoc = await Car.findById(id);
     if (!carDoc) {
       return res.status(404).json({ error: "Car not found" });
@@ -607,34 +589,29 @@ app.delete("/cars/:id", async (req, res) => {
   }
 });
 
-
-// Page Accueil
 app.get("/cars", async (req, res) => {
   try {
     const cars = await Car.find().populate("owner");
     const carsWithValidOwners = cars.filter((car) => car.owner !== null);
 
-    res.json(carsWithValidOwners); // make sure that deleted users cars dont appear
+    res.json(carsWithValidOwners);
   } catch (e) {
     console.error("Error fetching cars:", e);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-// Search cars by address
-app.get('/api/cars/search', async (req, res) => {
+app.get("/api/cars/search", async (req, res) => {
   try {
     const { address } = req.query;
-    const cars = await Car.find({ address: new RegExp(address, 'i') }); // Using regex for case-insensitive search
+    const cars = await Car.find({ address: new RegExp(address, "i") });
     res.json(cars);
   } catch (error) {
     console.error("Error fetching cars:", error);
-    res.status(500).json({ error: 'Failed to fetch cars' });
+    res.status(500).json({ error: "Failed to fetch cars" });
   }
 });
 
-
-// pour booker des voitures
 app.post("/trips", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
@@ -643,20 +620,11 @@ app.post("/trips", async (req, res) => {
       return res.status(401).json({ error: "Unauthorized. Please log in." });
     }
 
-    const { car, checkIn, checkOut, numberOfGuests, name, phone, price } = req.body;
+    const { car, checkIn, checkOut, numberOfGuests, name, phone, price } =
+      req.body;
 
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
-
-    console.log("Request data:", {
-      car,
-      checkInDate,
-      checkOutDate,
-      numberOfGuests,
-      name,
-      phone,
-      price,
-    });
 
     const overlappingTrips = await Trip.find({
       car,
@@ -669,7 +637,9 @@ app.post("/trips", async (req, res) => {
 
     if (overlappingTrips.length > 0) {
       console.log("Overlapping trips:", overlappingTrips);
-      return res.status(400).json({ error: "This car is already booked for the selected dates." });
+      return res
+        .status(400)
+        .json({ error: "This car is already booked for the selected dates." });
     }
 
     const trip = await Trip.create({
@@ -681,7 +651,7 @@ app.post("/trips", async (req, res) => {
       phone,
       price,
       user: userData.id,
-      status: "upcoming", // statut du trip
+      status: "upcoming",
     });
 
     const updatedCar = await Car.findByIdAndUpdate(
@@ -702,36 +672,6 @@ app.post("/trips", async (req, res) => {
   }
 });
 
-async function getUserDataFromReq(req) {
-  return new Promise((resolve, reject) => {
-    console.log("Cookies:", req.cookies);
-    jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
-      if (err) {
-        console.error("JWT verification error:", err);
-        return reject(new Error("Unauthorized. Please log in."));
-      }
-      console.log("UserData:", userData);
-      resolve(userData);
-    });
-  });
-}
-
-
-async function getUserDataFromReq(req) {
-  return new Promise((resolve, reject) => {
-    console.log("Cookies:", req.cookies);
-    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
-      if (err) {
-        console.error("JWT verification error:", err);
-        return reject(new Error("Unauthorized. Please log in."));
-      }
-      console.log("UserData:", userData);
-      resolve(userData);
-    });
-  });
-}
-
-
 app.get("/trips", async (req, res) => {
   const userData = await getUserDataFromReq(req);
   res.json(await Trip.find({ user: userData.id }).populate("car"));
@@ -748,7 +688,6 @@ app.get("/user-trips", async (req, res) => {
   }
 });
 
-// pour la page TripDetails??
 app.get("/trips/:id", async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.id)
@@ -773,7 +712,6 @@ app.get("/trips/:id", async (req, res) => {
   }
 });
 
-// Route to get trips for a specific car
 app.get("/trips/car/:carId", async (req, res) => {
   try {
     const { carId } = req.params;
@@ -798,16 +736,13 @@ app.put("/trips/:id/archive", async (req, res) => {
     const trip = await Trip.findById(id);
     if (!trip) {
       return res.status(404).json({ error: "Trip not found" });
-    } 
-    if (
-      trip.user.toString() !== userId.toString() 
-    ) {
+    }
+    if (trip.user.toString() !== userId.toString()) {
       return res.status(403).json({ error: "Unauthorized" });
     }
     trip.userStatus = "archived";
     await trip.save();
     res.json(trip);
-
   } catch (error) {
     console.error("Error archiving trip:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -818,7 +753,7 @@ app.put("/trips/:id/cancel", async (req, res) => {
   const { id } = req.params;
   try {
     const userData = await getUserDataFromReq(req);
-    const userId = userData.id; // Get the authenticated user's ID
+    const userId = userData.id;
 
     const trip = await Trip.findById(id).populate("car");
     if (!trip) {
@@ -840,7 +775,7 @@ app.put("/trips/:id/cancel", async (req, res) => {
     trip.status = "cancelled";
     await trip.save();
 
-    await Car.findByIdAndUpdate(car._id, { status: "available" }); // Update car status to 'available'
+    await Car.findByIdAndUpdate(car._id, { status: "available" });
 
     res.json(trip);
   } catch (error) {
@@ -849,12 +784,11 @@ app.put("/trips/:id/cancel", async (req, res) => {
   }
 });
 
-// Route to create a review
 app.post("/reviews", async (req, res) => {
   try {
     const { reviewedUserId, tripId, carId, rating, comment } = req.body;
     const userData = await getUserDataFromReq(req);
-    const reviewerId = userData.id; // Securely get the reviewer ID from the session
+    const reviewerId = userData.id;
 
     console.log("Creating review:", {
       reviewedUserId,
@@ -902,8 +836,6 @@ app.post("/reviews", async (req, res) => {
   }
 });
 
-
-// Route to get reviews for a specific user
 app.get("/users/:userId/reviews", async (req, res) => {
   try {
     const { userId } = req.params;
@@ -917,34 +849,34 @@ app.get("/users/:userId/reviews", async (req, res) => {
   }
 });
 
-app.get('/deals', async (req, res) => {
+app.get("/deals", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
     const userCars = await Car.find({ owner: userData.id });
-    const userCarsId = userCars.map(car => car._id.toString());
+    const userCarsId = userCars.map((car) => car._id.toString());
     const allDeals = [];
 
     for (let i = 0; i < userCarsId.length; i++) {
       const deals = await Trip.find({ car: userCarsId[i] })
         .populate({
-          path: 'car',
+          path: "car",
           populate: {
-            path: 'owner',
-            model: 'User',
-          }
+            path: "owner",
+            model: "User",
+          },
         })
         .populate({
-          path: 'user',
-          model: 'User',
-          select: 'name email profilePicture reviews',
+          path: "user",
+          model: "User",
+          select: "name email profilePicture reviews",
           populate: {
-            path: 'reviews',
+            path: "reviews",
             populate: {
-              path: 'reviewer',
-              model: 'User',
-              select: 'name'
-            }
-          }
+              path: "reviewer",
+              model: "User",
+              select: "name",
+            },
+          },
         });
 
       allDeals.push(...deals);
@@ -952,17 +884,16 @@ app.get('/deals', async (req, res) => {
 
     res.json(allDeals);
   } catch (error) {
-    console.error('Error fetching deals:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching deals:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-// Route to accept reservation
 app.put("/deals/:id/accept", async (req, res) => {
   const { id } = req.params;
   try {
     const userData = await getUserDataFromReq(req);
-    const userId = userData.id; // Get the authenticated user's ID
+    const userId = userData.id;
 
     const deal = await Trip.findById(id).populate("car");
     if (!deal) {
@@ -981,8 +912,6 @@ app.put("/deals/:id/accept", async (req, res) => {
     deal.status = "unpaid";
     await deal.save();
 
-    // await Car.findByIdAndUpdate(car._id, { status: 'booked' }); // Update car status to 'booked'
-
     res.json(deal);
   } catch (error) {
     console.error("Error accepting reservation:", error);
@@ -995,19 +924,25 @@ app.put("/deals/:id/checkin", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
     const userId = userData.id;
-    const deal = await Trip.findById(id);
+
+    const deal = await Trip.findById(id).populate({
+      path: "car",
+      populate: {
+        path: "owner",
+      },
+    });
+
     if (!deal) {
       return res.status(404).json({ error: "Deal not found" });
-    } 
-    if (
-      deal.user.toString() !== userId.toString() 
-    ) {
+    }
+
+    if (deal.car.owner._id.toString() !== userId.toString()) {
       return res.status(403).json({ error: "Unauthorized" });
     }
+
     deal.status = "ongoing";
     await deal.save();
     res.json(deal);
-
   } catch (error) {
     console.error("Error archiving deal:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -1022,16 +957,14 @@ app.put("/deals/:id/checkout", async (req, res) => {
     const deal = await Trip.findById(id);
     if (!deal) {
       return res.status(404).json({ error: "Deal not found" });
-    } 
-    if (
-      deal.user.toString() !== userId.toString() 
-    ) {
+    }
+    if (deal.car.owner._id.toString() !== userId.toString()) {
       return res.status(403).json({ error: "Unauthorized" });
     }
     deal.status = "completed";
+    console.log(deal.status);
     await deal.save();
     res.json(deal);
-
   } catch (error) {
     console.error("Error archiving deal:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -1064,7 +997,7 @@ app.put("/deals/:id/cancel", async (req, res) => {
     deal.status = "cancelled";
     await deal.save();
 
-    await Car.findByIdAndUpdate(car._id, { status: "available" }); // Update car status to 'available'
+    await Car.findByIdAndUpdate(car._id, { status: "available" });
 
     res.json(deal);
   } catch (error) {
@@ -1077,27 +1010,20 @@ app.put("/deals/:id/archive", async (req, res) => {
   const { id } = req.params;
   try {
     const userData = await getUserDataFromReq(req);
-    const userId = userData.id;
     const deal = await Trip.findById(id);
     if (!deal) {
       return res.status(404).json({ error: "Deal not found" });
-    } 
-    if (
-      deal.user.toString() !== userId.toString() 
-    ) {
-      return res.status(403).json({ error: "Unauthorized" });
     }
+
     deal.ownerStatus = "archived";
     await deal.save();
     res.json(deal);
-
   } catch (error) {
     console.error("Error archiving deal:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-// Route to handle password reset request
 app.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
@@ -1107,7 +1033,9 @@ app.post("/forgot-password", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const token = jwt.sign({ id: user._id, email: user.email }, jwtSecret, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, email: user.email }, jwtSecret, {
+      expiresIn: "1h",
+    });
     await sendResetPasswordEmail(email, token);
 
     res.json({ message: "Password reset link sent to your email address." });
@@ -1132,7 +1060,6 @@ app.post("/reset-password", async (req, res) => {
     res.status(400).json({ message: "Invalid or expired token." });
   }
 });
-
 
 app.listen(4000, () => {
   console.log("Server running on port 4000");
