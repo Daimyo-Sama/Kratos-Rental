@@ -216,39 +216,41 @@ export default function ProfilePage() {
   return (
     <div>
       <AccountNav paypalEmail={paypalEmail} />
-      <div className="bg-white p-6 rounded shadow-md text-center mb-4">
-        {user.profilePicture ? (
-          <img
-            src={`http://localhost:4000${user.profilePicture}`} // Check for correct URL
-            alt="Profile Image"
-            className="w-32 h-32 rounded-full mx-auto mb-4"
-          />
-        ) : (
-          <p className="text-red-500">Profile picture not available</p>
-        )}
-        <h2 className="text-2xl font-semibold">
-          {user.name ? (
-            user.name
-          ) : (
-            <span className="text-red-500">Name not available</span>
-          )}
-        </h2>
-        <p className="text-gray-600">
-          {user.bio ? (
-            user.bio
-          ) : (
-            <span className="text-red-500">Bio not available</span>
-          )}
-          <br />
-          <button
-            onClick={() => setEditBio(true)}
-            className="primary hover:bg-blue-700"
-            style={{ width: "300px" }}
-          >
-            Update Bio
-          </button>
-        </p>
-      </div>
+<div className="bg-white p-6 rounded shadow-md text-center mb-4">
+  {user.profilePicture ? (
+    <img
+      src={`http://localhost:4000${user.profilePicture}`} // Check for correct URL
+      alt="Profile Image"
+      className="w-32 h-32 rounded-full mx-auto mb-4  border-8 border-primary"
+    />
+  ) : (
+    <p className="text-red-500">Profile picture not available</p>
+  )}
+  <h2 className="text-2xl font-semibold">
+    {user.name ? (
+      user.name
+    ) : (
+      <span className="text-red-500">Name not available</span>
+    )}
+  </h2>
+  <div className="bg-gray-200 text-white p-4 rounded mx-auto mt-4 max-w-lg">
+    <p className="text-gray-600">
+      {user.bio ? (
+        user.bio
+      ) : (
+        <span className="text-red-500">Bio not available</span>
+      )}
+    </p>
+    
+  </div>
+  <button
+      onClick={() => setEditBio(true)}
+      className="primary hover:bg-blue-700 mt-4"
+      style={{ width: "300px" }}
+    >
+      Update Bio
+    </button>
+</div>
 
       {subpage === "profile" && (
         <div className="text-center max-w-xl mx-auto">
@@ -353,13 +355,16 @@ export default function ProfilePage() {
             </div>
           )}
           {allTasksCompleted && (
-            <div className="bg-green-400 p-4 rounded mt-3">
+            <div className="bg-green-200 p-4 rounded mt-3">
               <h3 className="text-lg font-semibold mb-2">
                 All tasks are complete!
               </h3>
-              <h3 className="text-lg font-semibold mb-2">
-                If you are not sure how to use it. Refer to our instructions in about us page.
-              </h3>
+              <h3 className="text-lg mb-2">
+  If you are not sure how to use your account, please refer to our detailled instructions{" "}
+  <Link to="/about-us" className="text-blue-500 underline hover:text-blue-700">
+    here
+  </Link>
+</h3>
 
             </div>
           )}
