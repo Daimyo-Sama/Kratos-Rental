@@ -313,7 +313,7 @@ export default function ProfilePage() {
           {user && user.role !== "owner" && !isPayPalTaskCompleted && (
             <div className="mt-4 flex flex-col items-center">
               {!becomeOwnerClicked && (
-                <button onClick={handleBecomeOwner} className="primary mt-4">
+                <button onClick={handleBecomeOwner} className=" primary max-w-48 ">
                   Become an Owner
                 </button>
               )}
