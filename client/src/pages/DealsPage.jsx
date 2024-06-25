@@ -65,7 +65,7 @@ export default function DealsPage() {
     const handleCheckOutDeal = async (ev, dealId) => {
         ev.preventDefault();
         try {
-            await axios.put(`/deals/${dealId}/checkin`);
+            await axios.put(`/deals/${dealId}/checkout`);
             setDeals(prevDeals => prevDeals.map(deal => 
                 deal._id === dealId ? { ...deal, status: 'completed' } : deal
             ));
