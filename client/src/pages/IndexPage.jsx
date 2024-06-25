@@ -16,7 +16,7 @@ export default function IndexPage() {
     <div>
       <Banner /> {/* Add the Banner component here */}
       <div className="flex justify-center">
-        <div className="bg-gray-500 text-white rounded-2xl text-center py-6 mb-2 inline-block border-8 border-gray-300">
+        <div className="bg-orange-950 text-white rounded-2xl text-center py-6 mb-2 inline-block border-8 border-gray-400">
           <h2 className="text-gray-300 text-2xl mb-1 mt-1 m-4">Find a car anywhere on the planet</h2>
         </div>
       </div>
