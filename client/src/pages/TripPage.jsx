@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import AddressLink from "../AddressLink";
 import CarGallery from "../CarGallery";
 import TripDates from "../TripDates";
@@ -168,6 +168,16 @@ export default function TripPage() {
             </div>
           </div>
         </div>
+
+        <div className="text-center mt-4">
+      <Link
+        to="/about-us"
+        className="text-blue-500 underline hover:text-blue-700"
+      >
+        Confused? Check out our user guide!
+      </Link>
+    </div>
+
         <div className="mt-4 flex items-center">
           <span className="font-semibold">Status:</span> {trip.status}
         </div>
