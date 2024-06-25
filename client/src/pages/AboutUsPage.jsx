@@ -14,11 +14,23 @@ export default function AboutUs() {
                                 Here’s a comprehensive guide to help you navigate and make the most of our app:
                             </p>
                             <ol className="list-decimal list-inside text-lg space-y-2 pl-4">
-                                <li>Navigate to the <span className="font-semibold text-indigo-500">Home Page</span> to see available cars.</li>
-                                <li>Use the <span className="font-semibold text-indigo-500">Search Bar</span> to filter cars by location, date, and other preferences.</li>
-                                <li>Click on a car to view more details, including pricing and availability.</li>
+
+                                
+                                <li>Click on the Profile tab in the top right to navigate to the Login page.</li>
+                                <li>Register if you haven't yet! Then check your email and click on the link to verify your account.</li>
+                                <li>Once logged you should update your profile through the profile tab, notice that it now has your name on it!</li>
+                                <li>Navigate to the <span className="font-semibold text-indigo-500">Home Page</span> at anytime by clicking on our logo in the top left.</li>
+                                <li>Check out the <span className="font-semibold text-indigo-500">My Trips</span> tab, this will be the place where you will find your trips.</li>
+                                <li>From the Home Page, use the <span className="font-semibold text-indigo-500">Search Bar</span> to filter cars by location.</li>
+                                <li>Click on a car to view more details, including the reviews, the pricing and availability.</li>
                                 <li>To rent a car, click the <span className="font-semibold text-indigo-500">Rent Now</span> button and follow the prompts to complete your booking.</li>
-                                <li>Check your <span className="font-semibold text-indigo-500">Account Page</span> for booking details and to manage your rentals.</li>
+                                <li>You can now find your trip in <span className="font-semibold text-indigo-500">My Trips</span>.</li>
+                                <li>Now lets just wait for the owner to confirm! You will see the status update accordingly.</li>
+                                <li>If you click on your trip, you can get the full details on your booking.</li>
+                                <li>When the trip is accepted by the owner, you will see this payemnt button appear.</li>
+                                <li>Once the payment goes through, your trip status will be updated to confirmed, and the deal is done!</li>
+                                <li>Please note that you are free to cancel at any point before the trip.</li>
+                                <li>When you cancel a trip, you can archive it so your dashboard stays clean!</li>
                             </ol>
                         </aside>
                         <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg">
@@ -44,7 +56,7 @@ export default function AboutUs() {
                                     <span className="font-semibold text-indigo-500">Upload a Profile Picture</span>: Use the <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">Update Profile Picture</span> section to upload a new picture.
                                 </li>
                                 <li>
-                                    <span className="font-semibold text-indigo-500">View and Complete Tasks</span>: Check the tasks assigned to you and mark them as completed to unlock more features.
+                                    <span className="font-semibold text-indigo-500">My Trips</span>: From the profile page, you can easily navigate between tabs to manage your account.
                                 </li>
                             </ol>
                         </aside>
@@ -64,11 +76,19 @@ export default function AboutUs() {
                                 </p>
                                 <ol className="list-decimal list-inside text-lg space-y-2 pl-4">
                                     <li>
-                                        <span className="font-semibold text-indigo-500">Become an Owner</span>: Click the <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">Become an Owner</span> button in your profile page to start listing your cars.
+                                        <span className="font-semibold text-indigo-500">Become an Owner</span>: Click the <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">Become an Owner</span> button in your profile page to unlock the hidden task.
                                     </li>
                                     <li>
-                                        <span className="font-semibold text-indigo-500">Manage Your Rentals</span>: Once you’re an owner, use the <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">Manage Your Cars</span> section in your profile to view and manage your car listings.
+                                        Click on the link to sign up with Paypal! Once you have an account, enter your paypal email to complete the task!
                                     </li>
+                                    <li>
+                                        <span className="font-semibold text-indigo-500">Manage Your Rentals</span>: Notice the new tabs above your Profile Picture, you can now use <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">My Cars</span> to view and manage your car listings.
+                                        
+                                    </li>
+                                    <li>
+                                         Once you create a listing, incoming offers will be visible through <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">My Deals</span>, where you can cancel or confirm. If you click on the deal, you can see further detail and the client reviews.
+                                    </li>
+                                    
                                 </ol>
                             </aside>
                             <aside className="flex-shrink-0 md:ml-8 bg-gray-500 p-4 rounded-lg">
