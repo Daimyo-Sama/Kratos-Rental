@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import AddressLink from "../AddressLink";
 import TripDates from "../TripDates";
 import CarImg from "../CarImg";
@@ -44,7 +44,7 @@ export default function DealPage() {
       const response = await axios.put(`/trips/${deal._id}/cancel`);
       setDeal(response.data);
       alert("Trip canceled successfully!");
-      navigate("/account/"); // Redirect to profile page after cancellation
+      navigate("/account/"); 
     } catch (error) {
       console.error("Error canceling trip:", error);
       if (error.response && error.response.status === 400) {
@@ -111,6 +111,14 @@ export default function DealPage() {
             <h2 className="text-2xl mb-4">Your deal information</h2>
             <TripDates trip={deal} />
           </div>
+          <div className="text-center mt-4">
+      <Link
+        to="/about-us"
+        className="text-blue-500 underline hover:text-blue-700"
+      >
+        Confused? Check out our user guide!
+      </Link>
+    </div>
           <div className="flex flex-wrap">
             <button
               onClick={handleAcceptTrip}
@@ -180,7 +188,7 @@ export default function DealPage() {
 
         <div className="w-full md:w-1/2 p-2">
           {(deal.status === "confirmed" || deal.status === "completed") && (
-            <div className="mt-4 p-4 w-full bg-white rounded shadow">
+            <div className="mt-4 p-4 w-full bg-gray-200 rounded shadow">
               <h2 className="font-semibold text-2xl">Submit a Review</h2>
               <p className="text-gray-700 mb-4">
                 You are welcome to leave a review about the client during or

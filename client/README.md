@@ -5,6 +5,8 @@ here are the commands to install and run
 client directory - npm install ----> npm run dev || yarn run dev
 api directory - npm install ----> nodemon index
 
+NOTES - The Paypal transaction is simulated through the Sandbox Api
+
 IMPORTANT - Dont change client local port since cross origin is specified to localhost:5173 in index file.
 
 

@@ -108,6 +108,7 @@ export default function TripPage() {
       .Buttons({
         createOrder: (data, actions) => createOrder(),
         onApprove: (data, actions) => onApprove(data),
+        fundingSource: window.paypal.FUNDING.PAYPAL,
       })
       .render(`#paypal-button-container`);
 
@@ -183,15 +184,17 @@ export default function TripPage() {
         </div>
         <div className="text-center mt-4">
           <div id={`paypal-button-container`}></div>
-          <button
-            onClick={handlePayment}
-            className={`btn-primary   ${
-              trip.status !== "unpaid" ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={trip.status !== "unpaid"}
-          >
-            Pay with PayPal
-          </button>
+          {!paypalButtonsRendered && (
+            <button
+              onClick={handlePayment}
+              className={`btn-primary ${
+                trip.status !== "unpaid" ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={trip.status !== "unpaid"}
+            >
+              Pay with PayPal
+            </button>
+          )}
         </div>
         <div className="flex gap-4 mt-4">
           <button
