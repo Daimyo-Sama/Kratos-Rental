@@ -277,7 +277,7 @@ export default function AboutUs() {
 
         <section className="mb-8 bg-gray-200 p-6 rounded-lg">
           <h2 className="text-2xl font-semibold mb-4 text-indigo-500">
-            Documentation
+            Tools
           </h2>
           <div className=" flex flex-col md:flex-row">
             <aside className="flex-1 flex flex-wrap max-w-1/2 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
@@ -296,7 +296,7 @@ export default function AboutUs() {
                   styles.
                 </li>
                 <li>
-                  Backend: Node.js with Express for handling server-side logic
+                  Backend: Mongoose for dat modeling, Node.js with Express for handling server-side logic
                   and APIs.
                 </li>
                 <li>
@@ -448,10 +448,7 @@ export default function AboutUs() {
                 </li>
               </ul>
             </li>
-            <li>
-              Open source libraries and frameworks that powered our development.
-            </li>
-            <li>Our team members for their dedication and hard work.</li>
+           
           </ul>
         </section>
       </div>
