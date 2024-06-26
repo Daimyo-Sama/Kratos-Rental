@@ -7,9 +7,9 @@ const UserSchema = new Schema({
   password: String,
   profilePicture: { type: String },
   bio: { type: String },
-  confirmed: { type: Boolean, default: false }, // email confirmation
-  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }], // reference to reviews
-  account_level: { type: String, enum: ['client', 'owner'], default: 'client' }, // account level field
+  confirmed: { type: Boolean, default: false },
+  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+  account_level: { type: String, enum: ['client', 'owner'], default: 'client' },
   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
   paypalEmail: { type: String }
 });
