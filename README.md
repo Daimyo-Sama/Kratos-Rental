@@ -2,14 +2,16 @@
 
 Kratos is a simplified MVC application offering a free market car rental service to its 2 category of users: the clients and the owners. The concept is that an owner is a client but a client needs to meet a condition to become an owner. The API runs on NodeJs and Express and uses Mongo DB. The frontend runs on Vite and ReactJs 
 
+Check out the Api Documentation `doc.md` file in api directory.
+
 here are the commands to install and run
 
-client directory - npm install ----> npm run dev || yarn run dev
-api directory - npm install ----> nodemon index
+client directory - `npm install` ----> `npm run dev` || `yarn run dev`
+api directory - `npm install` ----> `nodemon index`
 
-NOTES - The Paypal transaction is simulated through the Sandbox Api
+NOTES - The Paypal transaction is simulated through the Sandbox Api, get your sandbox and modify the `paypal.js` file
 
-IMPORTANT - Dont change client local port since cross origin is specified to localhost:5173 in index file.
+IMPORTANT - Dont change client local port since cross origin is specified to `localhost:5173` in index file.
 
 
 

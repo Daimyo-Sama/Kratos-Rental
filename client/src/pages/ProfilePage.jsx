@@ -214,7 +214,7 @@ export default function ProfilePage() {
     <div>
       {/* On passe ce prop au component */}
       <AccountNav paypalEmail={paypalEmail} />
-      <div className="bg-gray-200 p-6 rounded shadow-lg shadow-inner  text-center mb-4 max-w-xl mx-auto">
+      <div className="bg-gray-200 p-6 rounded shadow-lg shadow-inner border-2 border-white text-center mb-4 max-w-xl mx-auto">
         {user.profilePicture ? (
           <img
             src={`http://localhost:4000${user.profilePicture}`}
