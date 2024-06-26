@@ -1,16 +1,16 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// Mail account configuration
+
 const transporter = nodemailer.createTransport({
-  service: 'Gmail', // You can use any email service
+  service: 'Gmail', //
   auth: {
-    user: process.env.EMAIL_USER, // Use environment variables for sensitive information
+    user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   }
 });
 
-// Function to send the confirmation email
+
 const sendConfirmationEmail = async (email, token) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -22,7 +22,7 @@ const sendConfirmationEmail = async (email, token) => {
   await transporter.sendMail(mailOptions);
 };
 
-// Function to send the reset password email
+
 const sendResetPasswordEmail = async (email, token) => {
   const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
 

@@ -9,7 +9,7 @@ export default function AboutUs() {
                 <section className="mb-8 bg-gray-200 p-6 rounded-lg">
                     <h2 className="text-2xl font-semibold mb-4 text-indigo-500">User Guide</h2>
                     <div className="flex flex-col md:flex-row">
-                        <aside className="flex-1 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
+                        <aside className="flex-1 w-1/2 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
                             <p className="text-lg mb-4">
                                 Here’s a comprehensive guide to help you navigate and make the most of our app:
                             </p>
@@ -32,30 +32,72 @@ export default function AboutUs() {
                                 <li>When you cancel a trip, you can archive it to keep your dashboard clean!</li>
                             </ol>
                         </aside>
-                        <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg">
-                            <img src="http://localhost:4000/uploads/account-button.png" alt="Account Button" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/register.png" alt="Register" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/account-button-2.png" alt="Account Button 2" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/kratos-button.png" alt="Kratos Button" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/my-trips-result.png" alt="My Trips Result" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/search-bar.png" alt="Search Bar" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/search-bar-result.png" alt="Search Bar Result" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/booking.png" alt="Booking" className="rounded-lg shadow-lg mb-4" />
-                            
-                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Status Update 1" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Status Update 2" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Payment Button" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Comment Form" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Cancel" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Archive" className="rounded-lg shadow-lg mb-4" />
-                        </aside>
+                        <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg flex flex-wrap gap-4 w-1/2">
+  <img
+    src="http://localhost:4000/uploads/account-button.png"
+    alt="Account Button"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/register.png"
+    alt="Register"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/account-button-2.png"
+    alt="Account Button 2"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/kratos-button.png"
+    alt="Kratos Button"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/my-trips-result.png"
+    alt="My Trips Result"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/search-bar.png"
+    alt="Search Bar"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/search-bar-result.png"
+    alt="Search Bar Result"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/booking.png"
+    alt="Booking"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/status-update.png"
+    alt="Status Update"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/user-guide-image3.jpg"
+    alt="Comment Form"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+  <img
+    src="http://localhost:4000/uploads/user-guide-image3.jpg"
+    alt="Archive"
+    className="rounded-lg shadow-lg mb-4 border border-gray-400 h-40 w-auto"
+  />
+</aside>
+
+
                     </div>
                 </section>
 
                 <section className="mb-8 bg-gray-200 p-6 rounded-lg">
                     <h2 className="text-2xl font-semibold mb-4 text-indigo-500">Profile Page Guide</h2>
                     <div className="flex flex-col md:flex-row">
-                        <aside className="flex-1 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
+                        <aside className="flex-1 max-w-1/2 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
                             <p className="text-lg mb-4">
                                 Your profile page is your personal space within Kratos Rental. Here’s how to use it:
                             </p>
@@ -71,17 +113,17 @@ export default function AboutUs() {
                                 </li>
                             </ol>
                         </aside>
-                        <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg">
-                            <img src="http://localhost:4000/uploads/profile-page-guide-image1.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/profile-page-guide-image2.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4" />
-                            <img src="http://localhost:4000/uploads/profile-page-guide-image3.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4" />
+                        <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg max-w-1/2">
+                            <img src="http://localhost:4000/uploads/profile-page-guide-image1.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4 border border-gray-400" />
+                            <img src="http://localhost:4000/uploads/profile-page-guide-image2.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4 border border-gray-400" />
+                            <img src="http://localhost:4000/uploads/profile-page-guide-image3.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4 border border-gray-400" />
                         </aside>
                     </div>
 
                     <div className="bg-gray-400 p-6 mt-8 rounded-lg">
                         <h3 className="text-xl font-semibold mb-4 text-indigo-500">Become a Host</h3>
                         <div className="flex flex-col md:flex-row">
-                            <aside className="flex-1 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
+                            <aside className="flex-1 max-w-1/2 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
                                 <p className="text-lg mb-4">
                                     If you want to list your cars for rent and manage them, here’s how to get started:
                                 </p>
@@ -90,7 +132,7 @@ export default function AboutUs() {
                                         <span className="font-semibold text-indigo-500">Become an Owner</span>: Click the <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">Become an Owner</span> button in your profile page to unlock the hidden task.
                                     </li>
                                     <li>
-                                        Click on the link to sign up with Paypal! Once you have an account, enter your PayPal email to complete the task!
+                                        Click on the link to sign up with PayPal! Once you have an account, enter your PayPal email to complete the task!
                                     </li>
                                     <li>
                                         <span className="font-semibold text-indigo-500">Manage Your Rentals</span>: Notice the new tabs above your Profile Picture, you can now use <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">My Cars</span> to view and manage your car listings.
@@ -100,8 +142,8 @@ export default function AboutUs() {
                                     </li>
                                 </ol>
                             </aside>
-                            <aside className="flex-shrink-0 md:ml-8 bg-gray-500 p-4 rounded-lg">
-                                <img src="http://localhost:4000/uploads/become-host-image1.jpg" alt="Become a Host" className="rounded-lg shadow-lg" />
+                            <aside className="flex-shrink-0 md:ml-8 bg-gray-500 p-4 rounded-lg max-w-1/2">
+                                <img src="http://localhost:4000/uploads/become-host-image1.jpg" alt="Become a Host" className="rounded-lg shadow-lg mb-4 border border-gray-400" />
                             </aside>
                         </div>
                     </div>
@@ -110,7 +152,7 @@ export default function AboutUs() {
                 <section className="mb-8 bg-gray-200 p-6 rounded-lg">
                     <h2 className="text-2xl font-semibold mb-4 text-indigo-500">Documentation</h2>
                     <div className="flex flex-col md:flex-row">
-                        <aside className="flex-1 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
+                        <aside className="flex-1 max-w-1/2 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
                             <p className="text-lg mb-4">
                                 Our app leverages the MERN stack to provide a seamless and efficient car rental experience:
                             </p>
@@ -123,17 +165,16 @@ export default function AboutUs() {
                                 <li>Payment Processing: Integrated with PayPal Sandbox SDK and API for secure transactions.</li>
                             </ul>
                         </aside>
-                        <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg">
-    <div className="flex flex-col gap-4 items-center">
-    <img src="http://localhost:4000/uploads/express-icon.png" alt="Express" className="w-auto h-12" />
-    <img src="http://localhost:4000/uploads/nodejs-icon.png" alt="Node.js" className="w-auto h-12" />
-        <img src="http://localhost:4000/uploads/react-icon.png" alt="React" className="w-auto h-12" />
-        <img src="http://localhost:4000/uploads/tailwind-icon.png" alt="Tailwind CSS" className="w-auto h-12" />
-        <img src="http://localhost:4000/uploads/mongo-icon.png" alt="MongoDB" className="w-auto h-12" />
-        <img src="http://localhost:4000/uploads/paypal-icon.png" alt="PayPal" className="w-auto h-12" />
-    </div>
-</aside>
-
+                        <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg max-w-1/2">
+                            <div className="flex flex-col gap-4 items-center">
+                                <img src="http://localhost:4000/uploads/express-icon.png" alt="Express" className="w-auto h-12 border border-gray-400 rounded-lg shadow-lg" />
+                                <img src="http://localhost:4000/uploads/nodejs-icon.png" alt="Node.js" className="w-auto h-12 border border-gray-400 rounded-lg shadow-lg" />
+                                <img src="http://localhost:4000/uploads/react-icon.png" alt="React" className="w-auto h-12 border border-gray-400 rounded-lg shadow-lg" />
+                                <img src="http://localhost:4000/uploads/tailwind-icon.png" alt="Tailwind CSS" className="w-auto h-12 border border-gray-400 rounded-lg shadow-lg" />
+                                <img src="http://localhost:4000/uploads/mongo-icon.png" alt="MongoDB" className="w-auto h-12 border border-gray-400 rounded-lg shadow-lg" />
+                                <img src="http://localhost:4000/uploads/paypal-icon.png" alt="PayPal" className="w-auto h-12 border border-gray-400 rounded-lg shadow-lg" />
+                            </div>
+                        </aside>
                     </div>
                 </section>
 
