@@ -14,30 +14,40 @@ export default function AboutUs() {
                                 Here’s a comprehensive guide to help you navigate and make the most of our app:
                             </p>
                             <ol className="list-decimal list-inside text-lg space-y-2 pl-4">
-
-                                
-                                <li>Click on the Profile tab in the top right to navigate to the Login page.</li>
+                                <li>Click on the Account button in the top right to navigate to the Login page.</li>
                                 <li>Register if you haven't yet! Then check your email and click on the link to verify your account.</li>
-                                <li>Once logged you should update your profile through the profile tab, notice that it now has your name on it!</li>
-                                <li>Navigate to the <span className="font-semibold text-indigo-500">Home Page</span> at anytime by clicking on our logo in the top left.</li>
-                                <li>Check out the <span className="font-semibold text-indigo-500">My Trips</span> tab, this will be the place where you will find your trips.</li>
+                                <li>Once logged in, you should update your profile through the Account button, notice that it now has your name on it!</li>
+                                <li>Check out the <span className="font-semibold text-indigo-500">My Trips</span> button, this will be the place where you will find your trips.</li>
+                                <li>Navigate to the <span className="font-semibold text-indigo-500">Home Page</span> at any time by clicking on our logo in the top left.</li>
                                 <li>From the Home Page, use the <span className="font-semibold text-indigo-500">Search Bar</span> to filter cars by location.</li>
-                                <li>Click on a car to view more details, including the reviews, the pricing and availability.</li>
-                                <li>To rent a car, click the <span className="font-semibold text-indigo-500">Rent Now</span> button and follow the prompts to complete your booking.</li>
+                                <li>Click on a car to view more details, including reviews, pricing, and availability.</li>
+                                <li>To rent a car, set your availability through the calendar and click on the <span className="font-semibold text-indigo-500">Book this car</span> button to complete your booking.</li>
                                 <li>You can now find your trip in <span className="font-semibold text-indigo-500">My Trips</span>.</li>
-                                <li>Now lets just wait for the owner to confirm! You will see the status update accordingly.</li>
-                                <li>If you click on your trip, you can get the full details on your booking.</li>
+                                <li>Wait for the owner to confirm! You will see the status update accordingly.</li>
+                                <li>If you click on your trip, you can get full details on your booking.</li>
                                 <li>When the trip is accepted by the owner, you will see this payment button appear.</li>
                                 <li>Once the payment goes through, your trip status will be updated to confirmed, and the deal is done!</li>
-                                <li>You can now leave a comment about your experience to help other user make a choice! </li>
+                                <li>You can now leave a comment about your experience to help other users make a choice!</li>
                                 <li>Please note that you are free to cancel at any point before the trip.</li>
-                                <li>When you cancel a trip, you can archive it so your dashboard stays clean!</li>
+                                <li>When you cancel a trip, you can archive it to keep your dashboard clean!</li>
                             </ol>
                         </aside>
                         <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg">
-                            <img src="path/to/user-guide-image.jpg" alt="User Guide" className="rounded-lg shadow-lg" />
-                            <img src="path/to/user-guide-image.jpg" alt="User Guide" className="rounded-lg shadow-lg" />
-                            <img src="path/to/user-guide-image.jpg" alt="User Guide" className="rounded-lg shadow-lg" />
+                            <img src="http://localhost:4000/uploads/account-button.png" alt="Account Button" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/register.png" alt="Register" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/account-button-2.png" alt="Account Button 2" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/kratos-button.png" alt="Kratos Button" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/my-trips-result.png" alt="My Trips Result" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/search-bar.png" alt="Search Bar" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/search-bar-result.png" alt="Search Bar Result" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/booking.png" alt="Booking" className="rounded-lg shadow-lg mb-4" />
+                            
+                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Status Update 1" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Status Update 2" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Payment Button" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Comment Form" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Cancel" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/user-guide-image3.jpg" alt="Archive" className="rounded-lg shadow-lg mb-4" />
                         </aside>
                     </div>
                 </section>
@@ -62,9 +72,9 @@ export default function AboutUs() {
                             </ol>
                         </aside>
                         <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg">
-                            <img src="path/to/profile-page-guide-image.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg" />
-                            <img src="path/to/profile-page-guide-image.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg" />
-                            <img src="path/to/profile-page-guide-image.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg" />
+                            <img src="http://localhost:4000/uploads/profile-page-guide-image1.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/profile-page-guide-image2.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4" />
+                            <img src="http://localhost:4000/uploads/profile-page-guide-image3.jpg" alt="Profile Page Guide" className="rounded-lg shadow-lg mb-4" />
                         </aside>
                     </div>
 
@@ -80,20 +90,18 @@ export default function AboutUs() {
                                         <span className="font-semibold text-indigo-500">Become an Owner</span>: Click the <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">Become an Owner</span> button in your profile page to unlock the hidden task.
                                     </li>
                                     <li>
-                                        Click on the link to sign up with Paypal! Once you have an account, enter your paypal email to complete the task!
+                                        Click on the link to sign up with Paypal! Once you have an account, enter your PayPal email to complete the task!
                                     </li>
                                     <li>
                                         <span className="font-semibold text-indigo-500">Manage Your Rentals</span>: Notice the new tabs above your Profile Picture, you can now use <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">My Cars</span> to view and manage your car listings.
-                                        
                                     </li>
                                     <li>
-                                         Once you create a listing, incoming offers will be visible through <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">My Deals</span>, where you can cancel or confirm. If you click on the deal, you can see further detail and the client reviews.
+                                        Once you create a listing, incoming offers will be visible through <span className="primary hover:bg-blue-700 text-white bg-indigo-500 rounded px-2 py-1">My Deals</span>, where you can cancel or confirm. If you click on the deal, you can see further details and the client reviews.
                                     </li>
-                                    
                                 </ol>
                             </aside>
                             <aside className="flex-shrink-0 md:ml-8 bg-gray-500 p-4 rounded-lg">
-                                <img src="path/to/become-host-image.jpg" alt="Become a Host" className="rounded-lg shadow-lg" />
+                                <img src="http://localhost:4000/uploads/become-host-image1.jpg" alt="Become a Host" className="rounded-lg shadow-lg" />
                             </aside>
                         </div>
                     </div>
@@ -116,15 +124,16 @@ export default function AboutUs() {
                             </ul>
                         </aside>
                         <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg">
-                            <div className="grid grid-cols-3 gap-4">
-                                <img src="path/to/react-icon.png" alt="React" className="w-12 h-12" />
-                                <img src="path/to/tailwind-icon.png" alt="Tailwind CSS" className="w-12 h-12" />
-                                <img src="path/to/nodejs-icon.png" alt="Node.js" className="w-12 h-12" />
-                                <img src="path/to/express-icon.png" alt="Express" className="w-12 h-12" />
-                                <img src="path/to/mongodb-icon.png" alt="MongoDB" className="w-12 h-12" />
-                                <img src="path/to/paypal-icon.png" alt="PayPal" className="w-12 h-12" />
-                            </div>
-                        </aside>
+    <div className="flex flex-col gap-4 items-center">
+    <img src="http://localhost:4000/uploads/express-icon.png" alt="Express" className="w-auto h-12" />
+    <img src="http://localhost:4000/uploads/nodejs-icon.png" alt="Node.js" className="w-auto h-12" />
+        <img src="http://localhost:4000/uploads/react-icon.png" alt="React" className="w-auto h-12" />
+        <img src="http://localhost:4000/uploads/tailwind-icon.png" alt="Tailwind CSS" className="w-auto h-12" />
+        <img src="http://localhost:4000/uploads/mongo-icon.png" alt="MongoDB" className="w-auto h-12" />
+        <img src="http://localhost:4000/uploads/paypal-icon.png" alt="PayPal" className="w-auto h-12" />
+    </div>
+</aside>
+
                     </div>
                 </section>
 
