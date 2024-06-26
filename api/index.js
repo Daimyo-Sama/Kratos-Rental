@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose"); //{ default: mongoose }
+const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
@@ -322,7 +322,7 @@ app.post("/logout", (req, res) => {
 });
 
 
-//middleware
+//middleware pour les photos
 const photosMiddleware = multer({ dest: "uploads/" });
 
 app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
@@ -738,6 +738,8 @@ app.put("/trips/:id/archive", async (req, res) => {
       return res.status(404).json({ error: "Trip not found" });
     }
     if (trip.user.toString() !== userId.toString()) {
+      console.log(trip.user);
+      console.log(userId);
       return res.status(403).json({ error: "Unauthorized" });
     }
     trip.userStatus = "archived";
@@ -954,7 +956,14 @@ app.put("/deals/:id/checkout", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
     const userId = userData.id;
-    const deal = await Trip.findById(id);
+    const deal = await Trip.findById(id).populate({
+      path: "car",
+      populate: {
+        path: "owner",
+      },
+    });
+    
+
     if (!deal) {
       return res.status(404).json({ error: "Deal not found" });
     }
