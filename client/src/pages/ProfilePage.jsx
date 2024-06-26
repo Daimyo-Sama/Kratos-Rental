@@ -216,7 +216,7 @@ export default function ProfilePage() {
   return (
     <div>
       <AccountNav paypalEmail={paypalEmail} />
-      <div className="bg-white p-6 rounded shadow-md text-center mb-4 w-1/3 mx-auto">
+      <div className="bg-primary-200 p-6 rounded shadow-md text-center mb-4 w-1/4 mx-auto">
         {user.profilePicture ? (
           <img
             src={`http://localhost:4000${user.profilePicture}`} // Check for correct URL
@@ -226,15 +226,15 @@ export default function ProfilePage() {
         ) : (
           <p className="text-red-500">Profile picture not available</p>
         )}
-        <h2 className="text-2xl font-semibold">
+        <h2 className="bg-white-200 w-1/2 rounded-md text-2xl font-semibold mx-auto">
           {user.name ? (
             user.name
           ) : (
             <span className="text-red-500">Name not available</span>
           )}
         </h2>
-        <div className="bg-gray-200 text-white p-4 rounded mx-auto mt-4 max-w-lg">
-          <p className="text-gray-600">
+        <div className="bg-gray-300  text-white p-4 rounded mx-auto mt-4 max-w-lg">
+          <p className="text-primary font-semibold">
             {user.bio ? (
               user.bio
             ) : (
@@ -244,8 +244,7 @@ export default function ProfilePage() {
         </div>
         <button
           onClick={() => setEditBio(true)}
-          className="primary hover:bg-blue-700 mt-4"
-          style={{ width: "300px" }}
+          className="primary hover:bg-blue-700 mt-2"
         >
           Update Bio
         </button>
@@ -314,7 +313,7 @@ export default function ProfilePage() {
               {!becomeOwnerClicked && (
                 <button
                   onClick={handleBecomeOwner}
-                  className=" primary max-w-48 "
+                  className=" primary max-w-48 hover:bg-blue-700 "
                 >
                   Become an Owner
                 </button>
