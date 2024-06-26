@@ -29,13 +29,11 @@ export default function CarPage() {
                 <div>
                     <div className="my-4">
                         <h2 className="font-semibold text-2xl">Description</h2>
-                        {car.description}
+                        <p>{car.description}</p>
                     </div>
-                    Check-in: {car.checkIn}
-                    <br />
-                    Check-out: {car.checkOut}
-                    <br />
-                    Max number of guests: {car.maxGuests}
+                    <p>Check-in: {car.checkIn}</p>
+                    <p>Check-out: {car.checkOut}</p>
+                    <p>Max number of guests: {car.maxGuests}</p>
                     <div className="bg-grey -mx-2 px-2 py-8 border-t">
                         <div>
                             <h2 className="font-semibold text-2xl">Extra info</h2>
@@ -48,7 +46,7 @@ export default function CarPage() {
                 <div>
                     <TripWidget car={car} />
                     {car.owner && (
-                        <div className="mt-4 p-4 bg-white rounded shadow">
+                        <div className="mt-4 p-4 bg-white border-2 border-gray-200 rounded shadow">
                             <h2 className="font-semibold text-2xl">Host Information</h2>
                             <div className="flex items-center mt-2">
                                 {car.owner.profilePicture && (
@@ -65,23 +63,24 @@ export default function CarPage() {
                             </div>
                             <div className="mt-4">
                                 <h3 className="font-semibold text-xl">Reviews</h3>
-                                <ul className="list-disc list-inside">
+                                <div>
                                     {car.owner.reviews.length > 0 ? (
                                         car.owner.reviews.map((review, index) => (
-                                            <li key={index} className="text-sm text-gray-700 mt-1">
+                                            <div key={index} className="text-sm text-gray-700 mt-1">
                                                 <p>
-                                                    <strong>{review.reviewedUser.name}:</strong>{" "}
+                                                    <strong>{review.reviewer ? review.reviewer.name : "Anonymous"}:</strong>{" "}
                                                     {review.comment}
                                                 </p>
                                                 <p className="text-xs text-gray-500">
                                                     Rating: {review.rating}
                                                 </p>
-                                            </li>
+                                                {index < car.owner.reviews.length - 1 && <hr className="my-4 border-gray-300" />}
+                                            </div>
                                         ))
                                     ) : (
                                         <p className="text-sm text-gray-600">No reviews yet.</p>
                                     )}
-                                </ul>
+                                </div>
                             </div>
                         </div>
                     )}

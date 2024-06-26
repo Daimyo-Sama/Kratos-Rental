@@ -61,7 +61,7 @@ export default function TripWidget({car}) {
     }
 
     return (
-        <div className="bg-white shadow p-4 rounded-2xl">
+        <div className="bg-white rounded-shadow border-2 border-gray-200 p-4 rounded-2xl">
             <div className="text-2xl text-center">
                 Price: ${car.price} per night
             </div>
