@@ -143,14 +143,14 @@ export default function DealPage() {
 
       <div className="flex flex-wrap mt-8">
         <div className="w-full md:w-1/2 p-2">
-          <div className="bg-gray-200 p-4 rounded shadow-md">
+          <div className="bg-white border-2 border-gray-200 p-4 rounded shadow-md">
             <div>
-              <h2 className="text-2xl mb-2">Client Information</h2>
+              <h2 className="text-2xl mb-4">Client Information</h2>
               {deal.user?.profilePicture && (
                 <img
                   src={`http://localhost:4000${deal.user.profilePicture}`}
                   alt="Profile"
-                  className="w-32 h-32 rounded-full mr-4"
+                  className="w-32 h-32 rounded-full mb-4 border-gray-400 border-4"
                 />
               )}
               <p>
@@ -166,30 +166,30 @@ export default function DealPage() {
 
             <div className="mt-4">
               <h3 className="font-semibold text-xl">Reviews</h3>
-              <ul className="list-disc list-inside">
-                {deal.user?.reviews?.length > 0 ? (
-                  deal.user.reviews.map((review, index) => (
-                    <li key={index} className="text-sm text-gray-700 mt-1">
-                      <p>
-                        <strong>{review.reviewedUser?.name}:</strong>{" "}
-                        {review.comment}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Rating: {review.rating}
-                      </p>
-                    </li>
-                  ))
-                ) : (
-                  <p className="text-sm text-gray-600">No reviews yet.</p>
-                )}
-              </ul>
+              <div>
+    {deal.user?.reviews?.length > 0 ? (
+      deal.user.reviews.map((review, index) => (
+        <div key={index} className="text-sm text-gray-700 mt-1">
+          <p>
+            <strong>{review.reviewer ? review.reviewer.name : "Anonymous"}:</strong> {review.comment}
+          </p>
+          <p className="text-xs text-gray-500">
+            Rating: {review.rating}
+          </p>
+          {index < deal.user.reviews.length - 1 && <hr className="my-4 border-gray-300" />}
+        </div>
+      ))
+    ) : (
+      <p className="text-sm text-gray-600">No reviews yet.</p>
+    )}
+  </div>
             </div>
           </div>
         </div>
 
         <div className="w-full md:w-1/2 p-2">
           {(deal.status === "confirmed" || deal.status === "completed") && (
-            <div className="mt-4 p-4 w-full bg-gray-200 rounded shadow">
+            <div className="m p-4 w-full bg-gray-200 rounded shadow border-2 border-white">
               <h2 className="font-semibold text-2xl">Submit a Review</h2>
               <p className="text-gray-700 mb-4">
                 You are welcome to leave a review about the client during or
