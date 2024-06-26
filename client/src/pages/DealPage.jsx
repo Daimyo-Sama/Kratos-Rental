@@ -74,6 +74,116 @@ export default function DealPage() {
     }
   };
 
+  function ownerAccessPanelMessage1(dealStatus) {
+    if(dealStatus === "upcoming"){
+        return "New Booking Request!";
+    } if(dealStatus === "unpaid"){
+        return "User Approved!";
+    } if(dealStatus === "confirmed"){
+        return "Booking Completed!";
+    } if(dealStatus === "ongoing"){
+        return "Trip in Progress!";
+    } if(dealStatus === "completed"){
+        return "Trip Completed!"
+    } if(dealStatus === "cancelled"){
+        return "Trip Canceled."
+    } else {
+        return "";
+    }
+}
+
+function ownerAccessPanelMessage2(dealStatus) {
+    if(dealStatus === "upcoming"){
+        return "Approval needed.";
+    } if(dealStatus === "unpaid"){
+        return "Awaiting Payment.";
+    } if(dealStatus === "confirmed"){
+        return "Awaiting the Reservation!";
+    } if(dealStatus === "ongoing"){
+        return "Everything is going OK!";
+    } if(dealStatus === "completed"){
+        return "Thanks for Choosing Kratos!"
+    } if(dealStatus === "cancelled"){
+        return "See you soon!"
+    } else {
+        return "";
+    }
+}
+
+function ownerActionButton1(deal) {
+    const classNameButton = "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
+    if (deal.status === "upcoming") {
+        const buttonText = "Approve"
+        return (
+            <button
+                onClick={ev => handleAcceptDeal(ev,deal._id)}
+                className={classNameButton}
+            >
+                {buttonText}
+            </button>
+        );
+    } if (deal.status === "confirmed") {
+        const buttonText = "Check-In"
+        return (
+            <button
+                onClick={ev => handleCheckInDeal(ev,deal._id)}
+                className={classNameButton}
+            >
+                {buttonText}
+            </button>
+        );
+    } if (deal.status === "ongoing") {
+        const buttonText = "Check-Out"
+        return (
+            <button
+                onClick={ev => handleCheckOutDeal(ev,deal._id)}
+                className={classNameButton}
+            >
+                {buttonText}
+            </button>
+        );
+    } if (deal.status === "completed") {
+        const buttonText = "Review"
+        return (
+            <button
+                // onClick={() => handleCancelTrip(trip._id)}
+                className={classNameButton}
+            >
+                {buttonText}
+            </button>
+        );
+    } else {
+        return "";
+    }
+}
+
+function ownerActionButton2(deal) {
+    const classNameButton = "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
+    if (deal.status === "upcoming" || deal.status === "unpaid" || deal.status === "confirmed") {
+        const buttonText = "Cancel"
+        return (
+            <button
+                onClick={() => handleCancelDeal(deal._id)}
+                className={classNameButton}
+            >
+                {buttonText}
+            </button>
+        );
+    } if (deal.status === "completed" || deal.status === "cancelled") {
+        const buttonText = "Archive"
+        return (
+            <button
+                onClick={ev => handleArchiveDeal(ev,deal._id)}
+                className={classNameButton}
+            >
+                {buttonText}
+            </button>
+        );
+    } else {
+        return "";
+    }
+}
+
   return (
     <div className="max-w-6xl mx-auto">
       <button
@@ -119,8 +229,19 @@ export default function DealPage() {
               </Link>
             </div>
           </div>
+          <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
+            <h3 className="text-lg font-semibold">Message</h3>
+            <div className="flex flex-col items-center space-y-2 pt-2">
+              <p>{ownerAccessPanelMessage1(deal.status)}</p>
+              <p>{ownerAccessPanelMessage2(deal.status)}</p>
+            </div>
+            <div className="flex w-full p-2 space-x-2 mt-auto">
+              {ownerActionButton1(deal)}
+              {ownerActionButton2(deal)}
+            </div>
+          </div>
 
-          <div className="flex flex-wrap">
+          {/* <div className="flex flex-wrap">
             <button
               onClick={handleAcceptTrip}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
@@ -133,7 +254,7 @@ export default function DealPage() {
             >
               Cancel Trip
             </button>
-          </div>
+          </div> */}
           <div className="bg-primary p-6 text-white rounded-2xl">
             <div>Total income</div>
             <div className="text-3xl">${deal.price}</div>

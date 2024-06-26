@@ -115,6 +115,104 @@ export default function TripPage() {
     setPaypalButtonsRendered(true);
   };
 
+  function userAccessPanelMessage1(tripStatus) {
+    if (tripStatus === "upcoming") {
+      return "Booking Request Completed!";
+    }
+    if (tripStatus === "unpaid") {
+      return "Your Request Approved!";
+    }
+    if (tripStatus === "confirmed") {
+      return "Booking Completed!";
+    }
+    if (tripStatus === "ongoing") {
+      return "Trip in Progress!";
+    }
+    if (tripStatus === "completed") {
+      return "Trip Completed!";
+    }
+    if (tripStatus === "cancelled") {
+      return "Trip Canceled.";
+    } else {
+      return "";
+    }
+  }
+
+  function userAccessPanelMessage2(tripStatus) {
+    if (tripStatus === "upcoming") {
+      return "Awaiting Approval.";
+    }
+    if (tripStatus === "unpaid") {
+      return "Payment Required.";
+    }
+    if (tripStatus === "confirmed") {
+      return "Awaiting Your Reservation!";
+    }
+    if (tripStatus === "ongoing") {
+      return "Enjoy Your Trip!";
+    }
+    if (tripStatus === "completed") {
+      return "Thanks for Choosing Kratos!";
+    }
+    if (tripStatus === "cancelled") {
+      return "See you soon!";
+    } else {
+      return "";
+    }
+  }
+
+  function userActionButton1(trip) {
+    const classNameButton =
+      "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
+    if (trip.status === "unpaid") {
+      const buttonText = "Payment";
+      return (
+        <button onClick={() => handlePayment(trip)} className={classNameButton}>
+          {buttonText}
+        </button>
+      );
+    }
+    if (trip.status === "completed") {
+      const buttonText = "Review";
+      return <button className={classNameButton}>{buttonText}</button>;
+    } else {
+      return "";
+    }
+  }
+
+  function userActionButton2(trip) {
+    const classNameButton =
+      "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
+    if (
+      trip.status === "upcoming" ||
+      trip.status === "unpaid" ||
+      trip.status === "confirmed"
+    ) {
+      const buttonText = "Cancel";
+      return (
+        <button
+          onClick={() => handleCancelTrip(trip._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    }
+    if (trip.status === "completed" || trip.status === "cancelled") {
+      const buttonText = "Archive";
+      return (
+        <button
+          onClick={(ev) => handleArchiveTrip(ev, trip._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    } else {
+      return "";
+    }
+  }
+
   return (
     <div className="my-8 max-w-6xl mx-auto">
       <button
@@ -137,16 +235,14 @@ export default function TripPage() {
         </svg>
         Go Back
       </button>
-    
+
       <div className="bg-gray-200 p-6 my-6 rounded-2xl flex items-center justify-between">
         <div>
-        <h2 className="text-2xl mb-4">Your trip information</h2>
-        <h1 className="text-3xl">{trip.car.title}</h1>
-        <AddressLink className="my-2 block">{trip.car.address}</AddressLink>
-      
-          
+          <h2 className="text-2xl mb-4">Your trip information</h2>
+          <h1 className="text-3xl">{trip.car.title}</h1>
+          <AddressLink className="my-2 block">{trip.car.address}</AddressLink>
+
           <TripDates trip={trip} />
-          
         </div>
 
         <div className="bg-gray-300 p-4 rounded shadow-md">
@@ -171,18 +267,29 @@ export default function TripPage() {
         </div>
 
         <div className="text-center mt-4">
-      <Link
-        to="/about-us"
-        className="text-blue-500 underline hover:text-blue-700"
-      >
-        Confused? Check out our user guide!
-      </Link>
-    </div>
+          <Link
+            to="/about-us"
+            className="text-blue-500 underline hover:text-blue-700"
+          >
+            Confused? Check out our user guide!
+          </Link>
+        </div>
 
         <div className="mt-4 flex items-center">
           <span className="font-semibold">Status:</span> {trip.status}
         </div>
-        <div className="text-center mt-4">
+        <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
+          <h3 className="text-lg font-semibold">Message</h3>
+          <div className="flex flex-col items-center space-y-2 pt-2">
+            <p>{userAccessPanelMessage1(trip.status)}</p>
+            <p>{userAccessPanelMessage2(trip.status)}</p>
+          </div>
+          <div className="flex w-full p-2 space-x-2 mt-auto">
+            {userActionButton1(trip)}
+            {userActionButton2(trip)}
+          </div>
+        </div>
+        {/* <div className="text-center mt-4">
           <div id={`paypal-button-container`}></div>
           {!paypalButtonsRendered && (
             <button
@@ -203,7 +310,7 @@ export default function TripPage() {
           >
             Cancel Trip
           </button>
-        </div>
+        </div> */}
         <div className="bg-primary p-6 text-white rounded-2xl">
           <div>Total price</div>
           <div className="text-3xl">${trip.price}</div>
