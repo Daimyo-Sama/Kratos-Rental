@@ -16,7 +16,7 @@ To use this API, you need to set up the following:
 
    ```env
    PORT=4000
-   MONGO_URL=mongodb+srv://booking:PTxC7lT68bLlVdUR@cluster0.7oy2ehr.mongodb.net/kratos-rental
+   MONGO_URL=
    EMAIL_USER=
    EMAIL_PASS=
    JWT_SECRET=
@@ -24,7 +24,7 @@ To use this API, you need to set up the following:
    PAYPAL_CLIENT_SECRET=
    NODE_ENV=
    ```
-   
+
 3. **Checkout the function** : Consult `authEmail.js` and `paypal.js` to adapt them to your credentials.
 
 4. **Start the Server**: Run the following command to start the server:
