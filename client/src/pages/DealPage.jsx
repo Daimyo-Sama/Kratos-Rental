@@ -44,7 +44,7 @@ export default function DealPage() {
       const response = await axios.put(`/trips/${deal._id}/cancel`);
       setDeal(response.data);
       alert("Trip canceled successfully!");
-      navigate("/account/"); 
+      navigate("/account/");
     } catch (error) {
       console.error("Error canceling trip:", error);
       if (error.response && error.response.status === 400) {
@@ -110,15 +110,16 @@ export default function DealPage() {
           <div>
             <h2 className="text-2xl mb-4">Your deal information</h2>
             <TripDates trip={deal} />
+            <div className="text-center mt-4">
+              <Link
+                to="/about-us"
+                className="text-blue-500 underline hover:text-blue-700"
+              >
+                Confused? Check out our user guide!
+              </Link>
+            </div>
           </div>
-          <div className="text-center mt-4">
-      <Link
-        to="/about-us"
-        className="text-blue-500 underline hover:text-blue-700"
-      >
-        Confused? Check out our user guide!
-      </Link>
-    </div>
+
           <div className="flex flex-wrap">
             <button
               onClick={handleAcceptTrip}
