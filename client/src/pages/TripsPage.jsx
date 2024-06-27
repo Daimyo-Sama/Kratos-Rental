@@ -72,6 +72,7 @@ export default function TripsPage() {
             setTrips(prevTrips => prevTrips.map(trip => 
                 trip._id === tripId ? { ...trip, status: 'cancelled' } : trip
             ));
+            alert('Trip canceled successfully!');
         } catch (error) {
             console.error('Error canceling trip:', error);
             alert('Failed to cancel the trip. Please try again.');
@@ -85,6 +86,7 @@ export default function TripsPage() {
             setTrips(prevTrips => prevTrips.map(trip => 
                 trip._id === tripId ? { ...trip, userStatus: 'archived' } : trip
             ));
+            alert('Trip archived successfully!');
         } catch (error) {
             console.error('Error archiving trip:', error);
             alert('Failed to archive the trip. Please try again.');
@@ -147,11 +149,13 @@ export default function TripsPage() {
         } if (trip.status === "completed") {
             const buttonText = "Review"
             return (
-                <button
-                    className={classNameButton}
-                >
-                    {buttonText}
-                </button>
+                <div className="w-1/2">
+                    <button
+                        className={classNameButton}
+                    >
+                        {buttonText}
+                    </button>
+                </div>
             );
         } else {
             return "";

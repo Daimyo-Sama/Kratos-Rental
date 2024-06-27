@@ -7,11 +7,11 @@ import CarImg from "../CarImg";
 
 export default function DealPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [deal, setDeal] = useState(null);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -28,37 +28,63 @@ export default function DealPage() {
     return "Loading...";
   }
 
-  const handleAcceptTrip = async () => {
+  const handleAcceptDeal = async () => {
     try {
-      const response = await axios.put(`/trips/${deal._id}/accept`);
-      setDeal(response.data);
-      alert("Trip accepted successfully!");
+      await axios.put(`/deals/${deal._id}/accept`);
+      alert("Deal accepted successfully!");
+      navigate("/account/deals");
     } catch (error) {
-      console.error("Error accepting trip:", error);
-      alert("Failed to accept the trip. Please try again.");
+      console.error("Error accepting deal:", error);
+      alert("Failed to accept the deal. Please try again.");
     }
   };
 
-  const handleCancelTrip = async () => {
+  const handleCheckInDeal = async () => {
     try {
-      const response = await axios.put(`/trips/${deal._id}/cancel`);
-      setDeal(response.data);
-      alert("Trip canceled successfully!");
-      navigate("/account/");
+      await axios.put(`/deals/${deal._id}/checkin`);
+      alert("Deal checked-in successfully!");
+      navigate("/account/deals");
     } catch (error) {
-      console.error("Error canceling trip:", error);
-      if (error.response && error.response.status === 400) {
-        alert(
-          "Trip dates overlap with another trip. Please choose different dates."
-        );
-      } else {
-        alert("Failed to cancel the trip. Please try again.");
-      }
+      console.error("Error checking-in deal:", error);
+      alert("Failed to check-in the deal. Please try again.");
     }
   };
 
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
+  const handleCheckOutDeal = async () => {
+    try {
+      await axios.put(`/deals/${deal._id}/checkout`);
+      alert("Deal checked-out successfully!");
+      navigate("/account/deals");
+    } catch (error) {
+      console.error("Error checking-out deal:", error);
+      alert("Failed to check-out the deal. Please try again.");
+    }
+  };
+
+  const handleCancelDeal = async () => {
+    try {
+      await axios.put(`/deals/${deal._id}/cancel`);
+      alert("Deal canceled successfully!");
+      navigate("/account/deals");
+    } catch (error) {
+      console.error("Error canceling deal:", error);
+      alert("Failed to cancel the deal. Please try again.");
+    }
+  };
+
+  const handleArchiveDeal = async () => {
+    try {
+      await axios.put(`/deals/${deal._id}/archive`);
+      alert("Deal archived successfully!");
+      navigate("/account/deals");
+    } catch (error) {
+      console.error("Error archiving deal:", error);
+      alert("Failed to archive the deal. Please try again.");
+    }
+  };
+
+  const handleSubmitReview = async (ev) => {
+    ev.preventDefault();
     try {
       await axios.post("/reviews", {
         reviewedUserId: deal.user._id,
@@ -74,60 +100,59 @@ export default function DealPage() {
     }
   };
 
-  function ownerAccessPanelMessage1(dealStatus) {
-    if (dealStatus === "upcoming") {
+  function ownerMessage1() {
+    if (deal.status === "upcoming") {
       return "New Booking Request!";
     }
-    if (dealStatus === "unpaid") {
+    if (deal.status === "unpaid") {
       return "User Approved!";
     }
-    if (dealStatus === "confirmed") {
+    if (deal.status === "confirmed") {
       return "Booking Completed!";
     }
-    if (dealStatus === "ongoing") {
+    if (deal.status === "ongoing") {
       return "Trip in Progress!";
     }
-    if (dealStatus === "completed") {
+    if (deal.status === "completed") {
       return "Trip Completed!";
     }
-    if (dealStatus === "cancelled") {
+    if (deal.status === "cancelled") {
       return "Trip Canceled.";
     } else {
       return "";
     }
   }
 
-  function ownerAccessPanelMessage2(dealStatus) {
-    if (dealStatus === "upcoming") {
+  function ownerMessage2() {
+    if (deal.status === "upcoming") {
       return "Approval needed.";
     }
-    if (dealStatus === "unpaid") {
+    if (deal.status === "unpaid") {
       return "Awaiting Payment.";
     }
-    if (dealStatus === "confirmed") {
+    if (deal.status === "confirmed") {
       return "Awaiting the Reservation!";
     }
-    if (dealStatus === "ongoing") {
+    if (deal.status === "ongoing") {
       return "Everything is going OK!";
     }
-    if (dealStatus === "completed") {
+    if (deal.status === "completed") {
       return "Thanks for Choosing Kratos!";
     }
-    if (dealStatus === "cancelled") {
+    if (deal.status === "cancelled") {
       return "See you soon!";
     } else {
       return "";
     }
   }
 
-  function ownerActionButton1(deal) {
-    const classNameButton =
-      "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
+  function ownerActionButton1() {
+    const classNameButton = "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
     if (deal.status === "upcoming") {
       const buttonText = "Approve";
       return (
         <button
-          onClick={(ev) => handleAcceptDeal(ev, deal._id)}
+          onClick={handleAcceptDeal}
           className={classNameButton}
         >
           {buttonText}
@@ -138,7 +163,7 @@ export default function DealPage() {
       const buttonText = "Check-In";
       return (
         <button
-          onClick={(ev) => handleCheckInDeal(ev, deal._id)}
+          onClick={handleCheckInDeal}
           className={classNameButton}
         >
           {buttonText}
@@ -149,18 +174,7 @@ export default function DealPage() {
       const buttonText = "Check-Out";
       return (
         <button
-          onClick={(ev) => handleCheckOutDeal(ev, deal._id)}
-          className={classNameButton}
-        >
-          {buttonText}
-        </button>
-      );
-    }
-    if (deal.status === "completed") {
-      const buttonText = "Review";
-      return (
-        <button
-          // onClick={() => handleCancelTrip(trip._id)}
+          onClick={handleCheckOutDeal}
           className={classNameButton}
         >
           {buttonText}
@@ -171,9 +185,8 @@ export default function DealPage() {
     }
   }
 
-  function ownerActionButton2(deal) {
-    const classNameButton =
-      "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
+  function ownerActionButton2() {
+    const classNameButton = "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
     if (
       deal.status === "upcoming" ||
       deal.status === "unpaid" ||
@@ -182,7 +195,7 @@ export default function DealPage() {
       const buttonText = "Cancel";
       return (
         <button
-          onClick={() => handleCancelDeal(deal._id)}
+          onClick={handleCancelDeal}
           className={classNameButton}
         >
           {buttonText}
@@ -193,7 +206,7 @@ export default function DealPage() {
       const buttonText = "Archive";
       return (
         <button
-          onClick={(ev) => handleArchiveDeal(ev, deal._id)}
+          onClick={handleArchiveDeal}
           className={classNameButton}
         >
           {buttonText}
@@ -226,11 +239,9 @@ export default function DealPage() {
         </svg>
         Go Back
       </button>
-
       <div className="w-96 m-1 border-4 border-gray-300">
         <CarImg car={deal.car} />
       </div>
-
       <div className="bg-gray-200 rounded-2xl">
         <div className="p-6 my-6 flex items-center justify-between">
           <div>
@@ -252,36 +263,20 @@ export default function DealPage() {
           <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
             <h3 className="text-lg font-semibold">Message</h3>
             <div className="flex flex-col items-center space-y-2 pt-2">
-              <p>{ownerAccessPanelMessage1(deal.status)}</p>
-              <p>{ownerAccessPanelMessage2(deal.status)}</p>
+              <p>{ownerMessage1()}</p>
+              <p>{ownerMessage2()}</p>
             </div>
             <div className="flex w-full p-2 space-x-2 mt-auto">
-              {ownerActionButton1(deal)}
-              {ownerActionButton2(deal)}
+              {ownerActionButton1()}
+              {ownerActionButton2()}
             </div>
           </div>
-
-          {/* <div className="flex flex-wrap">
-            <button
-              onClick={handleAcceptTrip}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
-            >
-              Confirm Trip
-            </button>
-            <button
-              onClick={handleCancelTrip}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
-            >
-              Cancel Trip
-            </button>
-          </div> */}
           <div className="bg-primary p-6 text-white rounded-2xl">
             <div>Total income</div>
             <div className="text-3xl">${deal.price}</div>
           </div>
         </div>
       </div>
-
       <div className="flex flex-wrap mt-8">
         <div className="w-full md:w-1/2 p-2">
           <div className="bg-white border-2 border-gray-200 p-4 rounded shadow-md">
@@ -304,7 +299,6 @@ export default function DealPage() {
                 <strong>Phone:</strong> {deal.phone}
               </p>
             </div>
-
             <div className="mt-4">
               <h3 className="font-semibold text-xl">Reviews</h3>
               <div>
@@ -333,7 +327,6 @@ export default function DealPage() {
             </div>
           </div>
         </div>
-
         <div className="w-full md:w-1/2 p-2">
           {(deal.status === "confirmed" || deal.status === "completed") && (
             <div className="p-4 w-full bg-gray-200 rounded shadow">
