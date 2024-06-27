@@ -70,7 +70,6 @@ export default function CarsFormPage() {
       price,
     };
     if (id) {
-      // update
       await axios.put("/cars", {
         id,
         ...carData,
@@ -146,35 +145,7 @@ export default function CarsFormPage() {
           "Add the income you want to receive per day. Remember that it will be more expensive for the user due to the Kratos fees"
         )}
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
-          {/* <div>
-                        <h3 className="mt-2 -mb-1">Check in time</h3>
-                        <input 
-                            type="text"
-                            value={checkIn}
-                            onChange={ev => setCheckIn(ev.target.value)}
-                            placeholder="14"
-                            className="w-full p-2 border rounded-lg"
-                        />
-                    </div>
-                    <div>
-                        <h3 className="mt-2 -mb-1">Check out time</h3>
-                        <input 
-                            type="text"
-                            value={checkOut}
-                            onChange={ev => setCheckOut(ev.target.value)}
-                            placeholder="11"
-                            className="w-full p-2 border rounded-lg"
-                        />
-                    </div>
-                    <div>
-                        <h3 className="mt-2 -mb-1">Max number of guests</h3>
-                        <input 
-                            type="number"
-                            value={maxGuests}
-                            onChange={ev => setMaxGuests(ev.target.value)}
-                            className="w-full p-2 border rounded-lg"
-                        />
-                    </div> */}
+          {}
           <div>
             <h3 className="mt-2 -mb-1">Price per day</h3>
             <input
@@ -186,17 +157,17 @@ export default function CarsFormPage() {
           </div>
         </div>
         <div className=" flex w-full justify-between space-x-12 mt-4">
-  <button className="flex-1 primary my-4 px-4 py-2 text-white rounded-2xl hover:bg-green-800">
-    Save
-  </button>
-  <button
-    type="button"
-    onClick={deleteCar}
-    className="flex-1 my-4 px-4 py-2 bg-red-500 text-white rounded-2xl hover:bg-primary"
-  >
-    Delete Car
-  </button>
-</div>
+          <button className="flex-1 primary my-4 px-4 py-2 text-white rounded-2xl hover:bg-green-800">
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={deleteCar}
+            className="flex-1 my-4 px-4 py-2 bg-red-500 text-white rounded-2xl hover:bg-primary"
+          >
+            Delete Car
+          </button>
+        </div>
       </form>
     </div>
   );

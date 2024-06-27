@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Banner from "../HomeBanner"; // Import the Banner component
+import Banner from "../HomeBanner";
 
 export default function IndexPage() {
   const [cars, setCars] = useState([]);
@@ -14,10 +14,12 @@ export default function IndexPage() {
 
   return (
     <div>
-      <Banner /> {/* Add the Banner component here */}
+      <Banner />
       <div className="flex justify-center">
         <div className="bg-orange-950 text-white rounded-2xl text-center py-6 mb-2 inline-block border-8 border-gray-400">
-          <h2 className="text-gray-300 text-2xl mb-1 mt-1 m-4">Find a car anywhere on the planet</h2>
+          <h2 className="text-gray-300 text-2xl mb-1 mt-1 m-4">
+            Find a car anywhere on the planet
+          </h2>
         </div>
       </div>
       <div className="my-8 mt-2 mb-2">
