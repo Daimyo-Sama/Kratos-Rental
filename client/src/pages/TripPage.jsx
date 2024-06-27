@@ -74,27 +74,6 @@ export default function TripPage() {
     setPaypalButtonsRendered(true);
   };
 
-  const handleSubmitReview = async (ev) => {
-    ev.preventDefault();
-    if (!user) {
-      alert("You need to be logged in to submit a review.");
-      return;
-    }
-    try {
-      await axios.post("/reviews", {
-        reviewedUserId: trip.car.owner._id,
-        tripId: trip._id,
-        carId: trip.car._id,
-        rating,
-        comment,
-        reviewerId: user._id,
-      });
-      setReviewSubmitted(true);
-    } catch (error) {
-      console.error("Failed to submit review:", error);
-    }
-  };
-
   const handleCancelTrip = async () => {
     try {
       await axios.put(`/trips/${trip._id}/cancel`);
@@ -114,6 +93,27 @@ export default function TripPage() {
     } catch (error) {
       console.error("Error archiving trip:", error);
       alert("Failed to archive the trip. Please try again.");
+    }
+  };
+
+  const handleSubmitReview = async (ev) => {
+    ev.preventDefault();
+    if (!user) {
+      alert("You need to be logged in to submit a review.");
+      return;
+    }
+    try {
+      await axios.post("/reviews", {
+        reviewedUserId: trip.car.owner._id,
+        tripId: trip._id,
+        carId: trip.car._id,
+        rating,
+        comment,
+        reviewerId: user._id,
+      });
+      setReviewSubmitted(true);
+    } catch (error) {
+      console.error("Failed to submit review:", error);
     }
   };
 
@@ -180,10 +180,6 @@ export default function TripPage() {
           )}
         </div>
       );
-    }
-    if (trip.status === "completed") {
-      const buttonText = "Review";
-      return <button className={classNameButton}>{buttonText}</button>;
     } else {
       return "";
     }
@@ -248,7 +244,6 @@ export default function TripPage() {
         </svg>
         Go Back
       </button>
-
       <div className="bg-gray-200 rounded-2xl">
         <div className="p-6 my-6 flex items-center justify-between">
           <div>
@@ -284,7 +279,6 @@ export default function TripPage() {
           </div>
         </div>
       </div>
-
       <div className="bg-gray-300 p-4 mb-1 rounded shadow-md">
         <h2 className="text-2xl mb-2">Owner</h2>
         <div className="flex items-center">

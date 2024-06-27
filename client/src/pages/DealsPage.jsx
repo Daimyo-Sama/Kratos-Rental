@@ -14,20 +14,6 @@ export default function DealsPage() {
         });
     }, []);
 
-    const handleCancelDeal = async (dealId) => {
-        try {
-            await axios.put(`/deals/${dealId}/cancel`);
-            alert('Deal canceled successfully!');
-        } catch (error) {
-            console.error('Error canceling deal:', error);
-            if (error.response && error.response.status === 400) {
-                // alert('Trip dates overlap with another trip. Please choose different dates.');
-            } else {
-                alert('Failed to cancel the deal. Please try again.');
-            }
-        }
-    };
-
     const handleAcceptDeal = async (ev, dealId) => {
         ev.preventDefault();
         try {
@@ -35,13 +21,10 @@ export default function DealsPage() {
             setDeals(prevDeals => prevDeals.map(deal => 
                 deal._id === dealId ? { ...deal, status: 'unpaid' } : deal
             ));
+            alert('Deal accepted successfully!');
         } catch (error) {
             console.error('Error accepting deal:', error);
-            if (error.response && error.response.status === 400) {
-                // alert('Trip dates overlap with another trip. Please choose different dates.');
-            } else {
-                alert('Failed to accept the deal. Please try again.');
-            }
+            alert('Failed to accept the deal. Please try again.');
         }
     };
 
@@ -52,13 +35,10 @@ export default function DealsPage() {
             setDeals(prevDeals => prevDeals.map(deal => 
                 deal._id === dealId ? { ...deal, status: 'ongoing' } : deal
             ));
+            alert('Deal checked-in successfully!');
         } catch (error) {
             console.error('Error checking-in deal:', error);
-            if (error.response && error.response.status === 400) {
-                // alert('Trip dates overlap with another trip. Please choose different dates.');
-            } else {
-                alert('Failed to check-in the deal. Please try again.');
-            }
+            alert('Failed to check-in the deal. Please try again.');
         }
     };
 
@@ -69,13 +49,24 @@ export default function DealsPage() {
             setDeals(prevDeals => prevDeals.map(deal => 
                 deal._id === dealId ? { ...deal, status: 'completed' } : deal
             ));
+            alert('Deal checked-out successfully!');
         } catch (error) {
             console.error('Error checking-out deal:', error);
-            if (error.response && error.response.status === 400) {
-                // alert('Trip dates overlap with another trip. Please choose different dates.');
-            } else {
-                alert('Failed to check-out the deal. Please try again.');
-            }
+            alert('Failed to check-out the deal. Please try again.');
+        }
+    };
+
+    const handleCancelDeal = async (ev, dealId) => {
+        ev.preventDefault();
+        try {
+            await axios.put(`/deals/${dealId}/cancel`);
+            setDeals(prevDeals => prevDeals.map(deal => 
+                deal._id === dealId ? { ...deal, status: 'cancelled' } : deal
+            ));
+            alert('Deal canceled successfully!');
+        } catch (error) {
+            console.error('Error canceling deal:', error);
+            alert('Failed to cancel the deal. Please try again.');
         }
     };
 
@@ -86,13 +77,10 @@ export default function DealsPage() {
             setDeals(prevDeals => prevDeals.map(deal => 
                 deal._id === dealId ? { ...deal, ownerStatus: 'archived' } : deal
             ));
+            alert('Deal archived successfully!');
         } catch (error) {
             console.error('Error archiving deal:', error);
-            if (error.response && error.response.status === 400) {
-                // alert('Trip dates overlap with another trip. Please choose different dates.');
-            } else {
-                alert('Failed to archive the deal. Please try again.');
-            }
+            alert('Failed to archive the deal. Please try again.');
         }
     };
 
@@ -168,7 +156,6 @@ export default function DealsPage() {
             const buttonText = "Review"
             return (
                 <button
-                    // onClick={() => handleCancelTrip(trip._id)}
                     className={classNameButton}
                 >
                     {buttonText}
@@ -185,7 +172,7 @@ export default function DealsPage() {
             const buttonText = "Cancel"
             return (
                 <button
-                    onClick={() => handleCancelDeal(deal._id)}
+                    onClick={ev => handleCancelDeal(ev,deal._id)}
                     className={classNameButton}
                 >
                     {buttonText}
