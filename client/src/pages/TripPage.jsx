@@ -18,12 +18,12 @@ const loadPayPalScript = (clientId) => {
 
 export default function TripPage() {
   const { id } = useParams();
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const [trip, setTrip] = useState(null);
   const [rating, setRating] = useState(1);
   const [comment, setComment] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
-  const { user } = useContext(UserContext);
-  const navigate = useNavigate();
   const [isPayPalScriptLoaded, setIsPayPalScriptLoaded] = useState(false);
   const [paypalButtonsRendered, setPaypalButtonsRendered] = useState(false);
 
@@ -33,9 +33,7 @@ export default function TripPage() {
         setTrip(response.data);
       });
     }
-
-    // Load PayPal script
-    loadPayPalScript(
+    loadPayPalScript(   // Load PayPal script
       "AU3CK9Rvo6bUagdNuHdR0b2SBGT-wVKSB-Qf7vNggiFRPWdURKCkSB3Kds9PeNNyQXqDLB5myEbU_jbn"
     ).then(() => {
       setIsPayPalScriptLoaded(true);
@@ -44,8 +42,40 @@ export default function TripPage() {
 
   if (!trip) return "Loading...";
 
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
+    const handlePayment = async () => {
+    if (!isPayPalScriptLoaded) {
+      console.error("Error : Paypal script not loaded.");
+      return "";
+    }
+    const createOrder = async () => {
+      const amount = trip.price;
+      const response = await axios.post("/create-paypal-order", { amount });
+      return response.data.id;
+    };
+    const onApprove = async (data) => {
+      const response = await axios.post("/capture-paypal-order", {
+        orderID: data.orderID,
+        tripID: trip._id,
+      });
+      if (response.data.message === "Payment successful and trip confirmed!") {
+        alert("Payment successful and trip confirmed!");
+        window.location.reload();
+      } else {
+        alert("Payment not completed");
+      }
+    };
+    window.paypal
+    .Buttons({
+      createOrder: (data, actions) => createOrder(),
+      onApprove: (data, actions) => onApprove(data),
+      fundingSource: window.paypal.FUNDING.PAYPAL,
+    })
+    .render(`#paypal-button-container`);
+    setPaypalButtonsRendered(true);
+  };
+
+  const handleSubmitReview = async (ev) => {
+    ev.preventDefault();
     if (!user) {
       alert("You need to be logged in to submit a review.");
       return;
@@ -69,107 +99,86 @@ export default function TripPage() {
     try {
       await axios.put(`/trips/${trip._id}/cancel`);
       alert("Trip canceled successfully!");
-      navigate("/account/"); // Redirect to profile page after cancellation
+      navigate("/account/trips");
     } catch (error) {
       console.error("Error canceling trip:", error);
-      if (error.response && error.response.status === 400) {
-        alert(
-          "Trip dates overlap with another trip. Please choose different dates."
-        );
-      } else {
-        alert("Failed to cancel the trip. Please try again.");
-      }
+      alert("Failed to cancel the trip. Please try again.");
     }
   };
 
-  const handlePayment = async () => {
-    if (!isPayPalScriptLoaded || paypalButtonsRendered) return;
-
-    const createOrder = async () => {
-      const amount = trip.price;
-      const response = await axios.post("/create-paypal-order", { amount });
-      return response.data.id;
-    };
-
-    const onApprove = async (data) => {
-      const response = await axios.post("/capture-paypal-order", {
-        orderID: data.orderID,
-        tripID: trip._id,
-      });
-      if (response.data.message === "Payment successful and trip confirmed!") {
-        alert("Payment successful and trip confirmed!");
-        window.location.reload();
-      } else {
-        alert("Payment not completed");
-      }
-    };
-
-    window.paypal
-      .Buttons({
-        createOrder: (data, actions) => createOrder(),
-        onApprove: (data, actions) => onApprove(data),
-        fundingSource: window.paypal.FUNDING.PAYPAL,
-      })
-      .render(`#paypal-button-container`);
-
-    setPaypalButtonsRendered(true);
+  const handleArchiveTrip = async () => {
+    try {
+      await axios.put(`/trips/${trip._id}/archive`);
+      alert("Trip archived successfully!");
+      navigate("/account/trips");
+    } catch (error) {
+      console.error("Error archiving trip:", error);
+      alert("Failed to archive the trip. Please try again.");
+    }
   };
 
-  function userAccessPanelMessage1(tripStatus) {
-    if (tripStatus === "upcoming") {
+  function userMessage1() {
+    if (trip.status === "upcoming") {
       return "Booking Request Completed!";
     }
-    if (tripStatus === "unpaid") {
+    if (trip.status === "unpaid") {
       return "Your Request Approved!";
     }
-    if (tripStatus === "confirmed") {
+    if (trip.status === "confirmed") {
       return "Booking Completed!";
     }
-    if (tripStatus === "ongoing") {
+    if (trip.status === "ongoing") {
       return "Trip in Progress!";
     }
-    if (tripStatus === "completed") {
+    if (trip.status === "completed") {
       return "Trip Completed!";
     }
-    if (tripStatus === "cancelled") {
+    if (trip.status === "cancelled") {
       return "Trip Canceled.";
     } else {
       return "";
     }
   }
 
-  function userAccessPanelMessage2(tripStatus) {
-    if (tripStatus === "upcoming") {
+  function userMessage2() {
+    if (trip.status === "upcoming") {
       return "Awaiting Approval.";
     }
-    if (tripStatus === "unpaid") {
+    if (trip.status === "unpaid") {
       return "Payment Required.";
     }
-    if (tripStatus === "confirmed") {
+    if (trip.status === "confirmed") {
       return "Awaiting Your Reservation!";
     }
-    if (tripStatus === "ongoing") {
+    if (trip.status === "ongoing") {
       return "Enjoy Your Trip!";
     }
-    if (tripStatus === "completed") {
+    if (trip.status === "completed") {
       return "Thanks for Choosing Kratos!";
     }
-    if (tripStatus === "cancelled") {
+    if (trip.status === "cancelled") {
       return "See you soon!";
     } else {
       return "";
     }
   }
 
-  function userActionButton1(trip) {
-    const classNameButton =
-      "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
+  function userActionButton1() {
+    const classNameButton = "w-full py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
     if (trip.status === "unpaid") {
       const buttonText = "Payment";
       return (
-        <button onClick={() => handlePayment(trip)} className={classNameButton}>
-          {buttonText}
-        </button>
+        <div className="w-1/2">
+          <div id={`paypal-button-container`}></div>
+          {!paypalButtonsRendered && (
+            <button
+              onClick={handlePayment}
+              className={classNameButton}
+            >
+              {buttonText}
+            </button>
+          )}
+        </div>
       );
     }
     if (trip.status === "completed") {
@@ -180,9 +189,8 @@ export default function TripPage() {
     }
   }
 
-  function userActionButton2(trip) {
-    const classNameButton =
-      "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
+  function userActionButton2() {
+    const classNameButton = "w-full py-1 bg-red-500 hover:bg-red-700 text-white font-bold rounded";
     if (
       trip.status === "upcoming" ||
       trip.status === "unpaid" ||
@@ -190,23 +198,28 @@ export default function TripPage() {
     ) {
       const buttonText = "Cancel";
       return (
-        <button
-          onClick={() => handleCancelTrip(trip._id)}
-          className={classNameButton}
-        >
-          {buttonText}
-        </button>
+        <div className="w-1/2 ml-auto">
+          {!paypalButtonsRendered && (
+            <button
+              onClick={handleCancelTrip}
+              className={classNameButton}
+            >
+              {buttonText}
+            </button>
+          )}
+        </div>
       );
     }
     if (trip.status === "completed" || trip.status === "cancelled") {
       const buttonText = "Archive";
       return (
-        <button
-          onClick={(ev) => handleArchiveTrip(ev, trip._id)}
+        <div className="w-1/2 ml-auto">
+          <button onClick={handleArchiveTrip} 
           className={classNameButton}
-        >
-          {buttonText}
-        </button>
+          >
+            {buttonText}
+          </button>
+        </div>
       );
     } else {
       return "";
@@ -256,13 +269,13 @@ export default function TripPage() {
           </div>
           <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
             <h3 className="text-lg font-semibold">Message</h3>
-            <div className="flex flex-col items-center space-y-2 pt-2">
-              <p>{userAccessPanelMessage1(trip.status)}</p>
-              <p>{userAccessPanelMessage2(trip.status)}</p>
+            <div className="flex flex-col items-center space-y-2 py-2">
+              <p>{userMessage1()}</p>
+              <p>{userMessage2()}</p>
             </div>
-            <div className="flex w-full p-2 space-x-2 mt-auto">
-              {userActionButton1(trip)}
-              {userActionButton2(trip)}
+            <div className="flex w-full p-2 space-x-2">
+              {userActionButton1()}
+              {userActionButton2()}
             </div>
           </div>
           <div className="bg-primary p-6 text-white rounded-2xl">
