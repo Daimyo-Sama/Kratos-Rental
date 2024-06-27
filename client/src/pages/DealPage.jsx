@@ -74,6 +74,136 @@ export default function DealPage() {
     }
   };
 
+  function ownerAccessPanelMessage1(dealStatus) {
+    if (dealStatus === "upcoming") {
+      return "New Booking Request!";
+    }
+    if (dealStatus === "unpaid") {
+      return "User Approved!";
+    }
+    if (dealStatus === "confirmed") {
+      return "Booking Completed!";
+    }
+    if (dealStatus === "ongoing") {
+      return "Trip in Progress!";
+    }
+    if (dealStatus === "completed") {
+      return "Trip Completed!";
+    }
+    if (dealStatus === "cancelled") {
+      return "Trip Canceled.";
+    } else {
+      return "";
+    }
+  }
+
+  function ownerAccessPanelMessage2(dealStatus) {
+    if (dealStatus === "upcoming") {
+      return "Approval needed.";
+    }
+    if (dealStatus === "unpaid") {
+      return "Awaiting Payment.";
+    }
+    if (dealStatus === "confirmed") {
+      return "Awaiting the Reservation!";
+    }
+    if (dealStatus === "ongoing") {
+      return "Everything is going OK!";
+    }
+    if (dealStatus === "completed") {
+      return "Thanks for Choosing Kratos!";
+    }
+    if (dealStatus === "cancelled") {
+      return "See you soon!";
+    } else {
+      return "";
+    }
+  }
+
+  function ownerActionButton1(deal) {
+    const classNameButton =
+      "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
+    if (deal.status === "upcoming") {
+      const buttonText = "Approve";
+      return (
+        <button
+          onClick={(ev) => handleAcceptDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    }
+    if (deal.status === "confirmed") {
+      const buttonText = "Check-In";
+      return (
+        <button
+          onClick={(ev) => handleCheckInDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    }
+    if (deal.status === "ongoing") {
+      const buttonText = "Check-Out";
+      return (
+        <button
+          onClick={(ev) => handleCheckOutDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    }
+    if (deal.status === "completed") {
+      const buttonText = "Review";
+      return (
+        <button
+          // onClick={() => handleCancelTrip(trip._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    } else {
+      return "";
+    }
+  }
+
+  function ownerActionButton2(deal) {
+    const classNameButton =
+      "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
+    if (
+      deal.status === "upcoming" ||
+      deal.status === "unpaid" ||
+      deal.status === "confirmed"
+    ) {
+      const buttonText = "Cancel";
+      return (
+        <button
+          onClick={() => handleCancelDeal(deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    }
+    if (deal.status === "completed" || deal.status === "cancelled") {
+      const buttonText = "Archive";
+      return (
+        <button
+          onClick={(ev) => handleArchiveDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    } else {
+      return "";
+    }
+  }
+
   return (
     <div className="max-w-6xl mx-auto">
       <button
@@ -119,8 +249,19 @@ export default function DealPage() {
               </Link>
             </div>
           </div>
+          <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
+            <h3 className="text-lg font-semibold">Message</h3>
+            <div className="flex flex-col items-center space-y-2 pt-2">
+              <p>{ownerAccessPanelMessage1(deal.status)}</p>
+              <p>{ownerAccessPanelMessage2(deal.status)}</p>
+            </div>
+            <div className="flex w-full p-2 space-x-2 mt-auto">
+              {ownerActionButton1(deal)}
+              {ownerActionButton2(deal)}
+            </div>
+          </div>
 
-          <div className="flex flex-wrap">
+          {/* <div className="flex flex-wrap">
             <button
               onClick={handleAcceptTrip}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
@@ -133,7 +274,7 @@ export default function DealPage() {
             >
               Cancel Trip
             </button>
-          </div>
+          </div> */}
           <div className="bg-primary p-6 text-white rounded-2xl">
             <div>Total income</div>
             <div className="text-3xl">${deal.price}</div>
@@ -167,29 +308,35 @@ export default function DealPage() {
             <div className="mt-4">
               <h3 className="font-semibold text-xl">Reviews</h3>
               <div>
-    {deal.user?.reviews?.length > 0 ? (
-      deal.user.reviews.map((review, index) => (
-        <div key={index} className="text-sm text-gray-700 mt-1">
-          <p>
-            <strong>{review.reviewer ? review.reviewer.name : "Anonymous"}:</strong> {review.comment}
-          </p>
-          <p className="text-xs text-gray-500">
-            Rating: {review.rating}
-          </p>
-          {index < deal.user.reviews.length - 1 && <hr className="my-4 border-gray-300" />}
-        </div>
-      ))
-    ) : (
-      <p className="text-sm text-gray-600">No reviews yet.</p>
-    )}
-  </div>
+                {deal.user?.reviews?.length > 0 ? (
+                  deal.user.reviews.map((review, index) => (
+                    <div key={index} className="text-sm text-gray-700 mt-1">
+                      <p>
+                        <strong>
+                          {review.reviewer ? review.reviewer.name : "Anonymous"}
+                          :
+                        </strong>{" "}
+                        {review.comment}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Rating: {review.rating}
+                      </p>
+                      {index < deal.user.reviews.length - 1 && (
+                        <hr className="my-4 border-gray-300" />
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-600">No reviews yet.</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
         <div className="w-full md:w-1/2 p-2">
           {(deal.status === "confirmed" || deal.status === "completed") && (
-            <div className="m p-4 w-full bg-gray-200 rounded shadow border-2 border-white">
+            <div className="p-4 w-full bg-gray-200 rounded shadow">
               <h2 className="font-semibold text-2xl">Submit a Review</h2>
               <p className="text-gray-700 mb-4">
                 You are welcome to leave a review about the client during or

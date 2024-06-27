@@ -5,7 +5,6 @@ import axios from "axios";
 import CarsPage from "./CarsPage";
 import AccountNav from "../AccountNav";
 
-
 const PayPalInstructions = () => (
   <div className="text-left">
     <h3 className="text-lg font-semibold mb-2">Create a PayPal Account</h3>
@@ -40,16 +39,13 @@ export default function ProfilePage() {
   const [editBio, setEditBio] = useState(false);
   const [becomeOwnerClicked, setBecomeOwnerClicked] = useState(false);
 
-  
   let { subpage } = useParams();
   if (subpage === undefined) {
     subpage = "profile";
   }
 
-  
   useEffect(() => {
     if (ready && user) {
-      
       axios.get("/tasks").then(({ data }) => {
         setTasks(data);
         if (
@@ -65,7 +61,6 @@ export default function ProfilePage() {
     }
   }, [ready, user]);
 
-  
   async function updateBio(ev) {
     ev.preventDefault();
     try {
@@ -80,7 +75,6 @@ export default function ProfilePage() {
     }
   }
 
-  
   async function updateProfilePicture(ev) {
     ev.preventDefault();
     const formData = new FormData();
@@ -102,7 +96,6 @@ export default function ProfilePage() {
     }
   }
 
-
   async function updateTaskStatus(description) {
     const task = tasks.find((t) => t.description === description);
     if (task) {
@@ -122,7 +115,6 @@ export default function ProfilePage() {
     }
   }
 
-
   const handleBecomeOwner = async () => {
     try {
       await axios.post("/become-owner", { userId: user._id });
@@ -133,7 +125,6 @@ export default function ProfilePage() {
       alert("Failed to become an owner. Please try again.");
     }
   };
-
 
   const handleUpdatePayPalEmail = async (ev) => {
     ev.preventDefault();
@@ -151,7 +142,6 @@ export default function ProfilePage() {
       alert("Failed to update PayPal email. Please try again.");
     }
   };
-
 
   const isPayPalTaskCompleted = tasks.some(
     (task) =>
@@ -231,7 +221,7 @@ export default function ProfilePage() {
             <span className="text-red-500">Name not available</span>
           )}
         </h2>
-        <div className="bg-gray-300  text-white p-4 rounded mx-auto mt-4 max-w-lg">
+        <div className="bg-gray-300 text-white p-4 rounded mx-auto mt-4 max-w-lg border-4 border-primary">
           <p className="text-gray-600 font-semibold">
             {user.bio ? (
               user.bio
@@ -346,8 +336,10 @@ export default function ProfilePage() {
                     host functionalities!
                     <br></br>
                     <br></br>
-                    <b>You should now see My Cars and My Deals tabs at the top of
-                    the page.</b>
+                    <b>
+                      You should now see My Cars and My Deals tabs at the top of
+                      the page.
+                    </b>
                   </p>
                 </div>
               )}

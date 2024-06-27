@@ -276,80 +276,77 @@ export default function AboutUs() {
         </section>
 
         <section className="mb-8 bg-gray-200 p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-indigo-500">
-            Tools
-          </h2>
+          <h2 className="text-2xl font-semibold mb-4 text-indigo-500">Tools</h2>
           <div className=" flex flex-col md:flex-row">
             <aside className="flex-1 flex flex-wrap max-w-1/2 bg-blue-50 p-4 rounded-lg mb-4 md:mb-0">
-            <div className=" flex-grow">
-                <p className="text-lg mb-4">
-                Our app leverages the MERN stack to provide a seamless and
-                efficient car rental experience:
-              </p>
-              <ul className="list-disc list-inside text-lg space-y-2 pl-4">
-                <li>
-                  Frontend: Built with React for a dynamic and responsive user
-                  interface.
-                </li>
-                <li>
-                  Styling: Tailwind CSS for utility-first, easily customizable
-                  styles.
-                </li>
-                <li>
-                  Backend: Mongoose for dat modeling, Node.js with Express for handling server-side logic
-                  and APIs.
-                </li>
-                <li>
-                  Database: MongoDB for flexible and scalable data management.
-                </li>
-                <li>
-                  Authentication: Implemented with JWT to ensure secure user
-                  sessions.
-                </li>
-                <li>
-                  Payment Processing: Integrated with PayPal Sandbox SDK and API
-                  for secure transactions.
-                </li>
-              </ul>
-              </div>
-              
               <div className=" flex-grow">
-              <div className="mb-8 ">
-                <h2 className="text-2xl font-semibold mb-2 ">
-                  Total Time Invested
-                </h2>
-                <p className="text-4xl font-bold text-blue-600">150+ hours</p>
+                <p className="text-lg mb-4">
+                  Our app leverages the MERN stack to provide a seamless and
+                  efficient car rental experience:
+                </p>
+                <ul className="list-disc list-inside text-lg space-y-2 pl-4">
+                  <li>
+                    Frontend: Built with React for a dynamic and responsive user
+                    interface.
+                  </li>
+                  <li>
+                    Styling: Tailwind CSS for utility-first, easily customizable
+                    styles.
+                  </li>
+                  <li>
+                    Backend: Mongoose for dat modeling, Node.js with Express for
+                    handling server-side logic and APIs.
+                  </li>
+                  <li>
+                    Database: MongoDB for flexible and scalable data management.
+                  </li>
+                  <li>
+                    Authentication: Implemented with JWT to ensure secure user
+                    sessions.
+                  </li>
+                  <li>
+                    Payment Processing: Integrated with PayPal Sandbox SDK and
+                    API for secure transactions.
+                  </li>
+                </ul>
               </div>
 
-              <div>
-                <h2 className="text-2xl font-semibold mb-2">Data Schemas</h2>
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                  <div>
-                    <img
-                      src="path_to_your_image1.jpg"
-                      alt="Schema 1"
-                      className="w-full max-w-xs rounded shadow-lg"
-                    />
+              <div className=" flex-grow">
+                <div className="mb-8 ">
+                  <h2 className="text-2xl font-semibold mb-2 ">
+                    Total Time Invested
+                  </h2>
+                  <p className="text-4xl font-bold text-blue-600">150+ hours</p>
+                </div>
+
+                <div>
+                  <h2 className="text-2xl font-semibold mb-2">Data Schemas</h2>
+                  <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div>
+                      <img
+                        src="path_to_your_image1.jpg"
+                        alt="Schema 1"
+                        className="w-full max-w-xs rounded shadow-lg"
+                      />
+                    </div>
+                    <div>
+                      <img
+                        src="path_to_your_image2.jpg"
+                        alt="Schema 2"
+                        className="w-full max-w-xs rounded shadow-lg"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <img
-                      src="path_to_your_image2.jpg"
-                      alt="Schema 2"
-                      className="w-full max-w-xs rounded shadow-lg"
-                    />
+                  <div className="mt-4">
+                    <a
+                      href=""
+                      className="text-blue-500 underline hover:text-blue-700"
+                    >
+                      View Detailed Schemas
+                    </a>
                   </div>
                 </div>
-                <div className="mt-4">
-                  <a
-                    href=""
-                    className="text-blue-500 underline hover:text-blue-700"
-                  >
-                    View Detailed Schemas
-                  </a>
-                </div>
               </div>
-              </div>
-              
             </aside>
             <aside className="flex-shrink-0 md:ml-8 bg-gray-300 p-4 rounded-lg max-w-1/2">
               <div className="flex flex-col gap-4 items-center">
@@ -431,7 +428,7 @@ export default function AboutUs() {
               </ul>
             </li>
             <li>
-              Alex
+              Alex - Aka - Cyberdodo
               <ul className="list-none pl-4">
                 <li>
                   <a href="https://github.com/alex" className="text-blue-500">
@@ -448,7 +445,6 @@ export default function AboutUs() {
                 </li>
               </ul>
             </li>
-           
           </ul>
         </section>
       </div>
