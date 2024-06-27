@@ -291,9 +291,10 @@ export default function TripPage() {
             </p>
           </div>
         </div>
+        <div className="mt-2">
+          <CarGallery car={trip.car} />
+        </div>
       </div>
-
-      <CarGallery car={trip.car} />
 
       {(trip.status === "confirmed" || trip.status === "completed") && (
         <div className="mt-4 p-4 bg-white rounded shadow">
