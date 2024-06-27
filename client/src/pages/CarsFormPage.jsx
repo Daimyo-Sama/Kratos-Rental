@@ -145,7 +145,35 @@ export default function CarsFormPage() {
           "Add the income you want to receive per day. Remember that it will be more expensive for the user due to the Kratos fees"
         )}
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
-          {}
+          <div>
+            <h3 className="mt-2 -mb-1">Check in time</h3>
+            <input
+              type="text"
+              value={checkIn}
+              onChange={(ev) => setCheckIn(ev.target.value)}
+              placeholder="14"
+              className="w-full p-2 border rounded-lg"
+            />
+          </div>
+          <div>
+            <h3 className="mt-2 -mb-1">Check out time</h3>
+            <input
+              type="text"
+              value={checkOut}
+              onChange={(ev) => setCheckOut(ev.target.value)}
+              placeholder="11"
+              className="w-full p-2 border rounded-lg"
+            />
+          </div>
+          <div>
+            <h3 className="mt-2 -mb-1">Max number of guests</h3>
+            <input
+              type="number"
+              value={maxGuests}
+              onChange={(ev) => setMaxGuests(ev.target.value)}
+              className="w-full p-2 border rounded-lg"
+            />
+          </div>
           <div>
             <h3 className="mt-2 -mb-1">Price per day</h3>
             <input
