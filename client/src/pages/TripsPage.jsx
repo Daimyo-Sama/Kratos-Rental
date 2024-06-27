@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import AddressLink from "../AddressLink";
 import TripDates from "../TripDates";
 import CarImg from "../CarImg";
 import AccountNav from "../AccountNav";
@@ -17,51 +16,62 @@ const loadPayPalScript = (clientId) => {
 };
 
 export default function TripsPage() {
-    const [trips, setTrips] = useState([]); // State to store the list of trips
+    const [trips, setTrips] = useState([]);
     const [isPayPalScriptLoaded, setIsPayPalScriptLoaded] = useState(false);
-    const [paypalButtonsRendered, setPaypalButtonsRendered] = useState({}); // Track which PayPal buttons are rendered
+    const [paypalButtonsRendered, setPaypalButtonsRendered] = useState(false);
 
     useEffect(() => {
         axios.get('/trips').then(response => {
-            setTrips(response.data); // Fetch trips data and set it in state
+            setTrips(response.data);
         });
-        // Load PayPal script
-        loadPayPalScript('AU3CK9Rvo6bUagdNuHdR0b2SBGT-wVKSB-Qf7vNggiFRPWdURKCkSB3Kds9PeNNyQXqDLB5myEbU_jbn').then(() => {
+        loadPayPalScript(   // Load PayPal script
+            "AU3CK9Rvo6bUagdNuHdR0b2SBGT-wVKSB-Qf7vNggiFRPWdURKCkSB3Kds9PeNNyQXqDLB5myEbU_jbn"
+        ).then(() => {
             setIsPayPalScriptLoaded(true);
         });
-    }, []); // Empty dependency array means this effect runs once on mount
+    }, []);
 
-    const handlePayment = async (trip) => {
-        if (!isPayPalScriptLoaded || paypalButtonsRendered[trip._id]) return;
-
+    const handlePayment = async (ev,trip) => {
+        ev.preventDefault();
+        if (!isPayPalScriptLoaded) {
+            console.error("Error : Paypal script not loaded.");
+            return "";
+        }
         const createOrder = async () => {
-            const amount = trip.price; // Use the actual trip price
-            const response = await axios.post('/create-paypal-order', { amount });
+            const amount = trip.price;
+            const response = await axios.post("/create-paypal-order", { amount });
             return response.data.id;
         };
-
         const onApprove = async (data) => {
-            const response = await axios.post('/capture-paypal-order', { orderID: data.orderID, tripID: trip._id });
-            if (response.data.message === 'Payment successful and trip confirmed!') {
-                alert('Payment successful and trip confirmed!');
-                window.location.reload(); // Reload the page on successful payment
+            console.log("Hello!");
+            const response = await axios.post("/capture-paypal-order", {
+                orderID: data.orderID,
+                tripID: trip._id,
+            });
+            if (response.data.message === "Payment successful and trip confirmed!") {
+                alert("Payment successful and trip confirmed!");
+                window.location.reload();
             } else {
-                alert('Payment not completed');
+                alert("Payment not completed");
             }
         };
-
-        window.paypal.Buttons({
+        window.paypal
+        .Buttons({
             createOrder: (data, actions) => createOrder(),
-            onApprove: (data, actions) => onApprove(data)
-        }).render(`#paypal-button-container-${trip._id}`);
-
-        setPaypalButtonsRendered(prev => ({ ...prev, [trip._id]: true }));
+            onApprove: (data, actions) => onApprove(data),
+            fundingSource: window.paypal.FUNDING.PAYPAL,
+        })
+        .render(`#paypal-button-container`);
+        setPaypalButtonsRendered(true);
     };
 
-    const handleCancelTrip = async (tripId) => {
+    const handleCancelTrip = async (ev, tripId) => {
+        ev.preventDefault();
         try {
             await axios.put(`/trips/${tripId}/cancel`);
-            alert('Trip canceled successfully!');
+            setTrips(prevTrips => prevTrips.map(trip => 
+                trip._id === tripId ? { ...trip, status: 'cancelled' } : trip
+            ));
         } catch (error) {
             console.error('Error canceling trip:', error);
             alert('Failed to cancel the trip. Please try again.');
@@ -118,16 +128,21 @@ export default function TripsPage() {
     }
 
     function userActionButton1(trip) {
-        const classNameButton = "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
+        const classNameButton = "w-full py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
         if (trip.status === "unpaid") {
             const buttonText = "Payment"
             return (
-                <button
-                    onClick={() => handlePayment(trip)}
-                    className={classNameButton}
-                >
-                    {buttonText}
-                </button>
+                <div className="w-1/2">
+                    <div id={`paypal-button-container`}></div>
+                    {!paypalButtonsRendered && (
+                        <button
+                            onClick={ev => handlePayment(ev,trip)}
+                            className={classNameButton}
+                        >
+                            {buttonText}
+                        </button>
+                    )}
+                </div>
             );
         } if (trip.status === "completed") {
             const buttonText = "Review"
@@ -144,26 +159,32 @@ export default function TripsPage() {
     }
 
     function userActionButton2(trip) {
-        const classNameButton = "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
+        const classNameButton = "w-full py-1 bg-red-500 hover:bg-red-700 text-white font-bold rounded";
         if (trip.status === "upcoming" || trip.status === "unpaid" || trip.status === "confirmed") {
             const buttonText = "Cancel"
             return (
-                <button
-                    onClick={() => handleCancelTrip(trip._id)}
-                    className={classNameButton}
-                >
-                    {buttonText}
-                </button>
+                <div className="w-1/2 ml-auto">
+                    {!paypalButtonsRendered && (
+                        <button
+                            onClick={ev => handleCancelTrip(ev,trip._id)}
+                            className={classNameButton}
+                        >
+                            {buttonText}
+                        </button>
+                    )}
+                </div>
             );
         } if (trip.status === "completed" || trip.status === "cancelled") {
             const buttonText = "Archive"
             return (
-                <button
-                    onClick={ev => handleArchiveTrip(ev,trip._id)}
-                    className={classNameButton}
-                >
-                    {buttonText}
-                </button>
+                <div className="w-1/2 ml-auto">
+                    <button
+                        onClick={ev => handleArchiveTrip(ev,trip._id)}
+                        className={classNameButton}
+                    >
+                        {buttonText}
+                    </button>
+                </div>
             );
         } else {
             return "";
@@ -213,8 +234,8 @@ export default function TripsPage() {
                             </div>
                         </div>
                         <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
-                            <h3 className="text-lg font-semibold">Quick Access Panel</h3>
-                            <div className="flex flex-col items-center space-y-2 pt-2">
+                            <h3 className="text-lg font-semibold text-center">Quick Access Panel</h3>
+                            <div className="flex flex-col items-center space-y-2 py-2 text-center">
                                 <p>{userAccessPanelMessage1(trip.status)}</p>
                                 <p>{userAccessPanelMessage2(trip.status)}</p>
                             </div>
