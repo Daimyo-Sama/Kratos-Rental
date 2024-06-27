@@ -248,60 +248,64 @@ export default function TripPage() {
         </svg>
         Go Back
       </button>
-      <div className="bg-gray-200 p-6 my-6 rounded-2xl flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl mb-4">Your trip information</h2>
-          <h1 className="text-3xl">{trip.car.title}</h1>
-          <AddressLink className="my-2 block">{trip.car.address}</AddressLink>
-          <TripDates trip={trip} />
-        </div>
-        <div className="bg-gray-300 p-4 rounded shadow-md">
-          <h2 className="text-2xl mb-2">Owner</h2>
-          <div className="flex items-center">
-            {trip.car.owner.profilePicture && (
-              <img
-                src={`http://localhost:4000${trip.car.owner.profilePicture}`}
-                alt="Profile"
-                className="w-16 h-16 rounded-full mr-4"
-              />
-            )}
-            <div>
-              <p>
-                <strong>Name:</strong> {trip.car.owner.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {trip.car.owner.email}
-              </p>
+
+      <div className="bg-gray-200 rounded-2xl">
+        <div className="p-6 my-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl">{trip.car.title}</h1>
+            <AddressLink className="my-2 block">{trip.car.address}</AddressLink>
+          </div>
+          <div>
+            <h2 className="text-2xl mb-4">Your trip information</h2>
+            <TripDates trip={trip} />
+            <div className="text-center mt-4">
+              <Link
+                to="/about-us"
+                className="text-blue-500 underline hover:text-blue-700"
+              >
+                Confused? Check out our user guide!
+              </Link>
             </div>
           </div>
-        </div>
-        <div className="text-center mt-4">
-          <Link
-            to="/about-us"
-            className="text-blue-500 underline hover:text-blue-700"
-          >
-            Confused? Check out our user guide!
-          </Link>
-        </div>
-        <div className="mt-4 flex items-center">
-          <span className="font-semibold">Status:</span> {trip.status}
-        </div>
-        <div className="flex flex-col p-2 bg-gray-200 w-64 items-center justify-between ">
-          <h3 className="text-lg font-semibold text-center">Messages</h3>
-          <div className="flex flex-col items-center space-y-2 py-2 text-center">
-            <p>{userMessage1()}</p>
-            <p>{userMessage2()}</p>
+          <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
+            <h3 className="text-lg font-semibold">Message</h3>
+            <div className="flex flex-col items-center space-y-2 pt-2">
+              <p>{userAccessPanelMessage1(trip.status)}</p>
+              <p>{userAccessPanelMessage2(trip.status)}</p>
+            </div>
+            <div className="flex w-full p-2 space-x-2 mt-auto">
+              {userActionButton1(trip)}
+              {userActionButton2(trip)}
+            </div>
           </div>
-          <div className="flex w-full p-2 space-x-2">
-            {userActionButton1()}
-            {userActionButton2()}
+          <div className="bg-primary p-6 text-white rounded-2xl">
+            <div>Total price</div>
+            <div className="text-3xl">${trip.price}</div>
           </div>
-        </div>
-        <div className="bg-primary p-6 text-white rounded-2xl">
-          <div>Total price</div>
-          <div className="text-3xl">${trip.price}</div>
         </div>
       </div>
+
+      <div className="bg-gray-300 p-4 mb-1 rounded shadow-md">
+        <h2 className="text-2xl mb-2">Owner</h2>
+        <div className="flex items-center">
+          {trip.car.owner.profilePicture && (
+            <img
+              src={`http://localhost:4000${trip.car.owner.profilePicture}`}
+              alt="Profile"
+              className="w-16 h-16 rounded-full mr-4"
+            />
+          )}
+          <div>
+            <p>
+              <strong>Name:</strong> {trip.car.owner.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {trip.car.owner.email}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <CarGallery car={trip.car} />
 
       {(trip.status === "confirmed" || trip.status === "completed") && (

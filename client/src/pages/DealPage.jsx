@@ -75,114 +75,134 @@ export default function DealPage() {
   };
 
   function ownerAccessPanelMessage1(dealStatus) {
-    if(dealStatus === "upcoming"){
-        return "New Booking Request!";
-    } if(dealStatus === "unpaid"){
-        return "User Approved!";
-    } if(dealStatus === "confirmed"){
-        return "Booking Completed!";
-    } if(dealStatus === "ongoing"){
-        return "Trip in Progress!";
-    } if(dealStatus === "completed"){
-        return "Trip Completed!"
-    } if(dealStatus === "cancelled"){
-        return "Trip Canceled."
-    } else {
-        return "";
+    if (dealStatus === "upcoming") {
+      return "New Booking Request!";
     }
-}
-
-function ownerAccessPanelMessage2(dealStatus) {
-    if(dealStatus === "upcoming"){
-        return "Approval needed.";
-    } if(dealStatus === "unpaid"){
-        return "Awaiting Payment.";
-    } if(dealStatus === "confirmed"){
-        return "Awaiting the Reservation!";
-    } if(dealStatus === "ongoing"){
-        return "Everything is going OK!";
-    } if(dealStatus === "completed"){
-        return "Thanks for Choosing Kratos!"
-    } if(dealStatus === "cancelled"){
-        return "See you soon!"
-    } else {
-        return "";
+    if (dealStatus === "unpaid") {
+      return "User Approved!";
     }
-}
+    if (dealStatus === "confirmed") {
+      return "Booking Completed!";
+    }
+    if (dealStatus === "ongoing") {
+      return "Trip in Progress!";
+    }
+    if (dealStatus === "completed") {
+      return "Trip Completed!";
+    }
+    if (dealStatus === "cancelled") {
+      return "Trip Canceled.";
+    } else {
+      return "";
+    }
+  }
 
-function ownerActionButton1(deal) {
-    const classNameButton = "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
+  function ownerAccessPanelMessage2(dealStatus) {
+    if (dealStatus === "upcoming") {
+      return "Approval needed.";
+    }
+    if (dealStatus === "unpaid") {
+      return "Awaiting Payment.";
+    }
+    if (dealStatus === "confirmed") {
+      return "Awaiting the Reservation!";
+    }
+    if (dealStatus === "ongoing") {
+      return "Everything is going OK!";
+    }
+    if (dealStatus === "completed") {
+      return "Thanks for Choosing Kratos!";
+    }
+    if (dealStatus === "cancelled") {
+      return "See you soon!";
+    } else {
+      return "";
+    }
+  }
+
+  function ownerActionButton1(deal) {
+    const classNameButton =
+      "w-1/2 py-1 bg-green-500 hover:bg-green-700 text-white font-bold rounded";
     if (deal.status === "upcoming") {
-        const buttonText = "Approve"
-        return (
-            <button
-                onClick={ev => handleAcceptDeal(ev,deal._id)}
-                className={classNameButton}
-            >
-                {buttonText}
-            </button>
-        );
-    } if (deal.status === "confirmed") {
-        const buttonText = "Check-In"
-        return (
-            <button
-                onClick={ev => handleCheckInDeal(ev,deal._id)}
-                className={classNameButton}
-            >
-                {buttonText}
-            </button>
-        );
-    } if (deal.status === "ongoing") {
-        const buttonText = "Check-Out"
-        return (
-            <button
-                onClick={ev => handleCheckOutDeal(ev,deal._id)}
-                className={classNameButton}
-            >
-                {buttonText}
-            </button>
-        );
-    } if (deal.status === "completed") {
-        const buttonText = "Review"
-        return (
-            <button
-                // onClick={() => handleCancelTrip(trip._id)}
-                className={classNameButton}
-            >
-                {buttonText}
-            </button>
-        );
-    } else {
-        return "";
+      const buttonText = "Approve";
+      return (
+        <button
+          onClick={(ev) => handleAcceptDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
     }
-}
+    if (deal.status === "confirmed") {
+      const buttonText = "Check-In";
+      return (
+        <button
+          onClick={(ev) => handleCheckInDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    }
+    if (deal.status === "ongoing") {
+      const buttonText = "Check-Out";
+      return (
+        <button
+          onClick={(ev) => handleCheckOutDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    }
+    if (deal.status === "completed") {
+      const buttonText = "Review";
+      return (
+        <button
+          // onClick={() => handleCancelTrip(trip._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    } else {
+      return "";
+    }
+  }
 
-function ownerActionButton2(deal) {
-    const classNameButton = "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
-    if (deal.status === "upcoming" || deal.status === "unpaid" || deal.status === "confirmed") {
-        const buttonText = "Cancel"
-        return (
-            <button
-                onClick={() => handleCancelDeal(deal._id)}
-                className={classNameButton}
-            >
-                {buttonText}
-            </button>
-        );
-    } if (deal.status === "completed" || deal.status === "cancelled") {
-        const buttonText = "Archive"
-        return (
-            <button
-                onClick={ev => handleArchiveDeal(ev,deal._id)}
-                className={classNameButton}
-            >
-                {buttonText}
-            </button>
-        );
-    } else {
-        return "";
+  function ownerActionButton2(deal) {
+    const classNameButton =
+      "w-1/2 py-1 ml-auto bg-red-500 hover:bg-red-700 text-white font-bold rounded";
+    if (
+      deal.status === "upcoming" ||
+      deal.status === "unpaid" ||
+      deal.status === "confirmed"
+    ) {
+      const buttonText = "Cancel";
+      return (
+        <button
+          onClick={() => handleCancelDeal(deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
     }
-}
+    if (deal.status === "completed" || deal.status === "cancelled") {
+      const buttonText = "Archive";
+      return (
+        <button
+          onClick={(ev) => handleArchiveDeal(ev, deal._id)}
+          className={classNameButton}
+        >
+          {buttonText}
+        </button>
+      );
+    } else {
+      return "";
+    }
+  }
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -264,14 +284,14 @@ function ownerActionButton2(deal) {
 
       <div className="flex flex-wrap mt-8">
         <div className="w-full md:w-1/2 p-2">
-          <div className="bg-gray-200 p-4 rounded shadow-md">
+          <div className="bg-white border-2 border-gray-200 p-4 rounded shadow-md">
             <div>
-              <h2 className="text-2xl mb-2">Client Information</h2>
+              <h2 className="text-2xl mb-4">Client Information</h2>
               {deal.user?.profilePicture && (
                 <img
                   src={`http://localhost:4000${deal.user.profilePicture}`}
                   alt="Profile"
-                  className="w-32 h-32 rounded-full mr-4"
+                  className="w-32 h-32 rounded-full mb-4 border-gray-400 border-4"
                 />
               )}
               <p>
@@ -287,30 +307,36 @@ function ownerActionButton2(deal) {
 
             <div className="mt-4">
               <h3 className="font-semibold text-xl">Reviews</h3>
-              <ul className="list-disc list-inside">
+              <div>
                 {deal.user?.reviews?.length > 0 ? (
                   deal.user.reviews.map((review, index) => (
-                    <li key={index} className="text-sm text-gray-700 mt-1">
+                    <div key={index} className="text-sm text-gray-700 mt-1">
                       <p>
-                        <strong>{review.reviewedUser?.name}:</strong>{" "}
+                        <strong>
+                          {review.reviewer ? review.reviewer.name : "Anonymous"}
+                          :
+                        </strong>{" "}
                         {review.comment}
                       </p>
                       <p className="text-xs text-gray-500">
                         Rating: {review.rating}
                       </p>
-                    </li>
+                      {index < deal.user.reviews.length - 1 && (
+                        <hr className="my-4 border-gray-300" />
+                      )}
+                    </div>
                   ))
                 ) : (
                   <p className="text-sm text-gray-600">No reviews yet.</p>
                 )}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="w-full md:w-1/2 p-2">
           {(deal.status === "confirmed" || deal.status === "completed") && (
-            <div className="mt-4 p-4 w-full bg-gray-200 rounded shadow">
+            <div className="p-4 w-full bg-gray-200 rounded shadow">
               <h2 className="font-semibold text-2xl">Submit a Review</h2>
               <p className="text-gray-700 mb-4">
                 You are welcome to leave a review about the client during or

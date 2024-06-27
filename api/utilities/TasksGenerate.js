@@ -1,6 +1,7 @@
 const Task = require('../models/Task');
 const User = require('../models/User');
 
+//Generate tasks according to owner level
 async function generateUserTasks(userId, accountLevel) {
     const tasksToAdd = [];
 

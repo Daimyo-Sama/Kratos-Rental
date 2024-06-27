@@ -6,28 +6,27 @@ require("dotenv").config();
 let Environment = paypal.core.SandboxEnvironment;
 let PAYPAL_API_BASE_URL = 'https://api.sandbox.paypal.com';
 
-// pour la production
 if (process.env.NODE_ENV === 'production') {
     Environment = paypal.core.LiveEnvironment;
     PAYPAL_API_BASE_URL = 'https://api.paypal.com';
 }
 
-// Create a PayPal client using the appropriate environment
+
 const paypalClient = new paypal.core.PayPalHttpClient(new Environment(
     process.env.PAYPAL_CLIENT_ID,
     process.env.PAYPAL_CLIENT_SECRET
 ));
 
-// Create Nodemailer transporter
+
 const transporter = nodemailer.createTransport({
-    service: 'Gmail', // Use your email service
+    service: 'Gmail',
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
 });
 
-// obtenir le token dacces oauth de paypal
+// Obtain paypal api oauth access token
 const getAccessToken = async () => {
     const auth = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`).toString('base64');
     const response = await axios.post(`${PAYPAL_API_BASE_URL}/v1/oauth2/token`, 'grant_type=client_credentials', {
@@ -40,7 +39,7 @@ const getAccessToken = async () => {
     return response.data.access_token;
 };
 
-// Function to send payment confirmation email to the owner
+// Send an email to owner
 const sendPaymentConfirmationEmail = async (ownerEmail, amount) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
@@ -51,7 +50,7 @@ const sendPaymentConfirmationEmail = async (ownerEmail, amount) => {
             <p>Dear Owner,</p>
             <p>We are pleased to inform you that a payment of <strong>${amount} CAD</strong> has been sent to your PayPal account.</p>
             <p>Please login to your PayPal account to verify the payment:</p>
-            <a href="https://developer.paypal.com/dashboard/notifications">PayPal Dashboard</a>
+            <a href="https://developer.paypal.com/">PayPal Developper</a>
             <p>Thank you for using our service!</p>
             <p>Best regards,<br>Kratos Rental</p>
         `,
@@ -65,7 +64,7 @@ const sendPaymentConfirmationEmail = async (ownerEmail, amount) => {
     }
 };
 
-// Function to transfer payment to the owner
+
 const transferPaymentToOwner = async (trip) => {
     const ownerPaypalEmail = trip.car.owner.paypalEmail;
     const amount = trip.price;
@@ -80,7 +79,7 @@ const transferPaymentToOwner = async (trip) => {
             {
                 recipient_type: "EMAIL",
                 amount: {
-                    value: amount.toFixed(2), // Ensure two decimal places
+                    value: amount.toFixed(2),
                     currency: "CAD",
                 },
                 receiver: ownerPaypalEmail,
@@ -98,7 +97,7 @@ const transferPaymentToOwner = async (trip) => {
             },
         });
 
-        // Send confirmation email to owner
+        // Send email notice to owner 
         await sendPaymentConfirmationEmail(trip.car.owner.email, amount);
 
         return response.data;
@@ -108,5 +107,5 @@ const transferPaymentToOwner = async (trip) => {
     }
 };
 
-// Export the PayPal client and transferPaymentToOwner function
+
 module.exports = { paypalClient, transferPaymentToOwner };

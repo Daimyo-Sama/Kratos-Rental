@@ -5,7 +5,6 @@ import axios from "axios";
 import CarsPage from "./CarsPage";
 import AccountNav from "../AccountNav";
 
-// Component for displaying PayPal instructions
 const PayPalInstructions = () => (
   <div className="text-left">
     <h3 className="text-lg font-semibold mb-2">Create a PayPal Account</h3>
@@ -40,16 +39,13 @@ export default function ProfilePage() {
   const [editBio, setEditBio] = useState(false);
   const [becomeOwnerClicked, setBecomeOwnerClicked] = useState(false);
 
-  // Get the subpage from the URL
   let { subpage } = useParams();
   if (subpage === undefined) {
     subpage = "profile";
   }
 
-  // Effect to fetch tasks when the component is ready and user is loaded
   useEffect(() => {
     if (ready && user) {
-      // Fetch user tasks
       axios.get("/tasks").then(({ data }) => {
         setTasks(data);
         if (
@@ -63,9 +59,8 @@ export default function ProfilePage() {
         }
       });
     }
-  }, [ready, user]); // Dependencies to control re-running the effect
+  }, [ready, user]);
 
-  // Function to update the user's bio
   async function updateBio(ev) {
     ev.preventDefault();
     try {
@@ -80,7 +75,6 @@ export default function ProfilePage() {
     }
   }
 
-  // Function to update the user's profile picture
   async function updateProfilePicture(ev) {
     ev.preventDefault();
     const formData = new FormData();
@@ -102,7 +96,6 @@ export default function ProfilePage() {
     }
   }
 
-  // Function to update the status of a task
   async function updateTaskStatus(description) {
     const task = tasks.find((t) => t.description === description);
     if (task) {
@@ -122,7 +115,6 @@ export default function ProfilePage() {
     }
   }
 
-  // Function to handle the user becoming an owner
   const handleBecomeOwner = async () => {
     try {
       await axios.post("/become-owner", { userId: user._id });
@@ -134,7 +126,6 @@ export default function ProfilePage() {
     }
   };
 
-  // Function to update the user's PayPal email
   const handleUpdatePayPalEmail = async (ev) => {
     ev.preventDefault();
     try {
@@ -152,16 +143,13 @@ export default function ProfilePage() {
     }
   };
 
-  // Check if the PayPal task is completed
   const isPayPalTaskCompleted = tasks.some(
     (task) =>
       task.description === "Update PayPal Email" && task.status === "completed"
   );
 
-  // Check if all tasks are completed
   const allTasksCompleted = tasks.every((task) => task.status === "completed");
 
-  // Function to render task status icons
   const renderTaskIcon = (status) => {
     if (status === "completed") {
       return (
@@ -200,7 +188,6 @@ export default function ProfilePage() {
     }
   };
 
-  // Handle loading and redirects
   if (!ready) {
     return "Loading...";
   }
@@ -215,45 +202,44 @@ export default function ProfilePage() {
 
   return (
     <div>
+      {/* On passe ce prop au component */}
       <AccountNav paypalEmail={paypalEmail} />
-<div className="bg-white p-6 rounded shadow-md text-center mb-4">
-  {user.profilePicture ? (
-    <img
-      src={`http://localhost:4000${user.profilePicture}`} // Check for correct URL
-      alt="Profile Image"
-      className="w-32 h-32 rounded-full mx-auto mb-4  border-8 border-primary"
-    />
-  ) : (
-    <p className="text-red-500">Profile picture not available</p>
-  )}
-  <h2 className="text-2xl font-semibold">
-    {user.name ? (
-      user.name
-    ) : (
-      <span className="text-red-500">Name not available</span>
-    )}
-  </h2>
-  <div className="bg-gray-200 text-white p-4 rounded mx-auto mt-4 max-w-lg">
-    <p className="text-gray-600">
-      {user.bio ? (
-        user.bio
-      ) : (
-        <span className="text-red-500">Bio not available</span>
-      )}
-    </p>
-    
-  </div>
-  <button
-      onClick={() => setEditBio(true)}
-      className="primary hover:bg-blue-700 mt-4"
-      style={{ width: "300px" }}
-    >
-      Update Bio
-    </button>
-</div>
+      <div className="bg-gray-200 p-6 rounded shadow-lg shadow-inner border-2 border-white text-center mb-4 max-w-xl mx-auto">
+        {user.profilePicture ? (
+          <img
+            src={`http://localhost:4000${user.profilePicture}`}
+            alt="Profile Image"
+            className="w-32 h-32 rounded-full mx-auto mb-4  border-8 border-primary"
+          />
+        ) : (
+          <p className="text-red-500">Profile picture not available</p>
+        )}
+        <h2 className="bg-white-200 w-1/2 rounded-md text-2xl font-semibold mx-auto">
+          {user.name ? (
+            user.name
+          ) : (
+            <span className="text-red-500">Name not available</span>
+          )}
+        </h2>
+        <div className="bg-gray-300 text-white p-4 rounded mx-auto mt-4 max-w-lg border-4 border-primary">
+          <p className="text-gray-600 font-semibold">
+            {user.bio ? (
+              user.bio
+            ) : (
+              <span className="text-red-500">Bio not available</span>
+            )}
+          </p>
+        </div>
+        <button
+          onClick={() => setEditBio(true)}
+          className="primary hover:bg-blue-700 max-w-48 mt-2"
+        >
+          Update Bio
+        </button>
+      </div>
 
       {subpage === "profile" && (
-        <div className="text-center max-w-xl mx-auto">
+        <div className="text-center  max-w-xl mx-auto">
           {editBio && (
             <form onSubmit={updateBio} className="space-y-4">
               <div>
@@ -293,7 +279,7 @@ export default function ProfilePage() {
             </form>
           </div>
 
-          <div className="bg-blue-200 p-4 rounded mt-3">
+          <div className="bg-blue-200 p-4 shadow-inner rounded mt-3">
             <h3 className="font-semibold text-xl">Tasks to Complete</h3>
             <ul className="list-disc list-inside text-left">
               {tasks.map((task, index) => (
@@ -313,7 +299,10 @@ export default function ProfilePage() {
           {user && user.role !== "owner" && !isPayPalTaskCompleted && (
             <div className="mt-4 flex flex-col items-center">
               {!becomeOwnerClicked && (
-                <button onClick={handleBecomeOwner} className=" primary max-w-48 ">
+                <button
+                  onClick={handleBecomeOwner}
+                  className=" primary max-w-48 hover:bg-blue-700 "
+                >
                   Become an Owner
                 </button>
               )}
@@ -339,33 +328,38 @@ export default function ProfilePage() {
                 </>
               )}
               {thankYouMessage && (
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
-                  <p>
-                    Your PayPal email has been updated successfully.
-                    You are now set up to
-                    receive payments and have gained access to the host functionalities!
+                <div className=" bg-red-200 shadow-inner text-center ">
+                  <h3 className="text-lg font-semibold mt-4 ">Thank You!</h3>
+                  <p className="mb-4">
+                    Your PayPal email has been updated successfully. You are now
+                    set up to receive payments and have gained access to the
+                    host functionalities!
                     <br></br>
                     <br></br>
-                     You should now see My Cars and My Deals tabs at the top of the page.
-                     Refer to about us page for more details.
+                    <b>
+                      You should now see My Cars and My Deals tabs at the top of
+                      the page.
+                    </b>
                   </p>
                 </div>
               )}
             </div>
           )}
           {allTasksCompleted && (
-            <div className="bg-green-200 p-4 rounded mt-3">
+            <div className="bg-green-200 p-4 shadow-inner rounded mt-3">
               <h3 className="text-lg font-semibold mb-2">
                 All tasks are complete!
               </h3>
               <h3 className="text-lg mb-2">
-  If you are not sure how to use your account, please refer to our detailled instructions{" "}
-  <Link to="/about-us" className="text-blue-500 underline hover:text-blue-700">
-    here
-  </Link>
-</h3>
-
+                If you are not sure how to use your account, please refer to our
+                detailled instructions{" "}
+                <Link
+                  to="/about-us"
+                  className="text-blue-500 underline hover:text-blue-700"
+                >
+                  here
+                </Link>
+              </h3>
             </div>
           )}
         </div>
