@@ -269,13 +269,13 @@ export default function TripPage() {
           </div>
           <div className="flex flex-col px-2 bg-gray-200 w-64 items-center py-2 justify-between ">
             <h3 className="text-lg font-semibold">Message</h3>
-            <div className="flex flex-col items-center space-y-2 pt-2">
-              <p>{userAccessPanelMessage1(trip.status)}</p>
-              <p>{userAccessPanelMessage2(trip.status)}</p>
+            <div className="flex flex-col items-center space-y-2 py-2">
+              <p>{userMessage1()}</p>
+              <p>{userMessage2()}</p>
             </div>
-            <div className="flex w-full p-2 space-x-2 mt-auto">
-              {userActionButton1(trip)}
-              {userActionButton2(trip)}
+            <div className="flex w-full p-2 space-x-2">
+              {userActionButton1()}
+              {userActionButton2()}
             </div>
           </div>
           <div className="bg-primary p-6 text-white rounded-2xl">
