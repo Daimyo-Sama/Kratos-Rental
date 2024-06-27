@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Banner from "../HomeBanner"; // Import the Banner component
+import Banner from "../HomeBanner";
 
 export default function SearchResultsPage() {
   const [cars, setCars] = useState([]);
@@ -21,10 +21,12 @@ export default function SearchResultsPage() {
 
   return (
     <div>
-      <Banner /> {/* Add the Banner component here */}
+      <Banner />
       <div className="flex justify-center">
         <div className="bg-gray-500 text-white rounded-2xl text-center py-6 mb-2 inline-block border-8 border-gray-300">
-          <h2 className="text-gray-300 text-2xl mb-1 mt-1 m-4">Results for "{searchAddress}"</h2>
+          <h2 className="text-gray-300 text-2xl mb-1 mt-1 m-4">
+            Results for "{searchAddress}"
+          </h2>
         </div>
       </div>
       <div className="my-8 mt-2 mb-2">

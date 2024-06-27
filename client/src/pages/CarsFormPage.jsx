@@ -70,7 +70,6 @@ export default function CarsFormPage() {
       price,
     };
     if (id) {
-      // update
       await axios.put("/cars", {
         id,
         ...carData,
