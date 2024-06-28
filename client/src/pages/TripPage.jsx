@@ -206,7 +206,7 @@ export default function TripPage() {
         </div>
       );
     }
-    if (trip.status === "completed" || trip.status === "cancelled") {
+    if ((trip.status === "completed" || trip.status === "cancelled") && trip.userStatus === "inprogress") {
       const buttonText = "Archive";
       return (
         <div className="w-1/2 ml-auto">

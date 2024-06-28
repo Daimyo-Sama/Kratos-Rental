@@ -202,7 +202,7 @@ export default function DealPage() {
         </button>
       );
     }
-    if (deal.status === "completed" || deal.status === "cancelled") {
+    if ((deal.status === "completed" || deal.status === "cancelled") && deal.ownerStatus === "inprogress" ) {
       const buttonText = "Archive";
       return (
         <button
