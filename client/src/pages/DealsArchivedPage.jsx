@@ -9,7 +9,7 @@ export default function DealsArchivedPage() {
   const [deals, setDeals] = useState([]);
 
   useEffect(() => {
-    axios.get("/trips").then((response) => {
+    axios.get("/deals").then((response) => {
       setDeals(response.data);
     });
   }, []);
