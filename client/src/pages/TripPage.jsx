@@ -279,7 +279,7 @@ export default function TripPage() {
           </div>
         </div>
       </div>
-      <div className="bg-gray-300 p-4 mb-1 rounded shadow-md">
+      <div className="bg-gray-200 p-4 mb-1 rounded shadow-md">
         <h2 className="text-2xl mb-2">Owner</h2>
         <div className="flex items-center">
           {trip.car.owner.profilePicture && (
@@ -304,11 +304,10 @@ export default function TripPage() {
       </div>
 
       {(trip.status === "confirmed" || trip.status === "completed") && (
-        <div className="mt-4 p-4 bg-white rounded shadow">
+        <div className="mt-4 p-4 bg-gray-200 border-white rounded shadow">
           <h2 className="font-semibold text-2xl">Submit a Review</h2>
           <p className="text-gray-700 mb-4">
-            You are welcome to leave a review about the service during or after
-            your trip.
+            You are welcome to leave a review about the trip.
           </p>
           {!reviewSubmitted ? (
             <form onSubmit={handleSubmitReview} className="mt-4">

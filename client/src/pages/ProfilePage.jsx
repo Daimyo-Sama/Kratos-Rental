@@ -221,7 +221,7 @@ export default function ProfilePage() {
             <span className="text-red-500">Name not available</span>
           )}
         </h2>
-        <div className="bg-gray-300 text-white p-4 rounded mx-auto mt-4 max-w-lg border-4 border-primary">
+        <div className="bg-gray-300 text-white p-4 rounded mx-auto mt-4 max-w-lg border-4 border-gray-300">
           <p className="text-gray-600 font-semibold">
             {user.bio ? (
               user.bio
