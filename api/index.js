@@ -128,7 +128,6 @@ app.post("/capture-paypal-order", async (req, res) => {
     const capture = await paypalClient.execute(request);
     
 
-    // Check if the payment was successful
     if (capture.result.status === "COMPLETED") {
       
       const trip = await Trip.findById(tripID).populate({
@@ -171,7 +170,7 @@ app.post("/update-paypal-email", async (req, res) => {
   const { userId, paypalEmail } = req.body;
 
   try {
-    // Update the user's PayPal email
+    
     const user = await User.findByIdAndUpdate(
       userId,
       { paypalEmail },
@@ -678,7 +677,7 @@ app.get("/trips", async (req, res) => {
   res.json(await Trip.find({ user: userData.id }).populate("car"));
 });
 
-// pour afficher le statut de la voiture dans my cars
+
 app.get("/user-trips", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
