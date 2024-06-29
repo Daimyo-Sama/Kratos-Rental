@@ -24,7 +24,7 @@ export default function TripsPage() {
         axios.get('/trips').then(response => {
             setTrips(response.data);
         });
-        loadPayPalScript(   // Load PayPal script
+        loadPayPalScript( //Public key
             "AU3CK9Rvo6bUagdNuHdR0b2SBGT-wVKSB-Qf7vNggiFRPWdURKCkSB3Kds9PeNNyQXqDLB5myEbU_jbn"
         ).then(() => {
             setIsPayPalScriptLoaded(true);

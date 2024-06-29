@@ -975,7 +975,7 @@ app.put("/deals/:id/cancel", async (req, res) => {
   const { id } = req.params;
   try {
     const userData = await getUserDataFromReq(req);
-    const userId = userData.id; // Get the authenticated user's ID
+    const userId = userData.id;
 
     const deal = await Trip.findById(id).populate("car");
     if (!deal) {

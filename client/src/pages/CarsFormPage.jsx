@@ -76,7 +76,6 @@ export default function CarsFormPage() {
       });
       setRedirect(true);
     } else {
-      // new car
       await axios.post("/cars", carData);
       setRedirect(true);
     }
