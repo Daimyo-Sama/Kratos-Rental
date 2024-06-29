@@ -52,13 +52,12 @@ mongoose.connect(process.env.MONGO_URL);
 //helper function to check json token
 async function getUserDataFromReq(req) {
   return new Promise((resolve, reject) => {
-    console.log("Cookies:", req.cookies);
+    
     jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
       if (err) {
-        console.error("JWT verification error:", err);
         return reject(new Error("Unauthorized. Please log in."));
       }
-      console.log("UserData:", userData);
+      
       resolve(userData);
     });
   });
@@ -125,13 +124,13 @@ app.post("/capture-paypal-order", async (req, res) => {
   request.requestBody({});
 
   try {
-    console.log("Executing PayPal capture request...");
+    
     const capture = await paypalClient.execute(request);
-    console.log("PayPal capture response:", capture);
+    
 
     // Check if the payment was successful
     if (capture.result.status === "COMPLETED") {
-      console.log("Payment completed, updating trip status...");
+      
       const trip = await Trip.findById(tripID).populate({
         path: "car",
         populate: {
@@ -141,7 +140,7 @@ app.post("/capture-paypal-order", async (req, res) => {
       });
 
       if (!trip) {
-        console.log("Trip not found:", tripID);
+        
         return res.status(404).json({ error: "Trip not found" });
       }
 
@@ -151,14 +150,14 @@ app.post("/capture-paypal-order", async (req, res) => {
       // Transfer payment to the owner
       const ownerPayment = await transferPaymentToOwner(trip);
 
-      console.log("Trip status updated to confirmed:", trip);
+      
       res.json({
         message: "Payment successful and trip confirmed!",
         capture: capture.result,
         ownerPayment,
       });
     } else {
-      console.log("Payment not completed:", capture.result.status);
+      
       res.status(400).json({ error: "Payment not completed" });
     }
   } catch (error) {
@@ -303,7 +302,7 @@ app.post("/login", async (req, res) => {
               console.error("JWT sign error:", err);
               return res.status(500).json({ message: "Internal server error" });
             }
-            console.log("Token:", token);
+            
             res.cookie("token", token).json(userDoc);
           }
         );
@@ -638,7 +637,7 @@ app.post("/trips", async (req, res) => {
     });
 
     if (overlappingTrips.length > 0) {
-      console.log("Overlapping trips:", overlappingTrips);
+      
       return res
         .status(400)
         .json({ error: "This car is already booked for the selected dates." });
@@ -706,7 +705,6 @@ app.get("/trips/:id", async (req, res) => {
       return res.status(404).json({ error: "Trip not found" });
     }
 
-    console.log("Trip Data:", trip);
     res.json(trip);
   } catch (error) {
     console.error("Error fetching trip:", error);
@@ -740,8 +738,7 @@ app.put("/trips/:id/archive", async (req, res) => {
       return res.status(404).json({ error: "Trip not found" });
     }
     if (trip.user.toString() !== userId.toString()) {
-      console.log(trip.user);
-      console.log(userId);
+
       return res.status(403).json({ error: "Unauthorized" });
     }
     trip.userStatus = "archived";
@@ -794,14 +791,6 @@ app.post("/reviews", async (req, res) => {
     const userData = await getUserDataFromReq(req);
     const reviewerId = userData.id;
 
-    console.log("Creating review:", {
-      reviewedUserId,
-      tripId,
-      carId,
-      rating,
-      comment,
-      reviewerId,
-    });
 
     const newReview = new Review({
       reviewer: reviewerId,
@@ -814,23 +803,23 @@ app.post("/reviews", async (req, res) => {
 
     await newReview.save();
 
-    console.log("New review saved:", newReview);
+    
 
     await User.findByIdAndUpdate(reviewedUserId, {
       $push: { reviews: newReview._id },
     });
-    console.log(`User ${reviewedUserId} updated with new review`);
+    
 
     if (carId) {
       await Car.findByIdAndUpdate(carId, { $push: { reviews: newReview._id } });
-      console.log(`Car ${carId} updated with new review`);
+      
     }
 
     if (tripId) {
       await Trip.findByIdAndUpdate(tripId, {
         $push: { reviews: newReview._id },
       });
-      console.log(`Trip ${tripId} updated with new review`);
+      
     }
 
     res.status(201).json(newReview);
@@ -973,7 +962,7 @@ app.put("/deals/:id/checkout", async (req, res) => {
       return res.status(403).json({ error: "Unauthorized" });
     }
     deal.status = "completed";
-    console.log(deal.status);
+    
     await deal.save();
     res.json(deal);
   } catch (error) {

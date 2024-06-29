@@ -58,7 +58,7 @@ const sendPaymentConfirmationEmail = async (ownerEmail, amount) => {
 
     try {
         await transporter.sendMail(mailOptions);
-        console.log('Payment confirmation email sent');
+        
     } catch (error) {
         console.error('Error sending payment confirmation email:', error);
     }
